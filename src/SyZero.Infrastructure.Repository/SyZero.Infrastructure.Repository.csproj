@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\SyZero.Domain.Interface\SyZero.Domain.Interface.csproj" />
+    <ProjectReference Include="..\SyZero.Infrastructure.EntityFramework\SyZero.Infrastructure.EntityFramework.csproj" />
+  </ItemGroup>
+
+</Project>

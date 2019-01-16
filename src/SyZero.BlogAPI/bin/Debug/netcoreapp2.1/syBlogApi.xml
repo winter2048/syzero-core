@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>SyZero.BlogAPI</name>
+    </assembly>
+    <members>
+        <member name="M:SyZero.BlogAPI.Controllers.ValuesController.Get(System.Int32)">
+            <summary>
+            这是一个带参数的get请求
+            </summary>
+            <remarks>
+            例子:
+            Get api/Values/1
+            </remarks>
+            <param name="id">主键</param>
+            <returns>测试字符串</returns> 
+            <response code="201">返回value字符串</response>
+            <response code="400">如果id为空</response>  
+        </member>
+    </members>
+</doc>

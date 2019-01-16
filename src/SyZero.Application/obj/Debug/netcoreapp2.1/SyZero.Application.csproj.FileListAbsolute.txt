@@ -1,0 +1,8 @@
+F:\asp.net\webwapi(core)\SyZero.BlogAPI\SyZero.Application\bin\Debug\netcoreapp2.1\SyZero.Application.deps.json
+F:\asp.net\webwapi(core)\SyZero.BlogAPI\SyZero.Application\bin\Debug\netcoreapp2.1\SyZero.Application.dll
+F:\asp.net\webwapi(core)\SyZero.BlogAPI\SyZero.Application\bin\Debug\netcoreapp2.1\SyZero.Application.pdb
+F:\asp.net\webwapi(core)\SyZero.BlogAPI\SyZero.Application\obj\Debug\netcoreapp2.1\SyZero.Application.csproj.CoreCompileInputs.cache
+F:\asp.net\webwapi(core)\SyZero.BlogAPI\SyZero.Application\obj\Debug\netcoreapp2.1\SyZero.Application.AssemblyInfoInputs.cache
+F:\asp.net\webwapi(core)\SyZero.BlogAPI\SyZero.Application\obj\Debug\netcoreapp2.1\SyZero.Application.AssemblyInfo.cs
+F:\asp.net\webwapi(core)\SyZero.BlogAPI\SyZero.Application\obj\Debug\netcoreapp2.1\SyZero.Application.dll
+F:\asp.net\webwapi(core)\SyZero.BlogAPI\SyZero.Application\obj\Debug\netcoreapp2.1\SyZero.Application.pdb

@@ -1,0 +1,14 @@
+F:\asp.net\webwapi(core)\SyZero.BlogAPI\SyZero.EntityFramework\bin\Debug\netcoreapp2.1\SyZero.EntityFramework.deps.json
+F:\asp.net\webwapi(core)\SyZero.BlogAPI\SyZero.EntityFramework\bin\Debug\netcoreapp2.1\SyZero.EntityFramework.dll
+F:\asp.net\webwapi(core)\SyZero.BlogAPI\SyZero.EntityFramework\obj\Debug\netcoreapp2.1\SyZero.EntityFramework.csprojAssemblyReference.cache
+F:\asp.net\webwapi(core)\SyZero.BlogAPI\SyZero.EntityFramework\obj\Debug\netcoreapp2.1\SyZero.EntityFramework.csproj.CoreCompileInputs.cache
+F:\asp.net\webwapi(core)\SyZero.BlogAPI\SyZero.EntityFramework\obj\Debug\netcoreapp2.1\SyZero.EntityFramework.AssemblyInfoInputs.cache
+F:\asp.net\webwapi(core)\SyZero.BlogAPI\SyZero.EntityFramework\obj\Debug\netcoreapp2.1\SyZero.EntityFramework.AssemblyInfo.cs
+F:\asp.net\webwapi(core)\SyZero.BlogAPI\SyZero.EntityFramework\bin\Debug\netcoreapp2.1\SyZero.EntityFramework.runtimeconfig.json
+F:\asp.net\webwapi(core)\SyZero.BlogAPI\SyZero.EntityFramework\bin\Debug\netcoreapp2.1\SyZero.EntityFramework.runtimeconfig.dev.json
+F:\asp.net\webwapi(core)\SyZero.BlogAPI\SyZero.EntityFramework\bin\Debug\netcoreapp2.1\SyZero.EntityFramework.pdb
+F:\asp.net\webwapi(core)\SyZero.BlogAPI\SyZero.EntityFramework\bin\Debug\netcoreapp2.1\SyZero.Model.dll
+F:\asp.net\webwapi(core)\SyZero.BlogAPI\SyZero.EntityFramework\bin\Debug\netcoreapp2.1\SyZero.Model.pdb
+F:\asp.net\webwapi(core)\SyZero.BlogAPI\SyZero.EntityFramework\obj\Debug\netcoreapp2.1\SyZero.EntityFramework.csproj.CopyComplete
+F:\asp.net\webwapi(core)\SyZero.BlogAPI\SyZero.EntityFramework\obj\Debug\netcoreapp2.1\SyZero.EntityFramework.dll
+F:\asp.net\webwapi(core)\SyZero.BlogAPI\SyZero.EntityFramework\obj\Debug\netcoreapp2.1\SyZero.EntityFramework.pdb

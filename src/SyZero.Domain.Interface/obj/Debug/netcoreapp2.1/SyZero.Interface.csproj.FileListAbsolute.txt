@@ -1,0 +1,12 @@
+F:\asp.net\webwapi(core)\SyZero.BlogAPI\SyZero.Interface\obj\Debug\netcoreapp2.1\SyZero.Interface.csprojAssemblyReference.cache
+F:\asp.net\webwapi(core)\SyZero.BlogAPI\SyZero.Interface\obj\Debug\netcoreapp2.1\SyZero.Interface.csproj.CoreCompileInputs.cache
+F:\asp.net\webwapi(core)\SyZero.BlogAPI\SyZero.Interface\obj\Debug\netcoreapp2.1\SyZero.Interface.AssemblyInfoInputs.cache
+F:\asp.net\webwapi(core)\SyZero.BlogAPI\SyZero.Interface\obj\Debug\netcoreapp2.1\SyZero.Interface.AssemblyInfo.cs
+F:\asp.net\webwapi(core)\SyZero.BlogAPI\SyZero.Interface\bin\Debug\netcoreapp2.1\SyZero.Interface.deps.json
+F:\asp.net\webwapi(core)\SyZero.BlogAPI\SyZero.Interface\bin\Debug\netcoreapp2.1\SyZero.Interface.dll
+F:\asp.net\webwapi(core)\SyZero.BlogAPI\SyZero.Interface\bin\Debug\netcoreapp2.1\SyZero.Interface.pdb
+F:\asp.net\webwapi(core)\SyZero.BlogAPI\SyZero.Interface\bin\Debug\netcoreapp2.1\SyZero.Model.dll
+F:\asp.net\webwapi(core)\SyZero.BlogAPI\SyZero.Interface\bin\Debug\netcoreapp2.1\SyZero.Model.pdb
+F:\asp.net\webwapi(core)\SyZero.BlogAPI\SyZero.Interface\obj\Debug\netcoreapp2.1\SyZero.Interface.csproj.CopyComplete
+F:\asp.net\webwapi(core)\SyZero.BlogAPI\SyZero.Interface\obj\Debug\netcoreapp2.1\SyZero.Interface.dll
+F:\asp.net\webwapi(core)\SyZero.BlogAPI\SyZero.Interface\obj\Debug\netcoreapp2.1\SyZero.Interface.pdb
