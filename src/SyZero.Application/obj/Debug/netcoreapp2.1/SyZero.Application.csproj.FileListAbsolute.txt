@@ -6,3 +6,12 @@ F:\asp.net\webwapi(core)\SyZero.BlogAPI\SyZero.Application\obj\Debug\netcoreapp2
 F:\asp.net\webwapi(core)\SyZero.BlogAPI\SyZero.Application\obj\Debug\netcoreapp2.1\SyZero.Application.AssemblyInfo.cs
 F:\asp.net\webwapi(core)\SyZero.BlogAPI\SyZero.Application\obj\Debug\netcoreapp2.1\SyZero.Application.dll
 F:\asp.net\webwapi(core)\SyZero.BlogAPI\SyZero.Application\obj\Debug\netcoreapp2.1\SyZero.Application.pdb
+F:\项目\SYZERO\src\SyZero.Application\bin\Debug\netcoreapp2.1\SyZero.Application.deps.json
+F:\项目\SYZERO\src\SyZero.Application\bin\Debug\netcoreapp2.1\SyZero.Application.dll
+F:\项目\SYZERO\src\SyZero.Application\bin\Debug\netcoreapp2.1\SyZero.Application.pdb
+F:\项目\SYZERO\src\SyZero.Application\obj\Debug\netcoreapp2.1\SyZero.Application.csprojAssemblyReference.cache
+F:\项目\SYZERO\src\SyZero.Application\obj\Debug\netcoreapp2.1\SyZero.Application.csproj.CoreCompileInputs.cache
+F:\项目\SYZERO\src\SyZero.Application\obj\Debug\netcoreapp2.1\SyZero.Application.AssemblyInfoInputs.cache
+F:\项目\SYZERO\src\SyZero.Application\obj\Debug\netcoreapp2.1\SyZero.Application.AssemblyInfo.cs
+F:\项目\SYZERO\src\SyZero.Application\obj\Debug\netcoreapp2.1\SyZero.Application.dll
+F:\项目\SYZERO\src\SyZero.Application\obj\Debug\netcoreapp2.1\SyZero.Application.pdb

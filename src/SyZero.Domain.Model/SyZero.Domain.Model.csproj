@@ -5,4 +5,8 @@
     <AssemblyName>SyZero.Domain.Model</AssemblyName>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\SyZero.Infrastructure.Mongo\SyZero.Infrastructure.Mongo.csproj" />
+  </ItemGroup>
+
 </Project>

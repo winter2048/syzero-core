@@ -27,7 +27,9 @@
     <ProjectReference Include="..\SyZero.Common\SyZero.Common.csproj" />
     <ProjectReference Include="..\SyZero.Domain.Interface\SyZero.Domain.Interface.csproj" />
     <ProjectReference Include="..\SyZero.Infrastructure.EntityFramework\SyZero.Infrastructure.EntityFramework.csproj" />
-    <ProjectReference Include="..\SyZero.Infrastructure.Repository\SyZero.Infrastructure.Repository.csproj" />
+    <ProjectReference Include="..\SyZero.Infrastructure.MongoRepository\SyZero.Infrastructure.MongoRepository.csproj" />
+    <ProjectReference Include="..\SyZero.Infrastructure.Mongo\SyZero.Infrastructure.Mongo.csproj" />
+    <ProjectReference Include="..\SyZero.Infrastructure.Repository\SyZero.Infrastructure.EfRepository.csproj" />
   </ItemGroup>
 
 </Project>

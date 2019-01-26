@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace SyZero.Domain.Model
 {
-    public class User : EntityRoot
+    public class User : EfEntityBase
     {
       
         [MaxLength(200)]
@@ -22,10 +22,5 @@ namespace SyZero.Domain.Model
         public System.DateTime AddTime { get; set; }
         public System.DateTime LastTime { get; set; }
         public int State { get; set; }
-        public string L01 { get; set; }
-
-        public string L02 { get; set; }
-
-        public string L03 { get; set; }
     }
 }

@@ -3,6 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using MongoDB.Driver;
+using SyZero.Domain.Interface;
+using SyZero.Domain.Model;
+using SyZero.Infrastructure.Mongo;
 
 namespace SyZero.BlogAPI.Controllers
 {
@@ -10,12 +14,20 @@ namespace SyZero.BlogAPI.Controllers
     [ApiController]
     public class ValuesController : ControllerBase
     {
+       // private IMongoContext<UserMo> _context;
+
+      private IMongoRepository<UserMo> _repository;
+        public ValuesController( IMongoRepository<UserMo> repository)
+        {
+           _repository = repository;
+          //  _context = context;
+        }
         // GET api/values
         [HttpGet]
-        public ActionResult<IEnumerable<string>> Get()
+        public IEnumerable<UserMo> Get()
         {
-            
-            return new string[] { "value1", "value2" };
+         return   _repository.GetList();
+
         }
 
         /// <summary>
@@ -39,8 +51,10 @@ namespace SyZero.BlogAPI.Controllers
 
         // POST api/values
         [HttpPost]
-        public void Post([FromBody] string value)
+        public UserMo  Post([FromBody] string value)
         {
+            return _repository.Add(new UserMo()
+                { Name = "sssss" + value, Paw = "sssaasdasd", State = 1, Utype = 1 });
         }
 
         // PUT api/values/5

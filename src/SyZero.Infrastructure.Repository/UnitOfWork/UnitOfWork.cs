@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading;
 using SyZero.Infrastructure.EntityFramework;
 using SyZero.Domain.Interface;
+using System.Threading.Tasks;
 
-namespace SyZero.Infrastructure.Repository
+namespace SyZero.Infrastructure.EfRepository
 {
     public class UnitOfWork : IUnitOfWork
     {
@@ -15,15 +17,14 @@ namespace SyZero.Infrastructure.Repository
             this.dataContext = _dataContext;
         }
 
-        public void Commit()
+        public async Task<int> SaveAsyncChange(bool acceptAllChangesOnSuccess = true, CancellationToken cancellationToken = default(CancellationToken))
         {
-            dataContext.SaveChanges();
+           return await dataContext.SaveChangesAsync(acceptAllChangesOnSuccess, cancellationToken);
         }
 
-        public void CommitAsync()
+        public int SaveChange(bool acceptAllChangesOnSuccess = true)
         {
-            dataContext.SaveChangesAsync();
+            return dataContext.SaveChanges(acceptAllChangesOnSuccess);
         }
-
     }
 }

@@ -1,12 +1,25 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
 
-namespace SyZero.Infrastructure.Repository
+namespace SyZero.Infrastructure.EfRepository
 {
     public interface IUnitOfWork
     {
-        void Commit();
-        void CommitAsync();
+        /// <summary>
+        ///     保存更改
+        /// </summary>
+        /// <param name="acceptAllChangesOnSuccess"></param>
+        int SaveChange(bool acceptAllChangesOnSuccess = true);
+
+        /// <summary>
+        ///     异步保存更改
+        /// </summary>
+        /// <param name="acceptAllChangesOnSuccess"></param>
+        /// <param name="cancellationToken">异步取消凭据</param>
+        Task<int> SaveAsyncChange(bool acceptAllChangesOnSuccess = true,
+            CancellationToken cancellationToken = default(CancellationToken));
     }
 }

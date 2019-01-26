@@ -17,7 +17,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1-Presentation", "1-Present
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SyZero.Application", "SyZero.Application\SyZero.Application.csproj", "{7B2455F5-3E80-4BCF-9158-EFD69C00AFBC}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SyZero.Infrastructure.Repository", "SyZero.Infrastructure.Repository\SyZero.Infrastructure.Repository.csproj", "{E0B6D2F7-CB00-4366-988C-B9B718AA4435}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SyZero.Infrastructure.EfRepository", "SyZero.Infrastructure.Repository\SyZero.Infrastructure.EfRepository.csproj", "{E0B6D2F7-CB00-4366-988C-B9B718AA4435}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SyZero.Domain.DomainService", "SyZero.Domain.DomainService\SyZero.Domain.DomainService.csproj", "{B75162A3-C666-47C8-B2F6-0C9130FD68E1}"
 EndProject
@@ -26,6 +26,10 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SyZero.Domain.Model", "SyZero.Domain.Model\SyZero.Domain.Model.csproj", "{F48FAEE0-8055-4721-B6C6-E5841886EB30}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SyZero.Infrastructure.EntityFramework", "SyZero.Infrastructure.EntityFramework\SyZero.Infrastructure.EntityFramework.csproj", "{22F8FE52-E2D6-4603-B9B1-E0EFA756BD46}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SyZero.Infrastructure.Mongo", "SyZero.Infrastructure.Mongo\SyZero.Infrastructure.Mongo.csproj", "{44B342B7-5FAB-4F11-B113-E5EAA51D8195}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SyZero.Infrastructure.MongoRepository", "SyZero.Infrastructure.MongoRepository\SyZero.Infrastructure.MongoRepository.csproj", "{101443A3-3149-40D2-A2EC-78B482BBA5FA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -65,6 +69,14 @@ Global
 		{22F8FE52-E2D6-4603-B9B1-E0EFA756BD46}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{22F8FE52-E2D6-4603-B9B1-E0EFA756BD46}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{22F8FE52-E2D6-4603-B9B1-E0EFA756BD46}.Release|Any CPU.Build.0 = Release|Any CPU
+		{44B342B7-5FAB-4F11-B113-E5EAA51D8195}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{44B342B7-5FAB-4F11-B113-E5EAA51D8195}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{44B342B7-5FAB-4F11-B113-E5EAA51D8195}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{44B342B7-5FAB-4F11-B113-E5EAA51D8195}.Release|Any CPU.Build.0 = Release|Any CPU
+		{101443A3-3149-40D2-A2EC-78B482BBA5FA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{101443A3-3149-40D2-A2EC-78B482BBA5FA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{101443A3-3149-40D2-A2EC-78B482BBA5FA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{101443A3-3149-40D2-A2EC-78B482BBA5FA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -78,6 +90,8 @@ Global
 		{B7FB78CC-D0E4-43D7-B1FC-4E9B156CF815} = {ABC1DD00-45CB-408B-87D8-73E4D6589AA3}
 		{F48FAEE0-8055-4721-B6C6-E5841886EB30} = {ABC1DD00-45CB-408B-87D8-73E4D6589AA3}
 		{22F8FE52-E2D6-4603-B9B1-E0EFA756BD46} = {681397FB-C9A6-4FCC-ABC7-E99584206316}
+		{44B342B7-5FAB-4F11-B113-E5EAA51D8195} = {681397FB-C9A6-4FCC-ABC7-E99584206316}
+		{101443A3-3149-40D2-A2EC-78B482BBA5FA} = {681397FB-C9A6-4FCC-ABC7-E99584206316}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {7668E53B-AA87-498A-A3C0-6B7888DDCEFB}
