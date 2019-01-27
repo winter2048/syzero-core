@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace SyZero.Infrastructure.EntityFramework.Migrations
 {
-    public partial class Init2633 : Migration
+    public partial class Init10 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

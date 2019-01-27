@@ -10,8 +10,8 @@ using SyZero.Infrastructure.EntityFramework;
 namespace SyZero.Infrastructure.EntityFramework.Migrations
 {
     [DbContext(typeof(SyDbContext))]
-    [Migration("20190126144013_Init2.633")]
-    partial class Init2633
+    [Migration("20190127041528_Init1.0")]
+    partial class Init10
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

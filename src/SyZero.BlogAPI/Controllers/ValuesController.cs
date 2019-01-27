@@ -24,9 +24,9 @@ namespace SyZero.BlogAPI.Controllers
         }
         // GET api/values
         [HttpGet]
-        public IEnumerable<UserMo> Get()
+        public  IEnumerable<UserMo> Get()
         {
-         return   _repository.GetList();
+            return  _repository.GetList();
 
         }
 
@@ -44,9 +44,9 @@ namespace SyZero.BlogAPI.Controllers
         [HttpGet("{id}")]
         [ProducesResponseType(201)]
         [ProducesResponseType(400)]
-        public ActionResult<string> Get(int id)
+        public IEnumerable<UserMo> Get(int id)
         {
-            return "这是id=" + id;
+            return _repository.GetPaged(id, 50, p => p.Id,true);
         }
 
         // POST api/values
@@ -65,8 +65,14 @@ namespace SyZero.BlogAPI.Controllers
 
         // DELETE api/values/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public async void Delete(int id)
         {
+            for (int i = 0; i < id; i++)
+            {
+                await _repository.AddAsync(new UserMo()
+                    { Name = "sssss" + i, Paw = "sssaasdasd", State = 1, Utype = 1 });
+            }
+            //  _repository.Add();
         }
     }
 }

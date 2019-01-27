@@ -7,7 +7,7 @@ namespace SyZero.Infrastructure.EntityFramework
 {
     public static class EfExtensions
     {
-        public static IServiceCollection UserMongoLog(this IServiceCollection services,string configurationSection)
+        public static IServiceCollection UseEntityFramework(this IServiceCollection services,string configurationSection)
         {
             services.AddDbContext<SyDbContext>(options =>
                 options.UseSqlServer(configurationSection));

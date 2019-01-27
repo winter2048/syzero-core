@@ -13876,8 +13876,8 @@
     },
     "SyZero.Infrastructure.EfRepository/1.0.0": {
       "type": "project",
-      "path": "../SyZero.Infrastructure.Repository/SyZero.Infrastructure.EfRepository.csproj",
-      "msbuildProject": "../SyZero.Infrastructure.Repository/SyZero.Infrastructure.EfRepository.csproj"
+      "path": "../SyZero.Infrastructure.EfRepository/SyZero.Infrastructure.EfRepository.csproj",
+      "msbuildProject": "../SyZero.Infrastructure.EfRepository/SyZero.Infrastructure.EfRepository.csproj"
     },
     "SyZero.Infrastructure.EntityFramework/1.0.0": {
       "type": "project",
@@ -13952,6 +13952,9 @@
             "F:\\项目\\SYZERO\\src\\SyZero.Domain.Interface\\SyZero.Domain.Interface.csproj": {
               "projectPath": "F:\\项目\\SYZERO\\src\\SyZero.Domain.Interface\\SyZero.Domain.Interface.csproj"
             },
+            "F:\\项目\\SYZERO\\src\\SyZero.Infrastructure.EfRepository\\SyZero.Infrastructure.EfRepository.csproj": {
+              "projectPath": "F:\\项目\\SYZERO\\src\\SyZero.Infrastructure.EfRepository\\SyZero.Infrastructure.EfRepository.csproj"
+            },
             "F:\\项目\\SYZERO\\src\\SyZero.Infrastructure.EntityFramework\\SyZero.Infrastructure.EntityFramework.csproj": {
               "projectPath": "F:\\项目\\SYZERO\\src\\SyZero.Infrastructure.EntityFramework\\SyZero.Infrastructure.EntityFramework.csproj"
             },
@@ -13960,9 +13963,6 @@
             },
             "F:\\项目\\SYZERO\\src\\SyZero.Infrastructure.Mongo\\SyZero.Infrastructure.Mongo.csproj": {
               "projectPath": "F:\\项目\\SYZERO\\src\\SyZero.Infrastructure.Mongo\\SyZero.Infrastructure.Mongo.csproj"
-            },
-            "F:\\项目\\SYZERO\\src\\SyZero.Infrastructure.Repository\\SyZero.Infrastructure.EfRepository.csproj": {
-              "projectPath": "F:\\项目\\SYZERO\\src\\SyZero.Infrastructure.Repository\\SyZero.Infrastructure.EfRepository.csproj"
             }
           }
         }

@@ -6485,11 +6485,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "F:\\项目\\SYZERO\\src\\SyZero.Infrastructure.Repository\\SyZero.Infrastructure.EfRepository.csproj",
+      "projectUniqueName": "F:\\项目\\SYZERO\\src\\SyZero.Infrastructure.EfRepository\\SyZero.Infrastructure.EfRepository.csproj",
       "projectName": "SyZero.Infrastructure.EfRepository",
-      "projectPath": "F:\\项目\\SYZERO\\src\\SyZero.Infrastructure.Repository\\SyZero.Infrastructure.EfRepository.csproj",
+      "projectPath": "F:\\项目\\SYZERO\\src\\SyZero.Infrastructure.EfRepository\\SyZero.Infrastructure.EfRepository.csproj",
       "packagesPath": "C:\\Users\\JHT\\.nuget\\packages\\",
-      "outputPath": "F:\\项目\\SYZERO\\src\\SyZero.Infrastructure.Repository\\obj\\",
+      "outputPath": "F:\\项目\\SYZERO\\src\\SyZero.Infrastructure.EfRepository\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"

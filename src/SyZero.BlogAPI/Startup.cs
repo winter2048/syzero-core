@@ -58,14 +58,11 @@ namespace SyZero.BlogAPI
             });
             #endregion
 
-            //services.AddDbContext<SyDbContext>(options =>
-            //    options.UseSqlServer(Configuration.GetConnectionString("sqlConnection")));
-
+            //使用Mongo连接数据库
+            services.UseMongoDB(Configuration.GetSection("MongoConnection"));
             //使用EF连接数据库
-              EfExtensions.UserMongoLog(services, Configuration.GetConnectionString("sqlConnection"));
-
-            MongoExtensions.UserMongoLog(services, Configuration.GetSection("Mongo.Log"));
-
+            services.UseEntityFramework(Configuration.GetConnectionString("sqlConnection"));
+      
             services.AddMvc(options =>
             {
                 options.Filters.Add(typeof(WebApiResultMiddleware));
