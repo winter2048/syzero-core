@@ -32,4 +32,10 @@
     <ProjectReference Include="..\SyZero.Infrastructure.Mongo\SyZero.Infrastructure.Mongo.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Content Update="log4net.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
 </Project>

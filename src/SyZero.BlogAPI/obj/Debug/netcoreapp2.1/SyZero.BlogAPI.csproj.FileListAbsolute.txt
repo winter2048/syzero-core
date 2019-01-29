@@ -62,3 +62,4 @@ F:\项目\SYZERO\src\SyZero.BlogAPI\bin\Debug\netcoreapp2.1\netcoreapp2.1\SyZero
 F:\项目\SYZERO\src\SyZero.BlogAPI\bin\Debug\netcoreapp2.1\netcoreapp2.1\SyZero.Infrastructure.Mongo.pdb
 F:\项目\SYZERO\src\SyZero.BlogAPI\bin\Debug\netcoreapp2.1\netcoreapp2.1\SyZero.Infrastructure.MongoRepository.dll
 F:\项目\SYZERO\src\SyZero.BlogAPI\bin\Debug\netcoreapp2.1\netcoreapp2.1\SyZero.Infrastructure.MongoRepository.pdb
+F:\项目\SYZERO\src\SyZero.BlogAPI\bin\Debug\netcoreapp2.1\netcoreapp2.1\log4net.config
