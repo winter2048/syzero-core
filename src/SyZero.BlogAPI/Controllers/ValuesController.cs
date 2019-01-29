@@ -46,7 +46,7 @@ namespace SyZero.BlogAPI.Controllers
         [ProducesResponseType(400)]
         public IEnumerable<UserMo> Get(int id)
         {
-            return _repository.GetPaged(id, 50, p => p.Id,true);
+          return _repository.GetPaged(id, 30, p => p.Id,true);
         }
 
         // POST api/values

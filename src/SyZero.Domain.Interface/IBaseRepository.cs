@@ -90,7 +90,7 @@ namespace SyZero.Domain.Interface
         /// <param name="sortBy">排序</param>
         /// <param name="isDesc"></param>
         /// <returns></returns>
-        IEnumerable<T> GetPaged<TProperty>(int pageIndex, int pageSize, Func<T, TProperty> sortBy, bool isDesc = false);
+        IEnumerable<T> GetPaged(int pageIndex, int pageSize, Expression<Func<T, object>> sortBy, bool isDesc = false);
         /// <summary>
         /// 分页获取数据（异步）
         /// </summary>
@@ -101,7 +101,7 @@ namespace SyZero.Domain.Interface
         /// <param name="isDesc"></param>
         /// <param name="cancellationToken">异步取消凭据</param>
         /// <returns></returns>
-        Task<IEnumerable<T>> GetPagedAsync<TProperty>(int pageIndex, int pageSize, Func<T, TProperty> sortBy, bool isDesc = false, CancellationToken cancellationToken = default(CancellationToken));
+        Task<IEnumerable<T>> GetPagedAsync(int pageIndex, int pageSize, Expression<Func<T, object>> sortBy, bool isDesc = false, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// 分页获取部分数据
         /// </summary>
@@ -112,7 +112,7 @@ namespace SyZero.Domain.Interface
         /// <param name="where">条件</param>
         /// <param name="isDesc"></param>
         /// <returns></returns>
-        IEnumerable<T> GetPaged<TProperty>(int pageIndex, int pageSize, Func<T, TProperty> sortBy,
+        IEnumerable<T> GetPaged(int pageIndex, int pageSize, Expression<Func<T, object>> sortBy,
             Expression<Func<T, bool>> where, bool isDesc = false);
         /// <summary>
         /// 分页获取部分数据（异步）
@@ -125,7 +125,7 @@ namespace SyZero.Domain.Interface
         /// <param name="isDesc"></param>
         /// <param name="cancellationToken">异步取消凭据</param>
         /// <returns></returns>
-        Task<IEnumerable<T>> GetPagedAsync<TProperty>(int pageIndex, int pageSize, Func<T, TProperty> sortBy,
+        Task<IEnumerable<T>> GetPagedAsync(int pageIndex, int pageSize, Expression<Func<T, object>>  sortBy,
             Expression<Func<T, bool>> where, bool isDesc = false, CancellationToken cancellationToken = default(CancellationToken));
         #endregion
 

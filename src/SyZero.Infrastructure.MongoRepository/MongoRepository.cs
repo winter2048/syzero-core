@@ -119,6 +119,8 @@ namespace SyZero.Infrastructure.MongoRepository
             return result.FirstOrDefault();
         }
 
+     
+
         public async Task<TEntity> GetModelAsync(string id, CancellationToken cancellationToken = default(CancellationToken))
         {
             return await GetModelAsync(a => a.Id == id, cancellationToken);
@@ -130,29 +132,37 @@ namespace SyZero.Infrastructure.MongoRepository
             return result.FirstOrDefault(cancellationToken);
         }
 
-        public IEnumerable<TEntity> GetPaged<TProperty>(int pageIndex, int pageSize, Func<TEntity, TProperty> sortBy, bool isDesc = false)
+        public IEnumerable<TEntity> GetPaged(int pageIndex, int pageSize, Expression<Func<TEntity, object>> sortBy, bool isDesc = false)
         {
+            SortDefinition<TEntity> sorts = new ObjectSortDefinition<TEntity>(new { });
             if (isDesc)
-                return _collection.AsQueryable().OrderByDescending(sortBy).Skip((pageIndex - 1) * pageSize).Take(pageSize).AsEnumerable();
-            return _collection.AsQueryable().OrderBy(sortBy).Skip((pageIndex - 1) * pageSize).Take(pageSize).AsEnumerable();
+                sorts = sorts.Descending(sortBy);
+            else
+                sorts = sorts.Ascending(sortBy);
+            return _collection.Find(p=>true).Sort(sorts).Skip((pageIndex - 1) * pageSize).Limit(pageSize).ToEnumerable();
         }
 
-        public IEnumerable<TEntity> GetPaged<TProperty>(int pageIndex, int pageSize, Func<TEntity, TProperty> sortBy, Expression<Func<TEntity, bool>> where, bool isDesc = false)
+        public IEnumerable<TEntity> GetPaged(int pageIndex, int pageSize, Expression<Func<TEntity, object>> sortBy, Expression<Func<TEntity, bool>> where, bool isDesc = false)
         {
+            SortDefinition<TEntity> sorts = new ObjectSortDefinition<TEntity>(new { });
             if (isDesc)
-                return _collection.AsQueryable().Where(where).OrderByDescending(sortBy).Skip((pageIndex - 1) * pageSize).Take(pageSize).AsEnumerable();
-            return _collection.AsQueryable().Where(where).OrderBy(sortBy).Skip((pageIndex - 1) * pageSize).Take(pageSize).AsEnumerable();
+                sorts = sorts.Descending(sortBy);
+            else
+                sorts = sorts.Ascending(sortBy);
+            return _collection.Find(where).Sort(sorts).Skip((pageIndex - 1) * pageSize).Limit(pageSize).ToEnumerable();
         }
 
-        public Task<IEnumerable<TEntity>> GetPagedAsync<TProperty>(int pageIndex, int pageSize, Func<TEntity, TProperty> sortBy, bool isDesc = false, CancellationToken cancellationToken = default(CancellationToken))
+        public Task<IEnumerable<TEntity>> GetPagedAsync(int pageIndex, int pageSize, Expression<Func<TEntity, object>> sortBy, bool isDesc = false, CancellationToken cancellationToken = default(CancellationToken))
         {
             return Task.Run(() => GetPaged(pageIndex, pageSize, sortBy, isDesc), cancellationToken);
         }
 
-        public Task<IEnumerable<TEntity>> GetPagedAsync<TProperty>(int pageIndex, int pageSize, Func<TEntity, TProperty> sortBy, Expression<Func<TEntity, bool>> where, bool isDesc = false, CancellationToken cancellationToken = default(CancellationToken))
+        public Task<IEnumerable<TEntity>> GetPagedAsync(int pageIndex, int pageSize, Expression<Func<TEntity, object>> sortBy, Expression<Func<TEntity, bool>> where, bool isDesc = false, CancellationToken cancellationToken = default(CancellationToken))
         {
             return Task.Run(() => GetPaged(pageIndex, pageSize, sortBy, where, isDesc), cancellationToken);
         }
+
+
         #endregion
 
         #region Updata
@@ -186,7 +196,8 @@ namespace SyZero.Infrastructure.MongoRepository
             foreach (var item in entitys)
                 reulst += await UpdateAsync(item, cancellationToken);
             return reulst;
-        } 
+        }
         #endregion
+
     }
 }

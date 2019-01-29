@@ -135,29 +135,29 @@ namespace SyZero.Infrastructure.EfRepository
             return await _dbSet.FirstOrDefaultAsync(where, cancellationToken);
         }
 
-        public IEnumerable<TEntity> GetPaged<TProperty>(int pageIndex, int pageSize, Func<TEntity, TProperty> sortBy, bool isDesc = false)
+        public IEnumerable<TEntity> GetPaged(int pageIndex, int pageSize, Expression<Func<TEntity, object>> sortBy, bool isDesc = false)
         {
             if (isDesc)
                 return _dbSet.OrderByDescending(sortBy).Skip((pageIndex - 1) * pageSize).Take(pageSize).AsEnumerable();
             return _dbSet.OrderBy(sortBy).Skip((pageIndex - 1) * pageSize).Take(pageSize).AsEnumerable();
         }
 
-        public IEnumerable<TEntity> GetPaged<TProperty>(int pageIndex, int pageSize, Func<TEntity, TProperty> sortBy, Expression<Func<TEntity, bool>> where, bool isDesc = false)
+        public async Task<IEnumerable<TEntity>> GetPagedAsync(int pageIndex, int pageSize, Expression<Func<TEntity, object>> sortBy, bool isDesc = false, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            return await Task.Run(() => GetPaged(pageIndex, pageSize, sortBy, isDesc), cancellationToken);
+        }
+
+        public IEnumerable<TEntity> GetPaged(int pageIndex, int pageSize, Expression<Func<TEntity, object>> sortBy, Expression<Func<TEntity, bool>> where, bool isDesc = false)
         {
             if (isDesc)
                 return _dbSet.Where(where).OrderByDescending(sortBy).Skip((pageIndex - 1) * pageSize).Take(pageSize).AsEnumerable();
             return _dbSet.Where(where).OrderBy(sortBy).Skip((pageIndex - 1) * pageSize).Take(pageSize).AsEnumerable();
         }
 
-        public async Task<IEnumerable<TEntity>> GetPagedAsync<TProperty>(int pageIndex, int pageSize, Func<TEntity, TProperty> sortBy, bool isDesc = false, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<IEnumerable<TEntity>> GetPagedAsync(int pageIndex, int pageSize, Expression<Func<TEntity, object>> sortBy, Expression<Func<TEntity, bool>> where, bool isDesc = false, CancellationToken cancellationToken = default(CancellationToken))
         {
-            return await Task.Run(() => GetPaged(pageIndex, pageSize, sortBy, isDesc), cancellationToken);
+            return await Task.Run(() => GetPaged(pageIndex, pageSize, sortBy, where, isDesc), cancellationToken);
         }
-
-        public Task<IEnumerable<TEntity>> GetPagedAsync<TProperty>(int pageIndex, int pageSize, Func<TEntity, TProperty> sortBy, Expression<Func<TEntity, bool>> where, bool isDesc = false, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            return Task.Run(() => GetPaged(pageIndex, pageSize, sortBy, where, isDesc), cancellationToken);
-        } 
         #endregion
 
         #region Updata
@@ -181,7 +181,9 @@ namespace SyZero.Infrastructure.EfRepository
         public Task<long> UpdateAsync(IEnumerable<TEntity> entitys, CancellationToken cancellationToken = default(CancellationToken))
         {
             throw new NotImplementedException();
-        } 
+        }
+
+     
         #endregion
     }
 }

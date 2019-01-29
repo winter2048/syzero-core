@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 using System.Text;
 using SyZero.Domain.Model;
 
@@ -10,6 +11,8 @@ namespace SyZero.Domain.Interface
     {
         #region Mongo代码
         //TODU
+    
+
         #endregion
     }
 }
