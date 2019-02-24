@@ -1,6 +1,6 @@
 # SYZERO
 SYZERO ( Asp.net core + DDD )
-目前只实现了EF仓储 
+目前实现了EF仓储 / MongoDB仓储 
 # Files
  - doc
  - src
