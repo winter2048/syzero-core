@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>SyZero.BlogAPI</name>
+    </assembly>
+    <members>
+        <member name="P:SyZero.BlogAPI.ResultJson.code">
+            <summary>
+            401未认证 200正常  404null
+            </summary>
+        </member>
+        <member name="P:SyZero.BlogAPI.ResultJson.msg">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:SyZero.BlogAPI.ResultJson.total">
+            <summary>
+            总数
+            </summary>
+        </member>
+        <member name="P:SyZero.BlogAPI.ResultJson.data">
+            <summary>
+            数据
+            </summary>
+        </member>
+    </members>
+</doc>

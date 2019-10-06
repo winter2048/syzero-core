@@ -1,9 +1,0 @@
-F:\项目\SYZERO\src\SyZero.Infrastructure.Mongo\bin\Debug\netcoreapp2.1\SyZero.Infrastructure.Mongo.deps.json
-F:\项目\SYZERO\src\SyZero.Infrastructure.Mongo\bin\Debug\netcoreapp2.1\SyZero.Infrastructure.Mongo.dll
-F:\项目\SYZERO\src\SyZero.Infrastructure.Mongo\obj\Debug\netcoreapp2.1\SyZero.Infrastructure.Mongo.csprojAssemblyReference.cache
-F:\项目\SYZERO\src\SyZero.Infrastructure.Mongo\obj\Debug\netcoreapp2.1\SyZero.Infrastructure.Mongo.csproj.CoreCompileInputs.cache
-F:\项目\SYZERO\src\SyZero.Infrastructure.Mongo\obj\Debug\netcoreapp2.1\SyZero.Infrastructure.Mongo.AssemblyInfoInputs.cache
-F:\项目\SYZERO\src\SyZero.Infrastructure.Mongo\obj\Debug\netcoreapp2.1\SyZero.Infrastructure.Mongo.AssemblyInfo.cs
-F:\项目\SYZERO\src\SyZero.Infrastructure.Mongo\bin\Debug\netcoreapp2.1\SyZero.Infrastructure.Mongo.pdb
-F:\项目\SYZERO\src\SyZero.Infrastructure.Mongo\obj\Debug\netcoreapp2.1\SyZero.Infrastructure.Mongo.dll
-F:\项目\SYZERO\src\SyZero.Infrastructure.Mongo\obj\Debug\netcoreapp2.1\SyZero.Infrastructure.Mongo.pdb

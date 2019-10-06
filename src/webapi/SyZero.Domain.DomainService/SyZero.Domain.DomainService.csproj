@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.1</TargetFramework>
+    <AssemblyName>SyZero.Domain.DomainService</AssemblyName>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="Service\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\SyZero.Domain.Model\SyZero.Domain.Entities.csproj" />
+  </ItemGroup>
+
+</Project>

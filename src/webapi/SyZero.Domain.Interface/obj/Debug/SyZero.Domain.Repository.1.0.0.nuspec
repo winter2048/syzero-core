@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
+  <metadata>
+    <id>SyZero.Domain.Repository</id>
+    <version>1.0.0</version>
+    <authors>SyZero.Domain.Repository</authors>
+    <owners>SyZero.Domain.Repository</owners>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Package Description</description>
+    <dependencies>
+      <group targetFramework=".NETCoreApp2.1">
+        <dependency id="SyZero.Domain.Model" version="1.0.0" exclude="Build,Analyzers" />
+      </group>
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="E:\Project\SYZERO\src\webapi\SyZero.Domain.Interface\bin\Debug\netcoreapp2.1\SyZero.Domain.Repository.dll" target="lib\netcoreapp2.1\SyZero.Domain.Repository.dll" />
+  </files>
+</package>
