@@ -31,10 +31,9 @@
   <ItemGroup>
     <ProjectReference Include="..\SyZero.Application\SyZero.Application.csproj" />
     <ProjectReference Include="..\SyZero.Common\SyZero.Common.csproj" />
-    <ProjectReference Include="..\SyZero.Domain.DomainService\SyZero.Domain.DomainService.csproj" />
-    <ProjectReference Include="..\SyZero.Domain.Interface\SyZero.Domain.Repository.csproj" />
-    <ProjectReference Include="..\SyZero.Infrastructure.EfRepository\SyZero.EntityFrameworkCore.csproj" />
-    <ProjectReference Include="..\SyZero.Infrastructure.MongoRepository\SyZero.MongoDB.csproj" />
+    <ProjectReference Include="..\SyZero.EntityFrameworkCore\SyZero.EntityFrameworkCore.csproj" />
+    <ProjectReference Include="..\SyZero.MongoDB\SyZero.MongoDB.csproj" />
+    <ProjectReference Include="..\SyZero\SyZero.csproj" />
   </ItemGroup>
 
   <ItemGroup>

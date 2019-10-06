@@ -11,8 +11,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\SyZero.Common\SyZero.Common.csproj" />
-    <ProjectReference Include="..\SyZero.Domain.Interface\SyZero.Domain.Repository.csproj" />
-    <ProjectReference Include="..\SyZero.Domain.Model\SyZero.Domain.Entities.csproj" />
   </ItemGroup>
 
 </Project>

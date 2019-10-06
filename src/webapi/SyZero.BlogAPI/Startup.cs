@@ -71,9 +71,9 @@ namespace SyZero.BlogAPI
 
             //模块注册
             //使用EF仓储
-            builder.RegisterModule(new AutoFacEFModule(Configuration.GetConnectionString("sqlConnection")));
+            builder.RegisterModule(new EntityFrameworkModule());
             //使用Mongodb仓储
-            builder.RegisterModule(new AutoFacMongoModule(Configuration.GetSection("MongoConnection")));
+            builder.RegisterModule(new MongoDBModule());
             //注入Application程序集
             builder.RegisterModule(new AutoFacApplicationModule());
             //注入DomainService程序集

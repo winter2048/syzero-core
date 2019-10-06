@@ -8,8 +8,8 @@ namespace SyZero.Log4Net
 {
     public class Logger : ILogger
     {
-        private static ILog logger;
-        static Logger()
+        private ILog logger;
+        public Logger()
         {
             if (logger == null)
             {
