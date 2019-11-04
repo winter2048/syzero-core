@@ -19,17 +19,13 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Autofac.Configuration" Version="4.1.0" />
-    <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="4.3.1" />
     <PackageReference Include="JWT" Version="5.0.1" />
-    <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.4.10" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.1.9" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="4.0.1" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\SyZero.Application\SyZero.Application.csproj" />
     <ProjectReference Include="..\SyZero.Common\SyZero.Common.csproj" />
     <ProjectReference Include="..\SyZero.EntityFrameworkCore\SyZero.EntityFrameworkCore.csproj" />
     <ProjectReference Include="..\SyZero.MongoDB\SyZero.MongoDB.csproj" />
