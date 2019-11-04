@@ -19,15 +19,17 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SyZero.EntityFrameworkCore"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SyZero.MongoDB", "SyZero.MongoDB\SyZero.MongoDB.csproj", "{8EEBA0F0-0BAD-4599-AAA3-1E0411FD1DA5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Example.Web", "Example.Web\Example.Web.csproj", "{217F39D6-3519-44B6-A9A4-821E3F4F541E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Example.Web", "Example.Web\Example.Web.csproj", "{217F39D6-3519-44B6-A9A4-821E3F4F541E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Example.Core", "Example.Core\Example.Core.csproj", "{CBAB1AFB-A5D2-406E-A514-0F7AD0E67226}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Example.Core", "Example.Core\Example.Core.csproj", "{CBAB1AFB-A5D2-406E-A514-0F7AD0E67226}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Example.Application", "Example.Application\Example.Application.csproj", "{B28C014E-804E-4591-BE62-4BA795BBEAD7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Example.Application", "Example.Application\Example.Application.csproj", "{B28C014E-804E-4591-BE62-4BA795BBEAD7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Example.Web.Core", "Example.Web.Core\Example.Web.Core.csproj", "{11859642-69AB-4FBF-A7E8-2CB31007B91D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Example.Web.Core", "Example.Web.Core\Example.Web.Core.csproj", "{11859642-69AB-4FBF-A7E8-2CB31007B91D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Example.EntityFrameworkCore", "Example.EntityFrameworkCore\Example.EntityFrameworkCore.csproj", "{5BE06620-FD38-48A0-8643-55BDE3B4F833}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Example.EntityFrameworkCore", "Example.EntityFrameworkCore\Example.EntityFrameworkCore.csproj", "{5BE06620-FD38-48A0-8643-55BDE3B4F833}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SyZero.Web.Common", "SyZero.Web.Common\SyZero.Web.Common.csproj", "{2DE3845F-7FC7-4B94-A2BA-86599E0A9AA1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -79,6 +81,10 @@ Global
 		{5BE06620-FD38-48A0-8643-55BDE3B4F833}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5BE06620-FD38-48A0-8643-55BDE3B4F833}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5BE06620-FD38-48A0-8643-55BDE3B4F833}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2DE3845F-7FC7-4B94-A2BA-86599E0A9AA1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2DE3845F-7FC7-4B94-A2BA-86599E0A9AA1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2DE3845F-7FC7-4B94-A2BA-86599E0A9AA1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2DE3845F-7FC7-4B94-A2BA-86599E0A9AA1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -95,6 +101,7 @@ Global
 		{B28C014E-804E-4591-BE62-4BA795BBEAD7} = {831B5347-D82B-47AC-B432-3458FA949DAE}
 		{11859642-69AB-4FBF-A7E8-2CB31007B91D} = {831B5347-D82B-47AC-B432-3458FA949DAE}
 		{5BE06620-FD38-48A0-8643-55BDE3B4F833} = {831B5347-D82B-47AC-B432-3458FA949DAE}
+		{2DE3845F-7FC7-4B94-A2BA-86599E0A9AA1} = {681397FB-C9A6-4FCC-ABC7-E99584206316}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {7668E53B-AA87-498A-A3C0-6B7888DDCEFB}
