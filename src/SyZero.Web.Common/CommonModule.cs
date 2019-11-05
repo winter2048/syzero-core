@@ -12,6 +12,7 @@ namespace SyZero.Web.Common
         {
             builder.RegisterType<JsonSerialize>().As<IJsonSerialize>().SingleInstance();
             builder.RegisterType<XmlSerialize>().As<IXmlSerialize>().SingleInstance();
+            builder.RegisterType<SyEncode>().As<ISyEncode>().SingleInstance();
         }
     }
 }

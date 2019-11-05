@@ -4,11 +4,9 @@ using System.Text;
 
 namespace SyZero.Web.Common
 {
-    public class Encrypt
+   public  enum EncryptType
     {
-
-
-
-
+        DES,
+        AES
     }
 }
