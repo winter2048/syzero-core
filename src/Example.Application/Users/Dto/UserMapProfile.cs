@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Example.Core.Authorization.Users;
 
 namespace Example.Application.Users.Dto
 {

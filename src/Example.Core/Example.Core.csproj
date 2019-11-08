@@ -5,7 +5,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Authorization\Users\" />
+    <ProjectReference Include="..\SyZero.AutoMapper\SyZero.AutoMapper.csproj" />
+    <ProjectReference Include="..\SyZero.EntityFrameworkCore\SyZero.EntityFrameworkCore.csproj" />
   </ItemGroup>
 
 </Project>
