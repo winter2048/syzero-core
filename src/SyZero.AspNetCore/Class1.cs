@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Example.Web.Core
+namespace SyZero.AspNetCore
 {
     public class Class1
     {
