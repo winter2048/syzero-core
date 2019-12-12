@@ -5,6 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\SyZero.Web.Common\SyZero.Web.Common.csproj" />
     <ProjectReference Include="..\SyZero\SyZero.csproj" />
   </ItemGroup>
 
