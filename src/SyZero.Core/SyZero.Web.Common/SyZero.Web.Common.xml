@@ -1,0 +1,1821 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>SyZero.Web.Common</name>
+    </assembly>
+    <members>
+        <member name="T:SyZero.Web.Common.LongToStrConverter">
+            <summary>
+            Long转Str
+            </summary>
+        </member>
+        <member name="T:SyZero.Web.Common.AESEncrypt">
+            <summary> 
+            加密
+            </summary> 
+        </member>
+        <member name="T:SyZero.Web.Common.DESEncrypt">
+            <summary>
+            DES加密/解密类。
+            </summary>
+        </member>
+        <member name="M:SyZero.Web.Common.DESEncrypt.Encrypt(System.String,System.String)">
+            <summary> 
+            加密数据 
+            </summary> 
+            <param name="Text"></param> 
+            <param name="sKey"></param> 
+            <returns></returns> 
+        </member>
+        <member name="M:SyZero.Web.Common.DESEncrypt.Decrypt(System.String,System.String)">
+            <summary> 
+            解密数据 
+            </summary> 
+            <param name="Text"></param> 
+            <param name="sKey"></param> 
+            <returns></returns> 
+        </member>
+        <member name="M:SyZero.Web.Common.IEncrypt.Encrypt(System.String,System.String)">
+            <summary>
+            加密
+            </summary>
+            <param name="Text">内容</param>
+            <param name="sKey">密匙</param>
+            <returns></returns>
+        </member>
+        <member name="M:SyZero.Web.Common.IEncrypt.Decrypt(System.String,System.String)">
+            <summary>
+            解密
+            </summary>
+            <param name="Text">内容</param>
+            <param name="sKey">密匙</param>
+            <returns></returns>
+        </member>
+        <member name="M:SyZero.Web.Common.ISyEncode.Encrypt(System.String,System.String,SyZero.Web.Common.EncryptType)">
+            <summary>
+            加密
+            </summary>
+            <param name="Text">内容</param>
+            <param name="sKey">密匙</param>
+            <returns></returns>
+        </member>
+        <member name="M:SyZero.Web.Common.ISyEncode.Decrypt(System.String,System.String,SyZero.Web.Common.EncryptType)">
+            <summary>
+            解密
+            </summary>
+            <param name="Text">内容</param>
+            <param name="sKey">密匙</param>
+            <returns></returns>
+        </member>
+        <member name="M:SyZero.Web.Common.ISyEncode.Get32MD5One(System.String)">
+            <summary>
+            MD5加密 32位
+            </summary>
+            <param name="Text">内容</param>
+            <returns></returns>
+        </member>
+        <member name="M:SyZero.Web.Common.ISyEncode.Get16MD5One(System.String)">
+            <summary>
+            MD5加密 16位
+            </summary>
+            <param name="Text">内容</param>
+            <returns></returns>
+        </member>
+        <member name="M:SyZero.Web.Common.ISyEncode.DecryptForWeChatApplet(System.String,System.String,System.String)">
+            <summary>
+            微信小程序 开放数据解密
+            AES解密（Base64）
+            </summary>
+            <param name="encryptedData">已加密的数据</param>
+            <param name="sessionKey">解密密钥</param>
+            <param name="iv">IV偏移量</param>
+            <returns></returns>
+        </member>
+        <member name="T:SyZero.Web.Common.MD5Encrypt">
+            <summary>
+            此类获取md5加密值均为大写，如果要获取小写：MD5Comm.Get32MD5One(xx).ToLower();或完善此类。
+            </summary>
+        </member>
+        <member name="M:SyZero.Web.Common.MD5Encrypt.Get32MD5One(System.String)">
+            <summary>
+            此代码示例通过创建哈希字符串适用于任何 MD5 哈希函数 （在任何平台） 上创建 32 个字符的十六进制格式哈希字符串
+            官网案例改编
+            </summary>
+            <param name="source"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SyZero.Web.Common.MD5Encrypt.Get16MD5One(System.String)">
+            <summary>
+            获取16位md5加密
+            </summary>
+            <param name="source"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SyZero.Web.Common.SyEncode.DecryptByAesBytes(System.Byte[],System.Byte[],System.Byte[],System.Security.Cryptography.CipherMode,System.Security.Cryptography.PaddingMode)">
+            <summary>
+            AES解密
+            </summary>
+            <param name="decryptedBytes">待解密的字节数组</param>
+            <param name="keyBytes">解密密钥字节数组</param>
+            <param name="ivBytes">IV初始化向量字节数组</param>
+            <param name="cipher">运算模式</param>
+            <param name="padding">填充模式</param>
+            <returns></returns>
+        </member>
+        <member name="M:SyZero.Web.Common.AliasMethod.Initialization(System.Collections.Generic.List{System.Double})">
+            <summary>
+            初始化采样
+            </summary>
+            <param name="probabilities"></param>
+        </member>
+        <member name="M:SyZero.Web.Common.AliasMethod.Next">
+            <summary>
+            获取随机采样
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:SyZero.Web.Common.AliyunOssHelper.UpLoadSingleFile(Microsoft.AspNetCore.Http.IFormFile,System.String,System.String)">
+            <summary>
+            单文件上传，非断点上传
+            </summary>
+            <param name="file">上传文件对象</param>
+            <param name="bucketName">aliyunoss创建的bucketName，一个项目一个bucket</param>
+            <returns></returns>
+        </member>
+        <member name="M:SyZero.Web.Common.AliyunOssHelper.UpLoadMultipleFile(Microsoft.AspNetCore.Http.IFormFileCollection,System.String,System.String)">
+            <summary>
+            批量上传文件，非断点上传
+            </summary>
+            <param name="files">上传文件对象集合</param>
+            <param name="bucketName">aliyunoss创建的bucketName，一个项目一个bucket，如果不传值会上传到默认的bucket下</param>
+            <returns></returns>
+        </member>
+        <member name="M:SyZero.Web.Common.AliyunOssHelper.UploadFileToOSS(Microsoft.AspNetCore.Http.IFormFile,System.String,System.String)">
+            <summary>
+            私有方法  上传到本地并且上传到OSS
+            </summary>
+            <param name="file"></param>
+            <param name="bucketName">系统对应的bucketName，如果不传值会上传到默认的bucket下</param>
+            <returns></returns>
+        </member>
+        <member name="M:SyZero.Web.Common.AliyunOssHelper.FilePonit(System.String,System.String,System.String,System.String)">
+            <summary>
+            私有方法，实际实现断点续传方法
+            </summary>
+            <param name="objectName"></param>
+            <param name="localFilename"></param>
+            <param name="checkpointDir"></param>
+            <param name="bucketName"></param>
+        </member>
+        <member name="M:SyZero.Web.Common.AliyunOssHelper.UploadFilePonit(Microsoft.AspNetCore.Http.IFormFile,System.String,System.String)">
+            <summary>
+            单个文件断点续传，上传到aliyun Oss
+            </summary>
+            <param name="file"></param>
+            <param name="bucketName">所对应系统的bucketName</param>
+            <returns></returns>
+        </member>
+        <member name="M:SyZero.Web.Common.AliyunOssHelper.UploadFilePonitToOSS(Microsoft.AspNetCore.Http.IFormFile,System.String,System.String)">
+            <summary>
+            私有方法，断点续传实际实现方法
+            </summary>
+            <param name="file"></param>
+            <param name="bucketName"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SyZero.Web.Common.AliyunOssHelper.UploadMultipleFilePonit(Microsoft.AspNetCore.Http.IFormFileCollection,System.String,System.String)">
+            <summary>
+            批量断点续传，上传到aliyun Oss
+            </summary>
+            <param name="files">上传的文件集合</param>
+            <param name="bucketName">所对应系统的bucketName</param>
+            <returns></returns>
+        </member>
+        <member name="M:SyZero.Web.Common.AliyunOssHelper.DeleteAlyunOSSFile(System.String,System.String)">
+            <summary>
+            删除系统对应的bucketName所对应的OSS文件
+            </summary>
+            <param name="ossPath">存储到oss的文件地址，如： 20181229/20181229155625123.png</param>
+            <param name="bucketName">系统所对应的bucketName，如果不传值会上传到默认的bucket下</param>
+            <returns></returns>
+        </member>
+        <member name="M:SyZero.Web.Common.AliyunOssHelper.GetFileUrl(System.String,System.String)">
+            <summary>
+              获取文件下载地址
+            </summary>
+            <param name="ossPath">存储到oss的文件地址，如： 20181229/20181229155625123.png</param>
+            <param name="bucketName">系统所对应的bucketName</param>
+        </member>
+        <member name="T:SyZero.Web.Common.FileData">
+            <summary>
+            接收返回的信息
+            </summary>
+        </member>
+        <member name="P:SyZero.Web.Common.FileData.Url">
+            <summary>
+            文件在Oss上的http地址
+            </summary>
+        </member>
+        <member name="P:SyZero.Web.Common.FileData.IsSuccess">
+            <summary>
+            是否成功
+            </summary>
+        </member>
+        <member name="P:SyZero.Web.Common.FileData.OssKey">
+            <summary>
+            上传到Oss上的相对路径
+            </summary>
+        </member>
+        <member name="P:SyZero.Web.Common.FileData.LocalFilePath">
+            <summary>
+            本地文件存储地址
+            </summary>
+        </member>
+        <member name="M:SyZero.Web.Common.ResponseProvider.Success(System.String)">
+            <summary>
+                响应消息封装类
+            </summary>
+            <param name="msg">消息内容</param>
+            <returns></returns>
+        </member>
+        <member name="M:SyZero.Web.Common.ResponseProvider.Error(System.String,System.Boolean)">
+            <summary>
+                响应消息封装类
+            </summary>
+            <param name="status">状态:1 -成功 0- 失败</param>
+            <param name="errMsg">消息内容</param>
+            <returns></returns>
+        </member>
+        <member name="M:SyZero.Web.Common.ResponseProvider.Success``1(``0,System.String)">
+            <summary>
+                响应消息封装类
+            </summary>
+            <param name="data">业务数据</param>
+            <param name="msg">消息内容</param>
+            <returns></returns>
+        </member>
+        <member name="M:SyZero.Web.Common.ResponseProvider.Error``1(System.String)">
+            <summary>
+                Http 响应消息封装类
+            </summary>
+            <param name="msg">消息内容</param>
+            <returns></returns>
+        </member>
+        <member name="T:SyZero.Web.Common.ServerResponse">
+            <summary>
+                接口返回值
+            </summary>
+        </member>
+        <member name="P:SyZero.Web.Common.ServerResponse.Status">
+            <summary>
+                状态
+            </summary>
+        </member>
+        <member name="P:SyZero.Web.Common.ServerResponse.Message">
+            <summary>
+                描述信息
+            </summary>
+        </member>
+        <member name="T:SyZero.Web.Common.ServerResponse`1">
+            <summary>
+                响应消息类
+            </summary>
+        </member>
+        <member name="P:SyZero.Web.Common.ServerResponse`1.Data">
+            <summary>
+                业务数据对象
+            </summary>
+        </member>
+        <member name="P:SyZero.Web.Common.HttpResultMessage`1.Entity">
+            <summary>
+            数据集
+            </summary>
+        </member>
+        <member name="M:SyZero.Web.Common.HttpResultMessage`1.Create(System.Boolean,System.String,`0)">
+            <summary>
+            生成自定义服务数据集
+            </summary>
+            <param name="successd">状态值（true:成功 false：失败）</param>
+            <param name="message">返回到客户端的消息</param>
+            <param name="entity">返回到客户端的数据集</param>
+            <returns>返回信息结果集</returns>
+        </member>
+        <member name="M:SyZero.Web.Common.HttpResultMessage`1.Create(System.Boolean,`0)">
+            <summary>
+            生成自定义服务数据集
+            </summary>
+            <param name="successd">状态值（true:成功 false:失败）</param>
+            <param name="entity">返回到客户端的数据集</param>
+            <returns>返回信息结果集</returns>
+        </member>
+        <member name="M:SyZero.Web.Common.HttpResultMessage.Error(System.String)">
+            <summary>
+            生成错误信息
+            </summary>
+            <param name="message">返回客户端的消息</param>
+            <returns>返回服务数据集</returns>
+        </member>
+        <member name="M:SyZero.Web.Common.HttpResultMessage.Create(System.Boolean,System.String,System.String)">
+            <summary>
+            生成服务器数据集
+            </summary>
+            <param name="success">状态值（true:成功 false：失败）</param>
+            <param name="successMessage">返回客户端的消息</param>
+            <param name="errorMessage">错误信息</param>
+            <returns>返回服务数据集</returns>
+        </member>
+        <member name="M:SyZero.Web.Common.HttpResultMessage.#ctor">
+            <summary>
+            构造服务数据集
+            </summary>
+        </member>
+        <member name="P:SyZero.Web.Common.HttpResultMessage.IsSucceed">
+            <summary>
+            状态值
+            </summary>
+        </member>
+        <member name="P:SyZero.Web.Common.HttpResultMessage.Message">
+             <summary>
+            返回客户端的消息
+             </summary>
+        </member>
+        <member name="P:SyZero.Web.Common.HttpResultMessage.StatusCode">
+            <summary>
+            状态码
+            </summary>
+        </member>
+        <member name="M:SyZero.Web.Common.IAliasMethod.Next">
+            <summary>
+            获取随机采样
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:SyZero.Web.Common.IAliasMethod.Initialization(System.Collections.Generic.List{System.Double})">
+            <summary>
+            初始化
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:SyZero.Web.Common.IPrizeUtil.ReRatePrize(System.Collections.Generic.List{SyZero.Web.Common.PrizeData},System.Int32)">
+            <summary>
+            重新分配权重(所有)
+            </summary>
+            <param name="old"></param>
+            <param name="indextarget"></param>
+            <returns></returns>
+        </member>
+        <member name="P:SyZero.Web.Common.PrizeData.Id">
+            <summary>
+            奖品Id
+            </summary>
+        </member>
+        <member name="P:SyZero.Web.Common.PrizeData.PrizeLevel">
+            <summary>
+            奖品等级
+            </summary>
+        </member>
+        <member name="P:SyZero.Web.Common.PrizeData.Quantity">
+            <summary>
+            数量
+            </summary>
+        </member>
+        <member name="P:SyZero.Web.Common.PrizeData.Probability">
+            <summary>
+            概率
+            </summary>
+        </member>
+        <member name="M:SyZero.Web.Common.PrizeUtil.ReRateValue(System.Double,System.Collections.Generic.List{System.Double},System.Double,System.Double)">
+            <summary>
+            重分配权重(当前)
+            </summary>
+            <param name="thisQuantity"></param>
+            <param name="allQuantity"></param>
+            <param name="separateVaule"></param>
+            <param name="targetRate"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SyZero.Web.Common.PrizeUtil.GetSeparateVaule(System.Collections.Generic.List{System.Double})">
+            <summary>
+            低权重降权
+            </summary>
+            <param name="allQuantity"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SyZero.Web.Common.PrizeUtil.GetValueForAll(System.Double,System.Collections.Generic.List{System.Double})">
+            <summary>
+            获取权重比(所有)
+            </summary>
+            <param name="thisQuantity"></param>
+            <param name="allQuantity"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SyZero.Web.Common.PrizeUtil.GetValueForMax(System.Double,System.Collections.Generic.List{System.Double})">
+            <summary>
+            获取权重比(最大)
+            </summary>
+            <param name="thisQuantity"></param>
+            <param name="allQuantity"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SyZero.Web.Common.RestHelper.Execute(System.String,RestSharp.RestRequest)">
+            <summary>
+            通过传入的请求信息访问服务端，并返回结果对象
+            </summary>
+            <param name="baseUrl"></param>
+            <param name="request">外部设定的请求</param>
+            <returns>返回Jobject通用对象</returns>
+        </member>
+        <member name="M:SyZero.Web.Common.RestHelper.Execute``1(System.String,RestSharp.RestRequest)">
+            <summary>
+            通过传入的请求信息访问服务端，并返回T
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="baseUrl"></param>
+            <param name="request"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SyZero.Web.Common.RestHelper.PostJson(System.String,System.String,System.Object)">
+            <summary>
+            PostJson数据 无返回值
+            </summary>
+            <param name="baseUrl"></param>
+            <param name="resource"></param>
+            <param name="postData"></param>
+        </member>
+        <member name="M:SyZero.Web.Common.RestHelper.PostJson``1(System.String,System.String,System.Object,System.String)">
+            <summary>
+            PostJson数据，返回值T
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:SyZero.Web.Common.AccessJsonResult">
+            <summary>
+            AccessJsonResult接口结果
+            </summary>
+        </member>
+        <member name="P:SyZero.Web.Common.AccessJsonResult.openid">
+            <summary>
+            用户唯一标识
+            </summary>
+        </member>
+        <member name="P:SyZero.Web.Common.AccessJsonResult.access_token">
+            <summary>
+            会话密钥
+            </summary>
+        </member>
+        <member name="P:SyZero.Web.Common.AccessJsonResult.unionid">
+            <summary>
+            用户在开放平台的唯一标识符。本字段在满足一定条件的情况下才返回。具体参看：https://mp.weixin.qq.com/debug/wxadoc/dev/api/uinionID.html
+            </summary>
+        </member>
+        <member name="T:SyZero.Web.Common.JsCode2JsonResult">
+            <summary>
+            JsCode2Json接口结果
+            </summary>
+        </member>
+        <member name="P:SyZero.Web.Common.JsCode2JsonResult.openid">
+            <summary>
+            用户唯一标识
+            </summary>
+        </member>
+        <member name="P:SyZero.Web.Common.JsCode2JsonResult.session_key">
+            <summary>
+            会话密钥
+            </summary>
+        </member>
+        <member name="P:SyZero.Web.Common.JsCode2JsonResult.unionid">
+            <summary>
+            用户在开放平台的唯一标识符。本字段在满足一定条件的情况下才返回。具体参看：https://mp.weixin.qq.com/debug/wxadoc/dev/api/uinionID.html
+            </summary>
+        </member>
+        <member name="P:SyZero.Web.Common.WxAccessToken.access_token">
+            <summary>
+            微信返回的小程序凭证
+            </summary>
+        </member>
+        <member name="P:SyZero.Web.Common.WxAccessToken.expires_in">
+            <summary>
+            返回代码
+            </summary>
+        </member>
+        <member name="P:SyZero.Web.Common.WxacodeInfoInput.scene">
+            <summary>
+            自定义参数
+            </summary>
+        </member>
+        <member name="P:SyZero.Web.Common.WxacodeInfoInput.page">
+            <summary>
+            页面地址
+            </summary>
+        </member>
+        <member name="P:SyZero.Web.Common.WxacodeInfoInput.width">
+            <summary>
+            图片宽度
+            </summary>
+        </member>
+        <member name="P:SyZero.Web.Common.WxacodeReturn.errcode">
+            <summary>
+            错误码
+            </summary>
+        </member>
+        <member name="P:SyZero.Web.Common.WxacodeReturn.errmsg">
+            <summary>
+            错误信息
+            </summary>
+        </member>
+        <member name="P:SyZero.Web.Common.WxacodeReturn.ImgBase64">
+            <summary>
+            图片地址
+            </summary>
+        </member>
+        <member name="P:SyZero.Web.Common.WxDailyVisitTrendDto.ref_date">
+            <summary>
+            日期，格式为 yyyymmdd
+            </summary>
+        </member>
+        <member name="P:SyZero.Web.Common.WxDailyVisitTrendDto.session_cnt">
+            <summary>
+            打开次数
+            </summary>
+        </member>
+        <member name="P:SyZero.Web.Common.WxDailyVisitTrendDto.visit_pv">
+            <summary>
+            访问次数
+            </summary>
+        </member>
+        <member name="P:SyZero.Web.Common.WxDailyVisitTrendDto.visit_uv">
+            <summary>
+            访问人数
+            </summary>
+        </member>
+        <member name="P:SyZero.Web.Common.WxDailyVisitTrendDto.visit_uv_new">
+            <summary>
+            新用户数
+            </summary>
+        </member>
+        <member name="P:SyZero.Web.Common.WxDailyVisitTrendDto.stay_time_uv">
+            <summary>
+            	人均停留时长 (浮点型，单位：秒)
+            </summary>
+        </member>
+        <member name="P:SyZero.Web.Common.WxDailyVisitTrendDto.stay_time_session">
+            <summary>
+            次均停留时长 (浮点型，单位：秒)
+            </summary>
+        </member>
+        <member name="P:SyZero.Web.Common.WxDailyVisitTrendDto.visit_depth">
+            <summary>
+            平均访问深度 (浮点型)
+            </summary>
+        </member>
+        <member name="T:SyZero.Web.Common.WxLoginResultDto">
+            <summary>
+            微信登录后需要返回的Dto
+            </summary>
+        </member>
+        <member name="P:SyZero.Web.Common.WxLoginResultDto.openid">
+            <summary>
+            用户唯一标识
+            </summary>
+        </member>
+        <member name="P:SyZero.Web.Common.WxLoginResultDto.session_key">
+            <summary>
+            会话密钥
+            </summary>
+        </member>
+        <member name="P:SyZero.Web.Common.WxLoginResultDto.unionid">
+            <summary>
+            用户在开放平台的唯一标识符。本字段在满足一定条件的情况下才返回。具体参看：https://mp.weixin.qq.com/debug/wxadoc/dev/api/uinionID.html
+            </summary>
+        </member>
+        <member name="P:SyZero.Web.Common.WxOpenJsonResult.errmsg">
+            <summary>
+            返回结果信息
+            </summary>
+        </member>
+        <member name="T:SyZero.Web.Common.WxOpenReturnCode">
+            <summary>
+            公众号返回码（JSON）
+            应该更名为ReturnCode_MP，但为减少项目中的修改，此处依旧用ReturnCode命名
+            </summary>
+        </member>
+        <member name="F:SyZero.Web.Common.WxOpenReturnCode.SDKSettingError">
+            <summary>
+            SDK配置错误
+            </summary>
+        </member>
+        <member name="F:SyZero.Web.Common.WxOpenReturnCode.SystemBusy">
+            <summary>
+            系统繁忙此时请开发者稍候再试
+            </summary>
+        </member>
+        <member name="F:SyZero.Web.Common.WxOpenReturnCode.RequestSuccess">
+            <summary>
+            请求成功
+            </summary>
+        </member>
+        <member name="F:SyZero.Web.Common.WxOpenReturnCode.AccessTokenInValid">
+            <summary>
+            获取access_token时AppSecret错误或者access_token无效
+            </summary>
+        </member>
+        <member name="F:SyZero.Web.Common.WxOpenReturnCode.IvalidCertificateType">
+            <summary>
+            不合法的凭证类型
+            </summary>
+        </member>
+        <member name="F:SyZero.Web.Common.WxOpenReturnCode.不合法的OpenID">
+            <summary>
+            不合法的OpenID
+            </summary>
+        </member>
+        <member name="F:SyZero.Web.Common.WxOpenReturnCode.不合法的媒体文件类型">
+            <summary>
+            不合法的媒体文件类型
+            </summary>
+        </member>
+        <member name="F:SyZero.Web.Common.WxOpenReturnCode.不合法的文件类型">
+            <summary>
+            不合法的文件类型
+            </summary>
+        </member>
+        <member name="F:SyZero.Web.Common.WxOpenReturnCode.不合法的文件大小">
+            <summary>
+            不合法的文件大小
+            </summary>
+        </member>
+        <member name="F:SyZero.Web.Common.WxOpenReturnCode.不合法的媒体文件id">
+            <summary>
+            不合法的媒体文件id
+            </summary>
+        </member>
+        <member name="F:SyZero.Web.Common.WxOpenReturnCode.不合法的消息类型_40008">
+            <summary>
+            不合法的消息类型_40008
+            </summary>
+        </member>
+        <member name="F:SyZero.Web.Common.WxOpenReturnCode.不合法的图片文件大小">
+            <summary>
+            不合法的图片文件大小
+            </summary>
+        </member>
+        <member name="F:SyZero.Web.Common.WxOpenReturnCode.不合法的语音文件大小">
+            <summary>
+            不合法的语音文件大小
+            </summary>
+        </member>
+        <member name="F:SyZero.Web.Common.WxOpenReturnCode.不合法的视频文件大小">
+            <summary>
+            不合法的视频文件大小
+            </summary>
+        </member>
+        <member name="F:SyZero.Web.Common.WxOpenReturnCode.不合法的缩略图文件大小">
+            <summary>
+            不合法的缩略图文件大小
+            </summary>
+        </member>
+        <member name="F:SyZero.Web.Common.WxOpenReturnCode.不合法的APPID">
+            <summary>
+            不合法的APPID
+            </summary>
+        </member>
+        <member name="F:SyZero.Web.Common.WxOpenReturnCode.不合法的access_token">
+            <summary>
+            不合法的access_token
+            </summary>
+        </member>
+        <member name="F:SyZero.Web.Common.WxOpenReturnCode.不合法的菜单类型">
+            <summary>
+            不合法的菜单类型
+            </summary>
+        </member>
+        <member name="F:SyZero.Web.Common.WxOpenReturnCode.不合法的按钮个数1">
+            <summary>
+            不合法的按钮个数1
+            </summary>
+        </member>
+        <member name="F:SyZero.Web.Common.WxOpenReturnCode.不合法的按钮个数2">
+            <summary>
+            不合法的按钮个数2
+            </summary>
+        </member>
+        <member name="F:SyZero.Web.Common.WxOpenReturnCode.不合法的按钮名字长度">
+            <summary>
+            不合法的按钮名字长度
+            </summary>
+        </member>
+        <member name="F:SyZero.Web.Common.WxOpenReturnCode.不合法的按钮KEY长度">
+            <summary>
+            不合法的按钮KEY长度
+            </summary>
+        </member>
+        <member name="F:SyZero.Web.Common.WxOpenReturnCode.不合法的按钮URL长度">
+            <summary>
+            不合法的按钮URL长度
+            </summary>
+        </member>
+        <member name="F:SyZero.Web.Common.WxOpenReturnCode.不合法的菜单版本号">
+            <summary>
+            不合法的菜单版本号
+            </summary>
+        </member>
+        <member name="F:SyZero.Web.Common.WxOpenReturnCode.不合法的子菜单级数">
+            <summary>
+            不合法的子菜单级数
+            </summary>
+        </member>
+        <member name="F:SyZero.Web.Common.WxOpenReturnCode.不合法的子菜单按钮个数">
+            <summary>
+            不合法的子菜单按钮个数
+            </summary>
+        </member>
+        <member name="F:SyZero.Web.Common.WxOpenReturnCode.不合法的子菜单按钮类型">
+            <summary>
+            不合法的子菜单按钮类型
+            </summary>
+        </member>
+        <member name="F:SyZero.Web.Common.WxOpenReturnCode.不合法的子菜单按钮名字长度">
+            <summary>
+            不合法的子菜单按钮名字长度
+            </summary>
+        </member>
+        <member name="F:SyZero.Web.Common.WxOpenReturnCode.不合法的子菜单按钮KEY长度">
+            <summary>
+            不合法的子菜单按钮KEY长度
+            </summary>
+        </member>
+        <member name="F:SyZero.Web.Common.WxOpenReturnCode.不合法的子菜单按钮URL长度">
+            <summary>
+            不合法的子菜单按钮URL长度
+            </summary>
+        </member>
+        <member name="F:SyZero.Web.Common.WxOpenReturnCode.不合法的自定义菜单使用用户">
+            <summary>
+            不合法的自定义菜单使用用户
+            </summary>
+        </member>
+        <member name="F:SyZero.Web.Common.WxOpenReturnCode.不合法的oauth_code">
+            <summary>
+            不合法的oauth_code
+            </summary>
+        </member>
+        <member name="F:SyZero.Web.Common.WxOpenReturnCode.不合法的refresh_token">
+            <summary>
+            不合法的refresh_token
+            </summary>
+        </member>
+        <member name="F:SyZero.Web.Common.WxOpenReturnCode.不合法的openid列表">
+            <summary>
+            不合法的openid列表
+            </summary>
+        </member>
+        <member name="F:SyZero.Web.Common.WxOpenReturnCode.不合法的openid列表长度">
+            <summary>
+            不合法的openid列表长度
+            </summary>
+        </member>
+        <member name="F:SyZero.Web.Common.WxOpenReturnCode.不合法的请求字符不能包含uxxxx格式的字符">
+            <summary>
+            不合法的请求字符不能包含uxxxx格式的字符
+            </summary>
+        </member>
+        <member name="F:SyZero.Web.Common.WxOpenReturnCode.不合法的参数">
+            <summary>
+            不合法的参数
+            </summary>
+        </member>
+        <member name="F:SyZero.Web.Common.WxOpenReturnCode.template_id不正确">
+            <summary>
+            template_id不正确
+            </summary>
+        </member>
+        <member name="F:SyZero.Web.Common.WxOpenReturnCode.不合法的请求格式">
+            <summary>
+            不合法的请求格式
+            </summary>
+        </member>
+        <member name="F:SyZero.Web.Common.WxOpenReturnCode.不合法的URL长度">
+            <summary>
+            不合法的请求格式
+            </summary>
+        </member>
+        <member name="F:SyZero.Web.Common.WxOpenReturnCode.不合法的分组id">
+            <summary>
+            不合法的分组id
+            </summary>
+        </member>
+        <member name="F:SyZero.Web.Common.WxOpenReturnCode.分组名字不合法">
+            <summary>
+            分组名字不合法
+            </summary>
+        </member>
+        <member name="F:SyZero.Web.Common.WxOpenReturnCode.appsecret不正确">
+            <summary>
+            appsecret不正确
+            </summary>
+        </member>
+        <member name="F:SyZero.Web.Common.WxOpenReturnCode.小程序Appid不存在">
+            <summary>
+            小程序Appid不存在
+            </summary>
+        </member>
+        <member name="F:SyZero.Web.Common.WxOpenReturnCode.缺少access_token参数">
+            <summary>
+            缺少access_token参数
+            </summary>
+        </member>
+        <member name="F:SyZero.Web.Common.WxOpenReturnCode.缺少appid参数">
+            <summary>
+            缺少appid参数
+            </summary>
+        </member>
+        <member name="F:SyZero.Web.Common.WxOpenReturnCode.缺少refresh_token参数">
+            <summary>
+            缺少refresh_token参数
+            </summary>
+        </member>
+        <member name="F:SyZero.Web.Common.WxOpenReturnCode.缺少secret参数">
+            <summary>
+            缺少secret参数
+            </summary>
+        </member>
+        <member name="F:SyZero.Web.Common.WxOpenReturnCode.缺少多媒体文件数据">
+            <summary>
+            缺少多媒体文件数据
+            </summary>
+        </member>
+        <member name="F:SyZero.Web.Common.WxOpenReturnCode.缺少media_id参数">
+            <summary>
+            缺少media_id参数
+            </summary>
+        </member>
+        <member name="F:SyZero.Web.Common.WxOpenReturnCode.缺少子菜单数据">
+            <summary>
+            缺少子菜单数据
+            </summary>
+        </member>
+        <member name="F:SyZero.Web.Common.WxOpenReturnCode.缺少oauth_code">
+            <summary>
+            缺少oauth_code
+            </summary>
+        </member>
+        <member name="F:SyZero.Web.Common.WxOpenReturnCode.缺少openid">
+            <summary>
+            缺少openid
+            </summary>
+        </member>
+        <member name="F:SyZero.Web.Common.WxOpenReturnCode.form_id不正确_或者过期">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:SyZero.Web.Common.WxOpenReturnCode.form_id已被使用">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:SyZero.Web.Common.WxOpenReturnCode.page不正确">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:SyZero.Web.Common.WxOpenReturnCode.access_token超时">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:SyZero.Web.Common.WxOpenReturnCode.refresh_token超时">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:SyZero.Web.Common.WxOpenReturnCode.oauth_code超时">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:SyZero.Web.Common.WxOpenReturnCode.需要GET请求">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:SyZero.Web.Common.WxOpenReturnCode.需要POST请求">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:SyZero.Web.Common.WxOpenReturnCode.需要HTTPS请求">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:SyZero.Web.Common.WxOpenReturnCode.需要接收者关注">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:SyZero.Web.Common.WxOpenReturnCode.需要好友关系">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:SyZero.Web.Common.WxOpenReturnCode.多媒体文件为空">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:SyZero.Web.Common.WxOpenReturnCode.POST的数据包为空">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:SyZero.Web.Common.WxOpenReturnCode.图文消息内容为空">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:SyZero.Web.Common.WxOpenReturnCode.文本消息内容为空">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:SyZero.Web.Common.WxOpenReturnCode.多媒体文件大小超过限制">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:SyZero.Web.Common.WxOpenReturnCode.消息内容超过限制">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:SyZero.Web.Common.WxOpenReturnCode.标题字段超过限制">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:SyZero.Web.Common.WxOpenReturnCode.描述字段超过限制">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:SyZero.Web.Common.WxOpenReturnCode.链接字段超过限制">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:SyZero.Web.Common.WxOpenReturnCode.图片链接字段超过限制">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:SyZero.Web.Common.WxOpenReturnCode.语音播放时间超过限制">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:SyZero.Web.Common.WxOpenReturnCode.图文消息超过限制">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:SyZero.Web.Common.WxOpenReturnCode.接口调用超过限制">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:SyZero.Web.Common.WxOpenReturnCode.创建菜单个数超过限制">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:SyZero.Web.Common.WxOpenReturnCode.回复时间超过限制">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:SyZero.Web.Common.WxOpenReturnCode.系统分组不允许修改">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:SyZero.Web.Common.WxOpenReturnCode.分组名字过长">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:SyZero.Web.Common.WxOpenReturnCode.分组数量超过上限">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:SyZero.Web.Common.WxOpenReturnCode.不存在媒体数据">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:SyZero.Web.Common.WxOpenReturnCode.不存在的菜单版本">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:SyZero.Web.Common.WxOpenReturnCode.不存在的菜单数据">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:SyZero.Web.Common.WxOpenReturnCode.解析JSON_XML内容错误">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:SyZero.Web.Common.WxOpenReturnCode.api功能未授权">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:SyZero.Web.Common.WxOpenReturnCode.用户未授权该api">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:SyZero.Web.Common.WxOpenReturnCode.参数错误invalid_parameter">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:SyZero.Web.Common.WxOpenReturnCode.无效客服账号invalid_kf_account">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:SyZero.Web.Common.WxOpenReturnCode.客服帐号已存在kf_account_exsited">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:SyZero.Web.Common.WxOpenReturnCode.客服帐号名长度超过限制">
+            <summary>
+            客服帐号名长度超过限制(仅允许10个英文字符，不包括@及@后的公众号的微信号)(invalid kf_acount length)
+            </summary>
+        </member>
+        <member name="F:SyZero.Web.Common.WxOpenReturnCode.客服帐号名包含非法字符">
+            <summary>
+            客服帐号名包含非法字符(仅允许英文+数字)(illegal character in kf_account)
+            </summary>
+        </member>
+        <member name="F:SyZero.Web.Common.WxOpenReturnCode.客服帐号个数超过限制">
+            <summary>
+             	客服帐号个数超过限制(10个客服账号)(kf_account count exceeded)
+            </summary>
+        </member>
+        <member name="F:SyZero.Web.Common.WxOpenReturnCode.无效头像文件类型invalid_file_type">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:SyZero.Web.Common.WxOpenReturnCode.系统错误system_error">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:SyZero.Web.Common.WxOpenReturnCode.日期格式错误">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:SyZero.Web.Common.WxOpenReturnCode.日期范围错误">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:SyZero.Web.Common.WxOpenReturnCode.发送消息失败_该用户已被加入黑名单_无法向此发送消息">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:SyZero.Web.Common.WxOpenReturnCode.发送消息失败_对方关闭了接收消息">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:SyZero.Web.Common.WxOpenReturnCode.对方不是粉丝">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:SyZero.Web.Common.WxOpenReturnCode.没有留言权限">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:SyZero.Web.Common.WxOpenReturnCode.该图文不存在">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:SyZero.Web.Common.WxOpenReturnCode.文章存在敏感信息">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:SyZero.Web.Common.WxOpenReturnCode.精选评论数已达上限">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:SyZero.Web.Common.WxOpenReturnCode.已被用户删除_无法精选">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:SyZero.Web.Common.WxOpenReturnCode.已经回复过了">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:SyZero.Web.Common.WxOpenReturnCode.回复超过长度限制或为0">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:SyZero.Web.Common.WxOpenReturnCode.该评论不存在">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:SyZero.Web.Common.WxOpenReturnCode.获取评论数目不合法">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:SyZero.Web.Common.WxOpenReturnCode.该公众号_小程序已经绑定了开放平台帐号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:SyZero.Web.Common.WxOpenReturnCode.该主体已有任务执行中_距上次任务24h后再试">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:SyZero.Web.Common.WxOpenReturnCode.内部错误">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:SyZero.Web.Common.WxOpenReturnCode.无效微信号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:SyZero.Web.Common.WxOpenReturnCode.法人姓名与微信号不一致">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:SyZero.Web.Common.WxOpenReturnCode.企业代码类型无效_请选择正确类型填写">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:SyZero.Web.Common.WxOpenReturnCode.未找到该任务">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:SyZero.Web.Common.WxOpenReturnCode.待法人人脸核身校验">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:SyZero.Web.Common.WxOpenReturnCode.法人_企业信息一致性校验中">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:SyZero.Web.Common.WxOpenReturnCode.缺少参数">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:SyZero.Web.Common.WxOpenReturnCode.第三方权限集不全_补全权限集全网发布后生效">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:SyZero.Web.Common.WxOpenReturnCode.已下发的模板消息法人并未确认且已超时_24h_未进行身份证校验">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:SyZero.Web.Common.WxOpenReturnCode.已下发的模板消息法人并未确认且已超时_24h_未进行人脸识别校验">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:SyZero.Web.Common.WxOpenReturnCode.已下发的模板消息法人并未确认且已超时_24h">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:SyZero.Web.Common.WxOpenReturnCode.工商数据返回_企业已注销">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:SyZero.Web.Common.WxOpenReturnCode.工商数据返回_企业不存在或企业信息未更新">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:SyZero.Web.Common.WxOpenReturnCode.工商数据返回_企业法定代表人姓名不一致">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:SyZero.Web.Common.WxOpenReturnCode.工商数据返回_企业法定代表人身份证号码不一致">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:SyZero.Web.Common.WxOpenReturnCode.法定代表人身份证号码_工商数据未更新_请5_15个工作日之后尝试">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:SyZero.Web.Common.WxOpenReturnCode.工商数据返回_企业信息或法定代表人信息不一致">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:SyZero.Web.Common.WxOpenReturnCode.名称格式不合法">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:SyZero.Web.Common.WxOpenReturnCode.名称检测命中频率限制">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:SyZero.Web.Common.WxOpenReturnCode.禁止使用该名称">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:SyZero.Web.Common.WxOpenReturnCode.公众号_名称与已有公众号名称重复_小程序_该名称与已有小程序名称重复">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:SyZero.Web.Common.WxOpenReturnCode.公众号_公众号已有_名称A_时_需与该帐号相同主体才可申请_名称A_小程序_小程序已有_名称A_时_需与该帐号相同主体才可申请_名称A_">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:SyZero.Web.Common.WxOpenReturnCode.公众号_该名称与已有小程序名称重复_需与该小程序帐号相同主体才可申请_小程序_该名称与已有公众号名称重复_需与该公众号帐号相同主体才可申请">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:SyZero.Web.Common.WxOpenReturnCode.公众号_小程序已有_名称A_时_需与该帐号相同主体才可申请_名称A_小程序_公众号已有_名称A_时_需与该帐号相同主体才可申请_名称A">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:SyZero.Web.Common.WxOpenReturnCode.名称命中微信号">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:SyZero.Web.Common.WxOpenReturnCode.名称在保护期内">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:SyZero.Web.Common.WxOpenReturnCode.不是由第三方代小程序进行调用">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:SyZero.Web.Common.WxOpenReturnCode.不存在第三方的已经提交的代码">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:SyZero.Web.Common.WxOpenReturnCode.标签格式错误">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:SyZero.Web.Common.WxOpenReturnCode.页面路径错误">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:SyZero.Web.Common.WxOpenReturnCode.类目填写错误">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:SyZero.Web.Common.WxOpenReturnCode.已经有正在审核的版本">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:SyZero.Web.Common.WxOpenReturnCode.item_list有项目为空">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:SyZero.Web.Common.WxOpenReturnCode.标题填写错误">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:SyZero.Web.Common.WxOpenReturnCode.无效的审核id">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:SyZero.Web.Common.WxOpenReturnCode.没有审核版本">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:SyZero.Web.Common.WxOpenReturnCode.审核状态未满足发布">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:SyZero.Web.Common.WxOpenReturnCode.状态不可变">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:SyZero.Web.Common.WxOpenReturnCode.action非法">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:SyZero.Web.Common.WxOpenReturnCode.审核列表填写的项目数不在1到5以内">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:SyZero.Web.Common.WxOpenReturnCode.小程序没有线上版本_不能进行灰度">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:SyZero.Web.Common.WxOpenReturnCode.小程序提交的审核未审核通过">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:SyZero.Web.Common.WxOpenReturnCode.无效的发布比例">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:SyZero.Web.Common.WxOpenReturnCode.当前的发布比例需要比之前设置的高">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:SyZero.Web.Common.WxOpenReturnCode.小程序还未设置昵称_头像_简介_请先设置完后再重新提交">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:SyZero.Web.Common.WxOpenReturnCode.现网已经在灰度发布_不能进行版本回退">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:SyZero.Web.Common.WxOpenReturnCode.该版本不能回退_可能的原因_1_无上一个线上版用于回退_2_此版本为已回退版本_不能回退_3_此版本为回退功能上线之前的版本_不能回退">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:SyZero.Web.Common.WxOpenReturnCode.版本输入错误">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:SyZero.Web.Common.WxOpenReturnCode.签名错误">
+            <summary>
+            小程序为“签名错误”。对应公众号： 87009, “errmsg” : “reply is not exists” //该回复不存在
+            </summary>
+        </member>
+        <member name="F:SyZero.Web.Common.WxOpenReturnCode.内容含有违法违规内容">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:SyZero.Web.Common.WxOpenReturnCode.该经营资质已添加_请勿重复添加">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:SyZero.Web.Common.WxOpenReturnCode.附近地点添加数量达到上线_无法继续添加">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:SyZero.Web.Common.WxOpenReturnCode.地点已被其它小程序占用">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:SyZero.Web.Common.WxOpenReturnCode.附近功能被封禁">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:SyZero.Web.Common.WxOpenReturnCode.地点正在审核中">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:SyZero.Web.Common.WxOpenReturnCode.地点正在展示小程序">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:SyZero.Web.Common.WxOpenReturnCode.地点审核失败">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:SyZero.Web.Common.WxOpenReturnCode.程序未展示在该地点">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:SyZero.Web.Common.WxOpenReturnCode.小程序未上架或不可见">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:SyZero.Web.Common.WxOpenReturnCode.个人类型小程序不可用">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:SyZero.Web.Common.WxOpenReturnCode.管理员手机登记数量已超过上限">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:SyZero.Web.Common.WxOpenReturnCode.该微信号已绑定5个管理员">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:SyZero.Web.Common.WxOpenReturnCode.管理员身份证已登记过5次">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:SyZero.Web.Common.WxOpenReturnCode.该主体登记数量已超过上限">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:SyZero.Web.Common.WxOpenReturnCode.商家名称已被占用">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:SyZero.Web.Common.WxOpenReturnCode.不能使用该名称">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:SyZero.Web.Common.WxOpenReturnCode.该名称在侵权投诉保护期">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:SyZero.Web.Common.WxOpenReturnCode.名称包含违规内容或微信等保留字">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:SyZero.Web.Common.WxOpenReturnCode.商家名称在改名15天保护期内">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:SyZero.Web.Common.WxOpenReturnCode.需与该帐号相同主体才可申请">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:SyZero.Web.Common.WxOpenReturnCode.介绍中含有虚假混淆内容">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:SyZero.Web.Common.WxOpenReturnCode.头像或者简介修改达到每个月上限">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:SyZero.Web.Common.WxOpenReturnCode.没有权限">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:SyZero.Web.Common.WxOpenReturnCode.正在审核中_请勿重复提交">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:SyZero.Web.Common.WxOpenReturnCode.请先成功创建门店后再调用">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:SyZero.Web.Common.WxOpenReturnCode.临时mediaid无效">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:SyZero.Web.Common.WxOpenReturnCode.输入参数有误">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:SyZero.Web.Common.WxOpenReturnCode.门店不存在">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:SyZero.Web.Common.WxOpenReturnCode.该门店状态不允许更新">
+            <summary>
+            该门店状态不允许更新
+            </summary>
+        </member>
+        <member name="P:SyZero.Web.Common.WxSubscribeResult.touser">
+            <summary>
+            接受者openId
+            </summary>
+        </member>
+        <member name="P:SyZero.Web.Common.WxSubscribeResult.template_id">
+            <summary>
+            模板Id
+            </summary>
+        </member>
+        <member name="P:SyZero.Web.Common.WxSubscribeResult.data">
+            <summary>
+            模板内容
+            </summary>
+        </member>
+        <member name="T:SyZero.Web.Common.WxTemplateMessage">
+            <summary>
+            微信模板
+            </summary>
+        </member>
+        <member name="P:SyZero.Web.Common.WxTemplateMessage.touser">
+            <summary>
+            接收者openid 必填
+            </summary>
+        </member>
+        <member name="P:SyZero.Web.Common.WxTemplateMessage.template_id">
+            <summary>
+            模板ID 必填
+            </summary>
+        </member>
+        <member name="P:SyZero.Web.Common.WxTemplateMessage.url">
+            <summary>
+            模板跳转链接（海外帐号没有跳转能力）
+            </summary>
+        </member>
+        <member name="P:SyZero.Web.Common.WxTemplateMessage.miniprogram">
+            <summary>
+            跳小程序所需数据，不需跳小程序可不用传该数据
+            </summary>
+        </member>
+        <member name="P:SyZero.Web.Common.WxTemplateMessage.data">
+            <summary>
+            模板数据 必填
+            </summary>
+        </member>
+        <member name="P:SyZero.Web.Common.Miniprogram.appid">
+            <summary>
+            所需跳转到的小程序appid（该小程序appid必须与发模板消息的公众号是绑定关联关系，暂不支持小游戏）
+            </summary>
+        </member>
+        <member name="P:SyZero.Web.Common.Miniprogram.pagepath">
+            <summary>
+            所需跳转到小程序的具体页面路径，支持带参数,（示例index?foo=bar），要求该小程序已发布，暂不支持小游戏
+            </summary>
+        </member>
+        <member name="P:SyZero.Web.Common.TemplateMessageDataValue.value">
+            <summary>
+            模板内容 必填
+            </summary>
+        </member>
+        <member name="P:SyZero.Web.Common.TemplateMessageDataValue.color">
+            <summary>
+            模板内容字体颜色，不填默认为黑色
+            </summary>
+        </member>
+        <member name="T:SyZero.Web.Common.WxUserInfoResult">
+            <summary>
+            微信用户信息
+            </summary>
+        </member>
+        <member name="P:SyZero.Web.Common.WxUserInfoResult.subscribe">
+            <summary>
+            用户是否订阅该公众号标识，值为0时，代表此用户没有关注该公众号，拉取不到其余信息
+            </summary>
+        </member>
+        <member name="P:SyZero.Web.Common.WxUserInfoResult.openid">
+            <summary>
+            微信OpenId
+            </summary>
+        </member>
+        <member name="P:SyZero.Web.Common.WxUserInfoResult.nickname">
+            <summary>
+            普通用户昵称
+            </summary>
+        </member>
+        <member name="P:SyZero.Web.Common.WxUserInfoResult.sex">
+            <summary>
+            普通用户性别，1为男性，2为女性
+            </summary>
+        </member>
+        <member name="P:SyZero.Web.Common.WxUserInfoResult.province">
+            <summary>
+            普通用户个人资料填写的省份
+            </summary>
+        </member>
+        <member name="P:SyZero.Web.Common.WxUserInfoResult.city">
+            <summary>
+            	普通用户个人资料填写的城市
+            </summary>
+        </member>
+        <member name="P:SyZero.Web.Common.WxUserInfoResult.country">
+            <summary>
+            国家，如中国为CN
+            </summary>
+        </member>
+        <member name="P:SyZero.Web.Common.WxUserInfoResult.headimgurl">
+            <summary>
+            用户头像，最后一个数值代表正方形头像大小（有0、46、64、96、132数值可选，0代表640*640正方形头像），用户没有头像时该项为空
+            </summary>
+        </member>
+        <member name="P:SyZero.Web.Common.WxUserInfoResult.unionid">
+            <summary>
+            用户统一标识。针对一个微信开放平台帐号下的应用，同一用户的unionid是唯一的。
+            </summary>
+        </member>
+        <member name="T:SyZero.Web.Common.WxMPService">
+            <summary>
+            小程序微信服务
+            </summary>
+        </member>
+        <member name="M:SyZero.Web.Common.WxMPService.Login(System.String)">
+            <summary>
+            使用app的client_id 和 client_secret登陆并获取授权token
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:SyZero.Web.Common.WxMPService.GetWxToken">
+            <summary>
+            获取小程序AccessToken
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:SyZero.Web.Common.WxMPService.SubscribeMessage(System.String,System.String,System.Object)">
+            <summary>
+            发送小程序模板消息（需登录）
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:SyZero.Web.Common.WxMPService.GetWxORCode(System.String,System.String)">
+            <summary>
+            获取小程序二维码
+            </summary>
+            <param name="access_token"></param>
+            <param name="scene"></param>
+            <param name="page"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SyZero.Web.Common.WxMPService.GetDailyVisitTrend(System.DateTime,System.DateTime)">
+            <summary>
+            获取用户访问小程序数据日趋势（需登录/仅支持单天）
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:SyZero.Web.Common.WxService">
+            <summary>
+            微信公众号服务
+            </summary>
+        </member>
+        <member name="M:SyZero.Web.Common.WxService.GetWxToken">
+            <summary>
+            获取公众号AccessToken
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:SyZero.Web.Common.WxService.GetCurrentSelfmenuInfo">
+            <summary>
+            查询自定义菜单
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:SyZero.Web.Common.WxService.SetSelfmenuInfo(SyZero.Web.Common.CreateSelfmenuInfo)">
+            <summary>
+            设置自定义菜单
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:SyZero.Web.Common.WxService.SendTemplateMessage(SyZero.Web.Common.WxTemplateMessage)">
+            <summary>
+            发送模板消息
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:SyZero.Web.Common.WxService.Login(System.String)">
+            <summary>
+            公众号登录获取OpenId
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:SyZero.Web.Common.WxService.GetUserInfo(System.String)">
+            <summary>
+            通过openId获取用户信息
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:SyZero.Web.Common.WxService.GetJSAPIParameters(System.String)">
+            <summary>
+            获取JSAPI加密参数
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:SyZero.Web.Common.WxService.GetSignature(System.String,System.String,System.Int64,System.String)">
+            <summary>
+            签名算法
+            </summary>
+            <param name="jsapi_ticket">jsapi_ticket</param>
+            <param name="noncestr">随机字符串(必须与wx.config中的nonceStr相同)</param>
+            <param name="timestamp">时间戳(必须与wx.config中的timestamp相同)</param>
+            <param name="url">当前网页的URL，不包含#及其后面部分(必须是调用JS接口页面的完整URL)</param>
+            <returns></returns>
+        </member>
+        <member name="T:SyZero.Web.Common.IXmlSerialize">
+            <summary>
+            Xml序列化
+            </summary>
+        </member>
+        <member name="M:SyZero.Web.Common.IXmlSerialize.AppendChild(System.String,System.String,System.Xml.XmlNode)">
+            <summary>
+            追加节点
+            </summary>
+            <param name="filePath">XML文档绝对路径</param>
+            <param name="xPath">范例: @"Skill/First/SkillItem"</param>
+            <param name="xmlNode">XmlNode节点</param>
+            <returns></returns>
+        </member>
+        <member name="M:SyZero.Web.Common.IXmlSerialize.AppendChild(System.String,System.String,System.String,System.String)">
+            <summary>
+            从XML文档中读取节点追加到另一个XML文档中
+            </summary>
+            <param name="filePath">需要读取的XML文档绝对路径</param>
+            <param name="xPath">范例: @"Skill/First/SkillItem"</param>
+            <param name="toFilePath">被追加节点的XML文档绝对路径</param>
+            <param name="toXPath">范例: @"Skill/First/SkillItem"</param>
+            <returns></returns>
+        </member>
+        <member name="M:SyZero.Web.Common.IXmlSerialize.UpdateNodeInnerText(System.String,System.String,System.String)">
+            <summary>
+            修改节点的InnerText的值
+            </summary>
+            <param name="filePath">XML文件绝对路径</param>
+            <param name="xPath">范例: @"Skill/First/SkillItem"</param>
+            <param name="value">节点的值</param>
+            <returns></returns>
+        </member>
+        <member name="M:SyZero.Web.Common.IXmlSerialize.LoadXmlDoc(System.String)">
+            <summary>
+            读取XML文档
+            </summary>
+            <param name="filePath">XML文件绝对路径</param>
+            <returns></returns>
+        </member>
+        <member name="M:SyZero.Web.Common.IXmlSerialize.ReadNodes(System.String,System.String)">
+            <summary>
+            读取XML的所有子节点
+            </summary>
+            <param name="filePath">XML文件绝对路径</param>
+            <param name="xPath">范例: @"Skill/First/SkillItem"</param>
+            <returns></returns>
+        </member>
+    </members>
+</doc>

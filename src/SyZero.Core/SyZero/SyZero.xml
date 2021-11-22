@@ -1,0 +1,1065 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>SyZero</name>
+    </assembly>
+    <members>
+        <member name="P:SyZero.Application.Attributes.DynamicWebApiAttribute.Module">
+            <summary>
+            Equivalent to AreaName
+            </summary>
+        </member>
+        <member name="T:SyZero.Application.Service.CrudAppServiceBase`5">
+            <summary>
+            This is a common base class for CrudAppService and AsyncCrudAppService classes.
+            Inherit either from CrudAppService or AsyncCrudAppService, not from this class.
+            </summary>
+        </member>
+        <member name="M:SyZero.Application.Service.CrudAppServiceBase`5.ApplySorting(System.Linq.IQueryable{`0},`2)">
+            <summary>
+            Should apply sorting if needed.
+            </summary>
+            <param name="query">The query.</param>
+            <param name="input">The input.</param>
+        </member>
+        <member name="M:SyZero.Application.Service.CrudAppServiceBase`5.ApplyPaging(System.Linq.IQueryable{`0},`2)">
+            <summary>
+            Should apply paging if needed.
+            </summary>
+            <param name="query">The query.</param>
+            <param name="input">The input.</param>
+        </member>
+        <member name="M:SyZero.Application.Service.CrudAppServiceBase`5.CreateFilteredQuery(`2)">
+            <summary>
+            This method should create <see cref="T:System.Linq.IQueryable`1"/> based on given input.
+            It should filter query if needed, but should not do sorting or paging.
+            Sorting should be done in <see cref="M:SyZero.Application.Service.CrudAppServiceBase`5.ApplySorting(System.Linq.IQueryable{`0},`2)"/> and paging should be done in <see cref="M:SyZero.Application.Service.CrudAppServiceBase`5.ApplyPaging(System.Linq.IQueryable{`0},`2)"/>
+            methods.
+            </summary>
+            <param name="input">The input.</param>
+        </member>
+        <member name="M:SyZero.Application.Service.CrudAppServiceBase`5.CreateFilteredQueryAsync(`2)">
+            <summary>
+            This method should create <see cref="T:System.Linq.IQueryable`1"/> based on given input.
+            It should filter query if needed, but should not do sorting or paging.
+            Sorting should be done in <see cref="M:SyZero.Application.Service.CrudAppServiceBase`5.ApplySorting(System.Linq.IQueryable{`0},`2)"/> and paging should be done in <see cref="M:SyZero.Application.Service.CrudAppServiceBase`5.ApplyPaging(System.Linq.IQueryable{`0},`2)"/>
+            methods.
+            </summary>
+            <param name="input">The input.</param>
+        </member>
+        <member name="M:SyZero.Application.Service.CrudAppServiceBase`5.MapToEntityDto(`0)">
+            <summary>
+            Maps <see cref="!:TEntity"/> to <see cref="!:TEntityDto"/>.
+            It uses <see cref="T:SyZero.ObjectMapper.IObjectMapper"/> by default.
+            It can be overrided for custom mapping.
+            </summary>
+        </member>
+        <member name="M:SyZero.Application.Service.CrudAppServiceBase`5.MapToEntity(`3)">
+            <summary>
+            Maps <see cref="!:TEntityDto"/> to <see cref="!:TEntity"/> to create a new entity.
+            It uses <see cref="T:SyZero.ObjectMapper.IObjectMapper"/> by default.
+            It can be overrided for custom mapping.
+            </summary>
+        </member>
+        <member name="M:SyZero.Application.Service.CrudAppServiceBase`5.MapToEntity(`4,`0)">
+            <summary>
+            Maps <see cref="!:TUpdateInput"/> to <see cref="!:TEntity"/> to update the entity.
+            It uses <see cref="T:SyZero.ObjectMapper.IObjectMapper"/> by default.
+            It can be overrided for custom mapping.
+            </summary>
+        </member>
+        <member name="T:SyZero.Application.Service.Dto.EntityDto">
+            <summary>
+            实体继承此类  常用主键类型long
+            </summary>
+        </member>
+        <member name="T:SyZero.Application.Service.Dto.IEntityDto">
+            <summary>
+            定义基本实体类型的接口。系统中的所有实体都必须实现此接口。  常用long类型主键
+            </summary>
+        </member>
+        <member name="P:SyZero.Application.Service.Dto.IEntityDto.Id">
+            <summary>
+            实体Id
+            </summary>
+        </member>
+        <member name="T:SyZero.Application.Service.Dto.ILimitQuery">
+            <summary>
+            此接口定义为标准化以请求有限的结果
+            </summary>
+        </member>
+        <member name="P:SyZero.Application.Service.Dto.ILimitQuery.Limit">
+            <summary>
+            返回数量
+            </summary>
+        </member>
+        <member name="P:SyZero.Application.Service.Dto.IListResult`1.list">
+            <summary>
+            数据
+            </summary>
+        </member>
+        <member name="T:SyZero.Application.Service.Dto.IPageQuery">
+            <summary>
+            此接口定义为标准化以请求跳过数量
+            </summary>
+        </member>
+        <member name="P:SyZero.Application.Service.Dto.IPageQuery.Skip">
+            <summary>
+            跳过数量
+            </summary>
+        </member>
+        <member name="P:SyZero.Application.Service.Dto.IPageResult`1.total">
+            <summary>
+            总数
+            </summary>
+        </member>
+        <member name="P:SyZero.Application.Service.Dto.ISortQuery.Sort">
+            <summary>
+            排序
+            </summary>
+            <example>
+            Name Aes,Age Desc
+            </example>
+        </member>
+        <member name="T:SyZero.Application.Service.Dto.LimitQueryDto">
+            <summary>
+            ILimitQuery实现
+            </summary>
+        </member>
+        <member name="M:SyZero.Application.Service.Dto.ListResultDto`1.#ctor">
+            <summary>
+            返回列表数据
+            </summary>
+        </member>
+        <member name="M:SyZero.Application.Service.Dto.ListResultDto`1.#ctor(System.Collections.Generic.IList{`0})">
+            <summary>
+            返回列表数据
+            </summary>
+            <param name="items">列表数据</param>
+        </member>
+        <member name="T:SyZero.Application.Service.Dto.PageQueryDto">
+            <summary>
+            ISkipQuery实现
+            </summary>
+        </member>
+        <member name="P:SyZero.Application.Service.Dto.PageResultDto`1.total">
+            <summary>
+            数据总数
+            </summary>
+        </member>
+        <member name="M:SyZero.Application.Service.Dto.PageResultDto`1.#ctor(System.Int32,System.Collections.Generic.IList{`0})">
+            <summary>
+            返回分页数据
+            </summary>
+            <param name="totalCount">数据总数</param>
+            <param name="items">列表数据</param>
+        </member>
+        <member name="M:SyZero.Cache.ICache.Exist(System.String)">
+            <summary>
+            是否存在
+            </summary>
+            <param name="key"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SyZero.Cache.ICache.Get``1(System.String)">
+            <summary>
+            获取值
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="key"></param>
+            <param name="isExisted">是否成功</param>
+            <returns></returns>
+        </member>
+        <member name="M:SyZero.Cache.ICache.Remove(System.String)">
+            <summary>
+            移除
+            </summary>
+            <param name="key"></param>
+        </member>
+        <member name="M:SyZero.Cache.ICache.RemoveAsync(System.String)">
+            <summary>
+            移除 (异步)
+            </summary>
+            <param name="key"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SyZero.Cache.ICache.Refresh(System.String)">
+            <summary>
+            重置值
+            </summary>
+            <param name="key"></param>
+        </member>
+        <member name="M:SyZero.Cache.ICache.RefreshAsync(System.String)">
+            <summary>
+            重置值 (异步)
+            </summary>
+            <param name="key"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SyZero.Cache.ICache.Set``1(System.String,``0,System.Int32)">
+            <summary>
+            存储值
+            </summary>
+            <param name="key"></param>
+            <param name="value">值</param>
+            <param name="exprireTime">过期时间（秒） 默认24小时</param>
+        </member>
+        <member name="M:SyZero.Cache.ICache.SetAsync``1(System.String,``0,System.Int32)">
+            <summary>
+            存储值 (异步)
+            </summary>
+            <param name="key"></param>
+            <param name="value"></param>
+            <param name="exprireTime">过期时间（秒） 默认24小时</param>
+            <returns></returns>
+        </member>
+        <member name="T:SyZero.Client.IClient">
+            <summary>
+            客户端IClient
+            </summary>
+        </member>
+        <member name="M:SyZero.Client.IClient.ExecuteAsync(SyZero.Client.RequestTemplate,System.Threading.CancellationToken)">
+            <summary>
+            请求
+            </summary>
+            <param name="requestTemplate"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
+        <member name="P:SyZero.Client.RequestTemplate.IsForm">
+            <summary>
+            判断是否为表单的post提交
+            </summary>
+        </member>
+        <member name="T:SyZero.Configurations.DbType">
+            <summary>
+            数据库类型
+            </summary>
+        </member>
+        <member name="T:SyZero.Configurations.SyZeroConnectionOptions">
+            <summary>
+            SyZero连接字符串配置
+            </summary>
+        </member>
+        <member name="P:SyZero.Configurations.SyZeroConnectionOptions.Type">
+            <summary>
+            数据库类型
+            </summary>
+        </member>
+        <member name="P:SyZero.Configurations.SyZeroConnectionOptions.Master">
+            <summary>
+            主数据库
+            </summary>
+        </member>
+        <member name="P:SyZero.Configurations.SyZeroConnectionOptions.Slave">
+            <summary>
+            从数据库 连接字符串,权重
+            </summary>
+        </member>
+        <member name="T:SyZero.Configurations.SyZeroServerOptions">
+            <summary>
+            SyZero配置
+            </summary>
+        </member>
+        <member name="P:SyZero.Configurations.SyZeroServerOptions.Name">
+            <summary>
+            服务名称
+            </summary>
+        </member>
+        <member name="P:SyZero.Configurations.SyZeroServerOptions.Ip">
+            <summary>
+            服务内网Ip
+            </summary>
+        </member>
+        <member name="P:SyZero.Configurations.SyZeroServerOptions.Port">
+            <summary>
+            服务端口号
+            </summary>
+        </member>
+        <member name="P:SyZero.Configurations.SyZeroServerOptions.WanIp">
+            <summary>
+            服务广域网Ip
+            </summary>
+        </member>
+        <member name="P:SyZero.Configurations.SyZeroServerOptions.Protocol">
+            <summary>
+            协议 HTTP/HTTPS/GRPC
+            </summary>
+        </member>
+        <member name="P:SyZero.Configurations.SyZeroServerOptions.InspectInterval">
+            <summary>
+            检查时间间隔 （秒）
+            </summary>
+        </member>
+        <member name="P:SyZero.Configurations.SyZeroServerOptions.CorsOrigins">
+            <summary>
+            开放地址
+            </summary>
+        </member>
+        <member name="P:SyZero.Configurations.SyZeroServerOptions.DynamicConfig">
+            <summary>
+            动态配置
+            </summary>
+        </member>
+        <member name="T:SyZero.Dependency.ISingletonDependency">
+            <summary>
+            单例
+            </summary>
+        </member>
+        <member name="T:SyZero.Dependency.ITransientDependency">
+            <summary>
+            实现此接口的所有类都自动注册到依赖项
+            作为瞬变物体注入
+            </summary>
+        </member>
+        <member name="P:SyZero.Domain.Entities.Config.Name">
+            <summary>
+            键
+            </summary>
+        </member>
+        <member name="P:SyZero.Domain.Entities.Config.Value">
+            <summary>
+            值
+            </summary>
+        </member>
+        <member name="T:SyZero.Domain.Entities.Entity">
+            <summary>
+            实体继承此类  常用主键类型long
+            </summary>
+        </member>
+        <member name="P:SyZero.Domain.Entities.Entity.Id">
+            <summary>
+            根
+            </summary>
+        </member>
+        <member name="T:SyZero.Domain.Entities.IEntity">
+            <summary>
+            定义基本实体类型的接口。系统中的所有实体都必须实现此接口。  常用long类型主键
+            </summary>
+        </member>
+        <member name="P:SyZero.Domain.Entities.IEntity.Id">
+            <summary>
+            实体Id
+            </summary>
+        </member>
+        <member name="T:SyZero.Domain.Model.IDomainModel`1">
+            <summary>
+            领域Model
+            </summary>
+        </member>
+        <member name="M:SyZero.Domain.Repository.IBaseRepository`2.Count(System.Linq.Expressions.Expression{System.Func{`0,System.Boolean}})">
+            <summary>
+                计数
+            </summary>
+            <param name="where">条件</param>
+            <returns></returns>
+        </member>
+        <member name="M:SyZero.Domain.Repository.IBaseRepository`2.CountAsync(System.Linq.Expressions.Expression{System.Func{`0,System.Boolean}},System.Threading.CancellationToken)">
+            <summary>
+                计数
+            </summary>
+            <param name="where">条件</param>
+            <param name="cancellationToken">异步取消凭据</param>
+            <returns></returns>
+        </member>
+        <member name="M:SyZero.Domain.Repository.IBaseRepository`2.GetModel(`1)">
+            <summary>
+            获取对象
+            </summary>
+            <param name="id">主键</param>
+            <returns></returns>
+        </member>
+        <member name="M:SyZero.Domain.Repository.IBaseRepository`2.GetModelAsync(`1,System.Threading.CancellationToken)">
+            <summary>
+            获取对象（异步）
+            </summary>
+            <param name="id">主键</param>
+            <param name="cancellationToken">异步取消凭据</param>
+            <returns></returns>
+        </member>
+        <member name="M:SyZero.Domain.Repository.IBaseRepository`2.GetModel(System.Linq.Expressions.Expression{System.Func{`0,System.Boolean}})">
+            <summary>
+            获取对象
+            </summary>
+            <param name="where">条件</param>
+            <returns></returns>
+        </member>
+        <member name="M:SyZero.Domain.Repository.IBaseRepository`2.GetModelAsync(System.Linq.Expressions.Expression{System.Func{`0,System.Boolean}},System.Threading.CancellationToken)">
+            <summary>
+            获取对象（异步）
+            </summary>
+            <param name="where">条件</param>
+            <param name="cancellationToken">异步取消凭据</param>
+            <returns></returns>
+        </member>
+        <member name="M:SyZero.Domain.Repository.IBaseRepository`2.GetList">
+            <summary>
+            获取所有数据
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:SyZero.Domain.Repository.IBaseRepository`2.GetListAsync(System.Threading.CancellationToken)">
+            <summary>
+            获取所有数据（异步）
+            </summary>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SyZero.Domain.Repository.IBaseRepository`2.GetList(System.Linq.Expressions.Expression{System.Func{`0,System.Boolean}})">
+            <summary>
+            获取部分数据
+            </summary>
+            <param name="where">条件</param>
+            <returns></returns>
+        </member>
+        <member name="M:SyZero.Domain.Repository.IBaseRepository`2.GetListAsync(System.Linq.Expressions.Expression{System.Func{`0,System.Boolean}},System.Threading.CancellationToken)">
+            <summary>
+            获取部分数据（异步）
+            </summary>
+            <param name="where"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SyZero.Domain.Repository.IBaseRepository`2.GetPaged(System.Int32,System.Int32,System.Linq.Expressions.Expression{System.Func{`0,System.Object}},System.Boolean)">
+            <summary>
+            分页获取数据
+            </summary>
+            <typeparam name="TProperty">属性</typeparam>
+            <param name="pageIndex">当前页</param>
+            <param name="pageSize">每页条数</param>
+            <param name="sortBy">排序</param>
+            <param name="isDesc"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SyZero.Domain.Repository.IBaseRepository`2.GetPagedAsync(System.Int32,System.Int32,System.Linq.Expressions.Expression{System.Func{`0,System.Object}},System.Boolean,System.Threading.CancellationToken)">
+            <summary>
+            分页获取数据（异步）
+            </summary>
+            <typeparam name="TProperty">属性</typeparam>
+            <param name="pageIndex">当前页</param>
+            <param name="pageSize">每页数量</param>
+            <param name="sortBy">排序</param>
+            <param name="isDesc"></param>
+            <param name="cancellationToken">异步取消凭据</param>
+            <returns></returns>
+        </member>
+        <member name="M:SyZero.Domain.Repository.IBaseRepository`2.GetPaged(System.Int32,System.Int32,System.Linq.Expressions.Expression{System.Func{`0,System.Object}},System.Linq.Expressions.Expression{System.Func{`0,System.Boolean}},System.Boolean)">
+            <summary>
+            分页获取部分数据
+            </summary>
+            <typeparam name="TProperty">属性</typeparam>
+            <param name="pageIndex">当前页</param>
+            <param name="pageSize">每页条数</param>
+            <param name="sortBy">排序</param>
+            <param name="where">条件</param>
+            <param name="isDesc"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SyZero.Domain.Repository.IBaseRepository`2.GetPagedAsync(System.Int32,System.Int32,System.Linq.Expressions.Expression{System.Func{`0,System.Object}},System.Linq.Expressions.Expression{System.Func{`0,System.Boolean}},System.Boolean,System.Threading.CancellationToken)">
+            <summary>
+            分页获取部分数据（异步）
+            </summary>
+            <typeparam name="TProperty">属性</typeparam>
+            <param name="pageIndex">当前页</param>
+            <param name="pageSize">每页数量</param>
+            <param name="sortBy">排序</param>
+            <param name="where">条件</param>
+            <param name="isDesc"></param>
+            <param name="cancellationToken">异步取消凭据</param>
+            <returns></returns>
+        </member>
+        <member name="M:SyZero.Domain.Repository.IBaseRepository`2.Add(`0)">
+            <summary>
+                添加一条数据
+            </summary>
+            <param name="entity"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SyZero.Domain.Repository.IBaseRepository`2.AddAsync(`0,System.Threading.CancellationToken)">
+            <summary>
+                添加一条数据（异步）
+            </summary>
+            <param name="entity"></param>
+            <param name="cancellationToken">异步取消凭据</param>
+            <returns></returns>
+        </member>
+        <member name="M:SyZero.Domain.Repository.IBaseRepository`2.AddList(System.Linq.IQueryable{`0})">
+            <summary>
+                添加多条数据
+            </summary>
+            <param name="entities"></param>
+        </member>
+        <member name="M:SyZero.Domain.Repository.IBaseRepository`2.AddListAsync(System.Linq.IQueryable{`0},System.Threading.CancellationToken)">
+            <summary>
+                添加多条数据（异步）
+            </summary>
+            <param name="entities"></param>
+            <param name="cancellationToken">异步取消凭据</param>
+            <returns></returns>
+        </member>
+        <member name="M:SyZero.Domain.Repository.IBaseRepository`2.Update(`0)">
+            <summary>
+                更新一条数据
+            </summary>
+            <param name="entity"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SyZero.Domain.Repository.IBaseRepository`2.UpdateAsync(`0,System.Threading.CancellationToken)">
+            <summary>
+                更新一条数据（异步）
+            </summary>
+            <param name="entity"></param>
+            <param name="cancellationToken">异步取消凭据</param>
+            <returns></returns>
+        </member>
+        <member name="M:SyZero.Domain.Repository.IBaseRepository`2.Update(System.Linq.IQueryable{`0})">
+            <summary>
+                更新多条数据
+            </summary>
+            <param name="entitys"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SyZero.Domain.Repository.IBaseRepository`2.UpdateAsync(System.Linq.IQueryable{`0},System.Threading.CancellationToken)">
+            <summary>
+                更新多条数据（异步）
+            </summary>
+            <param name="entitys"></param>
+            <param name="cancellationToken">异步取消凭据</param>
+            <returns></returns>
+        </member>
+        <member name="M:SyZero.Domain.Repository.IBaseRepository`2.Delete(`1)">
+            <summary>
+                根据主键ID
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SyZero.Domain.Repository.IBaseRepository`2.DeleteAsync(`1,System.Threading.CancellationToken)">
+            <summary>
+                根据主键ID（异步）
+            </summary>
+            <param name="id"></param>
+            <param name="cancellationToken">异步取消凭据</param>
+            <returns></returns>
+        </member>
+        <member name="M:SyZero.Domain.Repository.IBaseRepository`2.Delete(System.Linq.Expressions.Expression{System.Func{`0,System.Boolean}})">
+            <summary>
+                删除
+            </summary>
+            <param name="where">条件</param>
+            <returns></returns>
+        </member>
+        <member name="M:SyZero.Domain.Repository.IBaseRepository`2.DeleteAsync(System.Linq.Expressions.Expression{System.Func{`0,System.Boolean}},System.Threading.CancellationToken)">
+            <summary>
+                删除（异步）
+            </summary>
+            <param name="where">条件</param>
+            <param name="cancellationToken">异步取消凭据</param>
+            <returns></returns>
+        </member>
+        <member name="M:SyZero.Domain.Repository.IUnitOfWork.BeginTransaction">
+            <summary>
+            开启事务
+            </summary>
+        </member>
+        <member name="M:SyZero.Domain.Repository.IUnitOfWork.CommitTransaction">
+            <summary>
+            提交事务
+            </summary>
+        </member>
+        <member name="M:SyZero.Domain.Repository.IUnitOfWork.RollbackTransaction">
+            <summary>
+            回滚事务
+            </summary>
+        </member>
+        <member name="M:SyZero.Domain.Repository.IUnitOfWork.DisposeTransaction">
+            <summary>
+            释放事务
+            </summary>
+        </member>
+        <member name="M:SyZero.Domain.Repository.IUnitOfWork.BeginTransactionAsync">
+            <summary>
+            开启事务异步
+            </summary>
+        </member>
+        <member name="M:SyZero.Domain.Repository.IUnitOfWork.CommitTransactionAsync">
+            <summary>
+            提交事务异步
+            </summary>
+        </member>
+        <member name="M:SyZero.Domain.Repository.IUnitOfWork.RollbackTransactionAsync">
+            <summary>
+            回滚事务异步
+            </summary>
+        </member>
+        <member name="M:SyZero.Domain.Repository.IUnitOfWork.DisposeTransactionAsync">
+            <summary>
+            释放事务异步
+            </summary>
+        </member>
+        <member name="T:SyZero.Domain.Service.DomainService">
+            <summary>
+            这个类作为域服务的基类
+            </summary>
+        </member>
+        <member name="T:SyZero.Domain.Service.IDomainService">
+            <summary>
+            此接口必须由所有域服务实现，以按约定标识它们。
+            </summary>
+        </member>
+        <member name="M:SyZero.ConvertExtension.ToStr``1(``0)">
+            <summary>
+            string
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="value"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SyZero.ConvertExtension.ToInt32``1(``0)">
+            <summary>
+            int
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="value"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SyZero.ConvertExtension.ToFloat``1(``0)">
+            <summary>
+            float
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="value"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SyZero.ConvertExtension.ToDouble``1(``0)">
+            <summary>
+            double
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="value"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SyZero.ConvertExtension.ToLong``1(``0)">
+            <summary>
+            long
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="value"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SyZero.ConvertExtension.ToDecimal``1(``0)">
+            <summary>
+            decimal
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="value"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SyZero.ConvertExtension.ToGuid``1(``0)">
+            <summary>
+            Guid
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="value"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SyZero.ConvertExtension.ToGuidNull``1(``0)">
+            <summary>
+            Guid?
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="value"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SyZero.ConvertExtension.ToGuidStr``1(``0)">
+            <summary>
+            GuidString
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="value"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SyZero.ConvertExtension.ToDateTime``1(``0)">
+            <summary>
+            DateTime
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="value"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SyZero.ConvertExtension.ToDateTimeNull``1(``0)">
+            <summary>
+            DateTime?
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="value"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SyZero.ConvertExtension.ToDateTimeFormat``1(``0,System.String)">
+            <summary>
+            格式的 时间 字符串
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="value"></param>
+            <param name="FormatStr"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SyZero.ConvertExtension.ToBool``1(``0)">
+            <summary>
+            bool
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="value"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SyZero.ConvertExtension.ToBytes``1(``0)">
+            <summary>
+            byte[]
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="value"></param>
+            <returns></returns>
+        </member>
+        <!-- Badly formed XML comment ignored for member "M:SyZero.ConvertExtension.ToTime``1(System.Int32)" -->
+        <!-- Badly formed XML comment ignored for member "M:SyZero.ConvertExtension.ToTimeInt``1(System.DateTime)" -->
+        <member name="M:SyZero.ConvertExtension.ConvertToObject(System.Object,System.Type)">
+            <summary>
+            将一个对象转换为指定类型
+            </summary>
+            <param name="obj">待转换的对象</param>
+            <param name="type">目标类型</param>
+            <returns>转换后的对象</returns>
+        </member>
+        <member name="M:SyZero.EnumExtension.ToDescription(System.Enum)">
+            <summary>
+            返回枚举的Description
+            </summary>
+            <param name="e"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SyZero.EnumExtension.GetEnumDescription(System.Enum)">
+            <summary>
+            返回枚举的Description 
+            </summary>
+            <param name="enumSubitem"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SyZero.ReflectionHelper.GetAssemblies">
+            <summary>
+                获取所有的程序集
+            </summary>
+        </member>
+        <member name="M:SyZero.ReflectionHelper.GetSingleAttributeOrNull``1(System.Reflection.MemberInfo,System.Boolean)">
+            <summary>
+            Gets a single attribute for a member.
+            </summary>
+            <typeparam name="TAttribute">Type of the attribute</typeparam>
+            <param name="memberInfo">The member that will be checked for the attribute</param>
+            <param name="inherit">Include inherited attributes</param>
+            <returns>Returns the attribute object if found. Returns null if not found.</returns>
+        </member>
+        <member name="T:SyZero.ObjectMapper.IObjectMapper">
+            <summary>
+            实体映射实现此接口
+            </summary>
+        </member>
+        <member name="M:SyZero.ObjectMapper.IObjectMapper.Map``1(System.Object)">
+            <summary>
+            Obj转Dto
+            </summary>
+            <typeparam name="TDestination"></typeparam>
+            <param name="source">Obj</param>
+            <returns></returns>
+        </member>
+        <member name="M:SyZero.ObjectMapper.IObjectMapper.Map``2(``0,``1)">
+            <summary>
+            Dto转Obj
+            </summary>
+            <typeparam name="TSource"></typeparam>
+            <typeparam name="TDestination"></typeparam>
+            <param name="source">Obj</param>
+            <param name="destination">Dto</param>
+            <returns></returns>
+        </member>
+        <member name="T:SyZero.SyMessageException">
+            <summary>
+            MVC 异常拦截 该对象 返回客户端
+            </summary>
+        </member>
+        <member name="P:SyZero.SyMessageException.Model">
+            <summary>
+            异常模型
+            </summary>
+        </member>
+        <member name="M:SyZero.SyMessageException.#ctor">
+            <summary>
+            成功消息
+            </summary>
+        </member>
+        <member name="M:SyZero.SyMessageException.#ctor(System.String)">
+            <summary>
+            失败并返回
+            </summary>
+            <param name="Messager"></param>
+        </member>
+        <member name="M:SyZero.SyMessageException.#ctor(SyZero.SyMessageBoxStatus)">
+            <summary>
+            状态返回
+            </summary>
+            <param name="Messager"></param>
+        </member>
+        <member name="M:SyZero.SyMessageException.#ctor(System.Object)">
+            <summary>
+            自定义异常
+            </summary>
+            <param name="Data">客户端接收对象 例如: {status=1,data="这是消息!"}</param>
+        </member>
+        <member name="M:SyZero.SyMessageBoxModel.#ctor(System.Object,SyZero.SyMessageBoxStatus)">
+            <summary>
+            自定义
+            </summary>
+            <param name="data">数据对象 例如:{status=500,action="6666"}</param>
+            <param name="msgStatus"></param>
+        </member>
+        <member name="P:SyZero.SyMessageBoxModel.code">
+            <summary>
+            错误状态码
+            </summary>
+        </member>
+        <member name="P:SyZero.SyMessageBoxModel.msg">
+            <summary>
+            错误消息
+            </summary>
+        </member>
+        <member name="T:SyZero.SyMessageBoxStatus">
+            <summary>
+            消息状态
+            </summary>
+        </member>
+        <member name="F:SyZero.SyMessageBoxStatus.NoPermission">
+            <summary>
+            无权限
+            </summary>
+        </member>
+        <member name="F:SyZero.SyMessageBoxStatus.UnAuthorized">
+            <summary>
+            未登录
+            </summary>
+        </member>
+        <member name="F:SyZero.SyMessageBoxStatus.Abnormal">
+            <summary>
+            服务端异常
+            </summary>
+        </member>
+        <member name="F:SyZero.SyMessageBoxStatus.Custom">
+            <summary>
+            自定义
+            </summary>
+        </member>
+        <member name="F:SyZero.SyMessageBoxStatus.Fail">
+            <summary>
+            失败
+            </summary>
+        </member>
+        <member name="F:SyZero.SyMessageBoxStatus.Success">
+            <summary>
+            成功
+            </summary>
+        </member>
+        <member name="M:SyZero.Runtime.Security.IToken.GetPrincipal(System.String)">
+            <summary>
+            此方法用解码字符串token，并返回秘钥的信息对象
+            </summary>
+            <param name="token"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SyZero.Runtime.Security.IToken.CreateAccessToken(System.Collections.Generic.IEnumerable{System.Security.Claims.Claim})">
+            <summary>
+            获取Token
+            </summary>
+            <param name="claims"></param>
+            <returns></returns>
+        </member>
+        <member name="T:SyZero.Runtime.Security.PermissionChecker">
+            <summary>
+            权限检查
+            </summary>
+        </member>
+        <member name="M:SyZero.Runtime.Security.PermissionChecker.IsHas(System.String)">
+            <summary>
+            是否拥有权限
+            </summary>
+            <param name="permission">权限值</param>
+            <returns></returns>
+        </member>
+        <member name="M:SyZero.Runtime.Security.PermissionChecker.Authorize(System.String)">
+            <summary>
+            检查权限 Exception 无权限
+            </summary>
+            <param name="permission"></param>
+        </member>
+        <member name="T:SyZero.Runtime.Security.ProtocolType">
+            <summary>
+            协议
+            </summary>
+        </member>
+        <member name="T:SyZero.Runtime.Security.SyClaimTypes">
+            <summary>
+            身份信息
+            </summary>
+        </member>
+        <member name="P:SyZero.Runtime.Security.SyClaimTypes.System">
+            <summary>
+            System.
+            Default: <see cref="P:SyZero.Runtime.Security.SyClaimTypes.System"/>
+            </summary>
+        </member>
+        <member name="P:SyZero.Runtime.Security.SyClaimTypes.UserName">
+            <summary>
+            UserName.
+            Default: <see cref="F:System.Security.Claims.ClaimTypes.Name"/>
+            </summary>
+        </member>
+        <member name="P:SyZero.Runtime.Security.SyClaimTypes.UserId">
+            <summary>
+            UserId.
+            Default: <see cref="F:System.Security.Claims.ClaimTypes.NameIdentifier"/>
+            </summary>
+        </member>
+        <member name="P:SyZero.Runtime.Security.SyClaimTypes.UserRole">
+            <summary>
+            UserRole.
+            Default: <see cref="F:System.Security.Claims.ClaimTypes.Role"/>
+            </summary>
+        </member>
+        <member name="P:SyZero.Runtime.Security.SyClaimTypes.Permission">
+            <summary>
+            Permission.
+            Default: <see cref="F:System.Security.Claims.ClaimTypes.Authentication"/>
+            </summary>
+        </member>
+        <member name="P:SyZero.Runtime.Security.SyClaimTypes.AvatarUrl">
+            <summary>
+            AvatarUrl.
+            Default: <see cref="P:SyZero.Runtime.Security.SyClaimTypes.AvatarUrl"/>
+            </summary>
+        </member>
+        <member name="T:SyZero.Runtime.Session.ISySession">
+            <summary>
+            运行时会话
+            </summary>
+        </member>
+        <member name="P:SyZero.Runtime.Session.ISySession.UserId">
+            <summary>
+            获取当前用户ID或空。
+            如果没有用户登录，则为空。
+            </summary>
+        </member>
+        <member name="P:SyZero.Runtime.Session.ISySession.UserRole">
+            <summary>
+            获取当前用户角色或空。
+            如果没有用户登录，则为空。
+            </summary>
+        </member>
+        <member name="P:SyZero.Runtime.Session.ISySession.UserName">
+            <summary>
+            获取当前用户名称或空。
+            如果没有用户登录，则为空。
+            </summary>
+        </member>
+        <member name="P:SyZero.Runtime.Session.ISySession.Permission">
+            <summary>
+            获取当前用户名称或空。
+            如果没有用户登录，则为空。
+            </summary>
+        </member>
+        <member name="T:SyZero.Serialization.IJsonSerialize">
+            <summary>
+            Json序列化
+            </summary>
+        </member>
+        <member name="M:SyZero.Serialization.IJsonSerialize.ObjectToJSON(System.Object)">
+            <summary>
+            Obj序列化
+            </summary>
+            <param name="obj">Obj</param>
+            <returns></returns>
+        </member>
+        <member name="M:SyZero.Serialization.IJsonSerialize.JSONToObject``1(System.String)">
+            <summary>
+            Json反序列化
+            </summary>
+            <typeparam name="T">对象类型</typeparam>
+            <param name="jsonText">Json字符串</param>
+            <returns></returns>
+        </member>
+        <member name="T:SyZero.SyZeroServiceBase">
+            <summary>
+            服务基类
+            </summary>
+        </member>
+        <member name="P:SyZero.SyZeroServiceBase.UnitOfWork">
+            <summary>
+            持久化
+            </summary>
+        </member>
+        <member name="P:SyZero.SyZeroServiceBase.Logger">
+            <summary>
+            日志
+            </summary>
+        </member>
+        <member name="P:SyZero.SyZeroServiceBase.ObjectMapper">
+            <summary>
+            实体映射
+            </summary>
+        </member>
+        <member name="T:SyZero.Util.AutofacUtil">
+            <summary>
+            Autofac依赖注入服务
+            </summary>
+        </member>
+        <member name="P:SyZero.Util.AutofacUtil.Container">
+            <summary>
+            Autofac依赖注入静态服务
+            </summary>
+        </member>
+        <member name="M:SyZero.Util.AutofacUtil.GetService``1">
+            <summary>
+            获取服务(Single)
+            </summary>
+            <typeparam name="T">接口类型</typeparam>
+            <returns></returns>
+        </member>
+        <member name="M:SyZero.Util.AutofacUtil.GetScopeService``1">
+            <summary>
+            获取服务(请求生命周期内)
+            </summary>
+            <typeparam name="T">接口类型</typeparam>
+            <returns></returns>
+        </member>
+        <member name="M:SyZero.Util.ILockUtil.Release(System.String)">
+            <summary>
+            释放锁
+            </summary>
+            <param name="lockKey"></param>
+        </member>
+        <member name="M:SyZero.Util.ILockUtil.GetLock(System.String,System.Int32,System.Int32)">
+            <summary>
+            获取锁
+            </summary>
+            <param name="key">上锁的key</param>
+            <param name="expiresMS">过期时间：秒，默认10秒，传入的expiresSenconds如果小于等于0，为了防止死锁：那么expiresSenconds也会调整为10</param>
+            <param name="waitTimeSenconds">等待时间，默认10s</param>
+            <returns></returns>
+        </member>
+        <member name="M:SyZero.Util.ILockUtil.GetLockAsync(System.String,System.Int32,System.Int32)">
+            <summary>
+            获取锁
+            </summary>
+            <param name="key">上锁的key</param>
+            <param name="expiresMS">过期时间：秒，默认10秒。传入的expiresSenconds如果小于等于0，为了防止死锁：那么expiresSenconds也会调整为10</param>
+            <param name="waitTimeSenconds">等待时间，默认10s</param>
+            <returns></returns>
+        </member>
+    </members>
+</doc>

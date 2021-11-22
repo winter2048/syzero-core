@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>SyZero.Nacos</name>
+    </assembly>
+    <members>
+        <member name="T:SyZero.Nacos.Config.NacosServiceOptions">
+            <summary>
+             Nacos配置模型类
+            </summary>
+        </member>
+        <member name="P:SyZero.Nacos.Config.NacosServiceOptions.NacosAddresses">
+            <summary>
+            服务注册地址（Nacos的地址）
+            </summary>
+        </member>
+        <member name="P:SyZero.Nacos.Config.NacosServiceOptions.Optional">
+            <summary>
+            健康检查地址
+            </summary>
+        </member>
+        <member name="T:SyZero.Nacos.NacosConfigurationBuilderExtensions">
+            <summary>
+            Nacos配置扩展
+            </summary>
+        </member>
+    </members>
+</doc>

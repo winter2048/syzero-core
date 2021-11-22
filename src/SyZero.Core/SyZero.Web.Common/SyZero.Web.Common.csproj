@@ -1,0 +1,51 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <Version>1.0.5</Version>
+    <Authors>失忆</Authors>
+    <Company>SyZero</Company>
+    <Description>SyZero-Common</Description>
+    <PackageIcon>logo.png</PackageIcon>
+    <PackageIconUrl />
+    <NeutralLanguage></NeutralLanguage>
+    <PackageProjectUrl>https://SyZero.com</PackageProjectUrl>
+    <PackageLicenseFile>LICENSE</PackageLicenseFile>
+    <RepositoryUrl>https://gitee.com/SyZero/SyZero.git</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
+    <PackageLicenseExpression></PackageLicenseExpression>
+    <SignAssembly>false</SignAssembly>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DocumentationFile>SyZero.Web.Common.xml</DocumentationFile>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
+    <PackageReference Include="RestSharp" Version="106.11.7" />
+    <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="5.6.0" />
+    <PackageReference Include="Aliyun.OSS.SDK.NetCore" Version="2.9.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Extension\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\..\..\doc\icon\logo.png">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
+    <None Include="..\..\..\LICENSE">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\SyZero\SyZero.csproj" />
+  </ItemGroup>
+
+</Project>

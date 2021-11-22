@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>SyZero.Redis</name>
+    </assembly>
+    <members>
+        <member name="M:SyZero.Redis.LockUtil.CurrentTimeStamp">
+            <summary>
+            获取时间戳
+            </summary>
+            <returns></returns>
+        </member>
+    </members>
+</doc>

@@ -1,0 +1,9 @@
+﻿syntax = "proto3";
+option csharp_namespace = "SyZero.GrpcLibrary.Test";  
+package BlogCategoryApp;
+package BlogApp;
+
+service IBlogCategoryAppService {
+	rpc GetShowAll (RequestQueryDto) returns (PageResultDto) {}
+}
+ 

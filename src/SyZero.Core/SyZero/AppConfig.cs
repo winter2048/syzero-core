@@ -1,0 +1,79 @@
+﻿using Microsoft.Extensions.Configuration;
+using System.IO;
+using System.Linq;
+using SyZero.Configurations;
+
+namespace SyZero
+{
+    public class AppConfig
+    {
+        public static IConfiguration Configuration { get; set; }
+        //  public static readonly IConfiguration Configuration;
+
+        static AppConfig()
+        {
+            if (Configuration == null)
+            {
+                Configuration = new ConfigurationBuilder()
+                    .SetBasePath(Directory.GetCurrentDirectory())
+                    .AddJsonFile("appsettings.json", true)
+                    .Build();
+            }
+        }
+
+        public static T GetSection<T>(string key) where T : class, new()
+        {
+            var obj = Configuration.GetSection(key).Get<T>();
+            return obj;
+        }
+
+        public static string GetSection(string key)
+        {
+            return Configuration.GetValue<string>(key);
+        }
+
+        private static SyZeroServerOptions serverOptions;
+        public static SyZeroServerOptions ServerOptions
+        {
+            get
+            {
+                if (serverOptions == null)
+                {
+                    SyZeroServerOptions options = GetSection<SyZeroServerOptions>("SyZero");
+                    if (string.IsNullOrEmpty(options.Ip))
+                    {
+                        options.Ip = System.Net.NetworkInformation.NetworkInterface.GetAllNetworkInterfaces()
+                                      .Select(p => p.GetIPProperties())
+                                      .SelectMany(p => p.UnicastAddresses)
+                                      .Where(p => p.Address.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork && !System.Net.IPAddress.IsLoopback(p.Address))
+                                      .FirstOrDefault()?.Address.ToString();
+                    }
+                    if (string.IsNullOrEmpty(options.WanIp))
+                    {
+                        options.WanIp = System.Net.NetworkInformation.NetworkInterface.GetAllNetworkInterfaces()
+                                      .Select(p => p.GetIPProperties())
+                                      .SelectMany(p => p.UnicastAddresses)
+                                      .Where(p => p.Address.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork && !System.Net.IPAddress.IsLoopback(p.Address))
+                                      .FirstOrDefault()?.Address.ToString();
+                    }
+                    serverOptions = options;
+                }
+                return serverOptions;
+            }
+        }
+
+        private static SyZeroConnectionOptions connectionOptions;
+        public static SyZeroConnectionOptions ConnectionOptions
+        {
+            get
+            {
+                if (connectionOptions == null)
+                {
+                    SyZeroConnectionOptions options = GetSection<SyZeroConnectionOptions>("ConnectionString");
+                    connectionOptions = options;
+                }
+                return connectionOptions;
+            }
+        }
+    }
+}

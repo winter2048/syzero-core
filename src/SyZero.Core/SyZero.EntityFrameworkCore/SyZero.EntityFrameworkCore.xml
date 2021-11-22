@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>SyZero.EntityFrameworkCore</name>
+    </assembly>
+    <members>
+        <member name="T:SyZero.EntityFrameworkCore.Domain.DomainModel`2">
+            <summary>
+            领域模型
+            </summary>
+            <typeparam name="TDbContext"></typeparam>
+            <typeparam name="IEntity"></typeparam>
+        </member>
+        <member name="M:SyZero.EntityFrameworkCore.SyZeroEntityFrameworkExtension.AddSyZeroEntityFramework``1(Autofac.ContainerBuilder)">
+            <summary>
+            注册EntityFramework
+            </summary>
+            <typeparam name="TContext"></typeparam>
+            <param name="builder"></param>
+            <param name="configuration"></param>
+            <returns></returns>
+        </member>
+    </members>
+</doc>

@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>SyZero.AutoMapper</name>
+    </assembly>
+    <members>
+        <member name="T:SyZero.AutoMapper.AutoMapperModule">
+            <summary>
+            实体映射注入
+            </summary>
+        </member>
+    </members>
+</doc>
