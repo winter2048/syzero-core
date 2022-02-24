@@ -2,8 +2,12 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Routing;
 using System;
+using System.Threading;
 using SyZero.AspNetCore;
 using SyZero.AspNetCore.Middleware;
+using SyZero.Cache;
+using SyZero.Runtime.Session;
+using SyZero.Util;
 
 namespace Microsoft.AspNetCore.Builder
 {
@@ -24,10 +28,27 @@ namespace Microsoft.AspNetCore.Builder
         /// 权限中间件 - 扩展方法
         /// </summary>
         /// <param name="app"></param>
-        public static IApplicationBuilder UseSyAuthMiddleware(this IApplicationBuilder app)
+        public static IApplicationBuilder UseSyAuthMiddleware(this IApplicationBuilder app, Func<ISySession, string> cacheKeyFun = null)
         {
             Console.WriteLine("注入权限中间件...");
             app.UseMiddleware<SyAuthMiddleware>();
+            if (cacheKeyFun != null)
+            {
+                app.Use(async (context, next) =>
+                {
+                    var sySeesion = AutofacUtil.GetService<ISySession>();
+                    if (sySeesion.UserId != null)
+                    {
+                        var cache = AutofacUtil.GetService<ICache>();
+                        if (!cache.Exist(cacheKeyFun(sySeesion)))
+                        {
+                            Thread.CurrentPrincipal = null;
+                            context.User = null;
+                        }
+                    }
+                    await next.Invoke();
+                });
+            }
             return app;
         }
     }

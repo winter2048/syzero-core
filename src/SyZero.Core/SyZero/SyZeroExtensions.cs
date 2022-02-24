@@ -11,8 +11,6 @@ namespace Microsoft.AspNetCore.Builder
             #region Autofac依赖注入服务
             AutofacUtil.Container = app.ApplicationServices.GetAutofacRoot();
             #endregion
-
-            System.Console.WriteLine("启动成功");
             return app;
         }
     }

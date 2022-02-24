@@ -52,7 +52,7 @@
             <param name="opts"></param>
             <param name="routeAttribute"></param>
         </member>
-        <member name="M:Microsoft.AspNetCore.Builder.MvcOptionsExtensions.UseSyAuthMiddleware(Microsoft.AspNetCore.Builder.IApplicationBuilder)">
+        <member name="M:Microsoft.AspNetCore.Builder.MvcOptionsExtensions.UseSyAuthMiddleware(Microsoft.AspNetCore.Builder.IApplicationBuilder,System.Func{SyZero.Runtime.Session.ISySession,System.String})">
             <summary>
             权限中间件 - 扩展方法
             </summary>

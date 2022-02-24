@@ -6,6 +6,8 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using SyZero.Runtime.Security;
+using SyZero.Runtime.Session;
+using SyZero.Util;
 
 namespace SyZero.AspNetCore.Middleware
 {
@@ -14,7 +16,7 @@ namespace SyZero.AspNetCore.Middleware
     /// </summary>
     public class SyAuthMiddleware : IMiddleware
     {
-        private IToken _token;
+        public IToken _token;
 
         public SyAuthMiddleware(IToken token)
         {

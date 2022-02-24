@@ -1,10 +1,12 @@
 ﻿using Autofac;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyModel;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.Loader;
 using SyZero.AspNetCore.Controllers;
+using SyZero.AspNetCore.Middleware;
 
 namespace SyZero.AspNetCore
 {
@@ -13,6 +15,7 @@ namespace SyZero.AspNetCore
 
         protected override void Load(ContainerBuilder builder)
         {
+            builder.RegisterType<SyAuthMiddleware>().InstancePerLifetimeScope();
 
             var asss = new List<Assembly>();
             var deps = DependencyContext.Default;
