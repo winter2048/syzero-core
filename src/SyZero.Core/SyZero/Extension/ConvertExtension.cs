@@ -241,6 +241,18 @@ namespace SyZero
         }
 
         /// <summary>
+        /// byte[]
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public static byte[] ToBytes(this string value)
+        {
+            if (value == null) return null;
+
+            return System.Text.Encoding.Default.GetBytes(value);
+        }
+
+        /// <summary>
         /// 时间戳转为C#格式时间
         /// </summary>
         /// <param name=”timeStamp”></param>

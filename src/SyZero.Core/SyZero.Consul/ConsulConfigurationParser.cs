@@ -86,6 +86,14 @@ namespace SyZero.Consul
                 this.consulConfigurationSource.ConsulHttpClientHandler))
             {
                 QueryResult<KVPair> result = await consulClient.KV.Get(key, queryOptions, cancellationToken).ConfigureAwait(false);
+                if (result.StatusCode == HttpStatusCode.NotFound)
+                {
+                    await consulClient.KV.Put(new KVPair(key)
+                    {
+                        Value = "{}".ToBytes()
+                    });
+                    result = await consulClient.KV.Get(key, queryOptions, cancellationToken).ConfigureAwait(false);
+                }
 
                 switch (result.StatusCode)
                 {

@@ -720,6 +720,13 @@
             <param name="value"></param>
             <returns></returns>
         </member>
+        <member name="M:SyZero.ConvertExtension.ToBytes(System.String)">
+            <summary>
+            byte[]
+            </summary>
+            <param name="value"></param>
+            <returns></returns>
+        </member>
         <!-- Badly formed XML comment ignored for member "M:SyZero.ConvertExtension.ToTime``1(System.Int32)" -->
         <!-- Badly formed XML comment ignored for member "M:SyZero.ConvertExtension.ToTimeInt``1(System.DateTime)" -->
         <member name="M:SyZero.ConvertExtension.ConvertToObject(System.Object,System.Type)">
