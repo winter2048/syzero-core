@@ -5,6 +5,8 @@ using System.Linq;
 using SyZero.SqlSugar.DbContext;
 using SyZero;
 using Org.BouncyCastle.Crypto.Tls;
+using System;
+using System.Reflection;
 
 namespace Microsoft.Extensions.DependencyInjection
 {
@@ -46,6 +48,19 @@ namespace Microsoft.Extensions.DependencyInjection
                         if (attributes.Any(it => it is NotMappedAttribute))
                         {
                             column.IsIgnore = true;
+                        }
+
+                        // int?  decimal?这种 isnullable=true
+                        if (property.PropertyType.IsGenericType &&
+                        property.PropertyType.GetGenericTypeDefinition() == typeof(Nullable<>))
+                        {
+                            column.IsNullable = true;
+                        }
+                        else if (property.PropertyType == typeof(string) &&
+                                 property.GetCustomAttribute<RequiredAttribute>() == null)
+                        {
+                            //string类型如果没有Required isnullable=true
+                            column.IsNullable = true;
                         }
                     },
                     EntityNameService = (type, entity) =>

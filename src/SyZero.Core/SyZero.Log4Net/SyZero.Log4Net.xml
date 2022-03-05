@@ -4,5 +4,14 @@
         <name>SyZero.Log4Net</name>
     </assembly>
     <members>
+        <member name="M:SyZero.SyZeroLog4NetExtension.AddSyZeroLog4Net(Autofac.ContainerBuilder)">
+            <summary>
+            注册Log4NetModule
+            </summary>
+            <typeparam name="TContext"></typeparam>
+            <param name="builder"></param>
+            <param name="configuration"></param>
+            <returns></returns>
+        </member>
     </members>
 </doc>

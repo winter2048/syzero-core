@@ -312,16 +312,6 @@
             作为瞬变物体注入
             </summary>
         </member>
-        <member name="P:SyZero.Domain.Entities.Config.Name">
-            <summary>
-            键
-            </summary>
-        </member>
-        <member name="P:SyZero.Domain.Entities.Config.Value">
-            <summary>
-            值
-            </summary>
-        </member>
         <member name="T:SyZero.Domain.Entities.Entity">
             <summary>
             实体继承此类  常用主键类型long
@@ -756,6 +746,11 @@
                 获取所有的程序集
             </summary>
         </member>
+        <member name="M:SyZero.ReflectionHelper.GetTypes">
+            <summary>
+              获取所有的程序集
+            </summary>
+        </member>
         <member name="M:SyZero.ReflectionHelper.GetSingleAttributeOrNull``1(System.Reflection.MemberInfo,System.Boolean)">
             <summary>
             Gets a single attribute for a member.
@@ -998,6 +993,15 @@
             </summary>
             <typeparam name="T">对象类型</typeparam>
             <param name="jsonText">Json字符串</param>
+            <returns></returns>
+        </member>
+        <member name="M:SyZero.SyZeroExtension.AddSyZero(Autofac.ContainerBuilder)">
+            <summary>
+            SyZeroModule
+            </summary>
+            <typeparam name="TContext"></typeparam>
+            <param name="builder"></param>
+            <param name="configuration"></param>
             <returns></returns>
         </member>
         <member name="T:SyZero.SyZeroServiceBase">

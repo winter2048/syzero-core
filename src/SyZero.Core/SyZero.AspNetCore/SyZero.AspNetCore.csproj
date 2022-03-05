@@ -2,21 +2,22 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
-    <Version>1.0.5</Version>
-    <Authors>失忆</Authors>
-    <Company>SyZero</Company>
+    <PackageId>SyZero.AspNetCore</PackageId>
+    <Version>1.0.6</Version>
+    <Authors>winter2048</Authors>
+    <Company>SYZERO</Company>
     <Description>SyZero中的Web层扩展</Description>
     <PackageIcon>logo.png</PackageIcon>
     <PackageIconUrl />
     <NeutralLanguage></NeutralLanguage>
-    <PackageProjectUrl>https://SyZero.com</PackageProjectUrl>
+    <PackageProjectUrl>https://syzero.com</PackageProjectUrl>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
-    <RepositoryUrl>https://gitee.com/SyZero/SyZero.git</RepositoryUrl>
+    <RepositoryUrl>https://github.com/winter2048/syzero-core</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
     <PackageLicenseExpression></PackageLicenseExpression>
     <SignAssembly>false</SignAssembly>
-    <OutputType>Library</OutputType>
 
     <DocumentationFile>Dora.AspNetCore.xml</DocumentationFile>
     <NoWarn>1701;1702;1591</NoWarn>
@@ -32,6 +33,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Include="..\..\..\doc\icon\logo.png">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
     <None Include="..\..\..\LICENSE">
       <Pack>True</Pack>
       <PackagePath></PackagePath>

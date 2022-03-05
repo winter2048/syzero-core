@@ -4,8 +4,16 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using SyZero.SqlSugar.DbContext;
+using SyZero.Util;
+using SyZero.Domain.Entities;
+using Microsoft.AspNetCore.Builder;
+using SyZero.SqlSugar.Repositories;
+using SyZero.Domain.Repository;
+using SyZero.SqlSugar;
+using System;
+using System.Reflection;
 
-namespace SyZero.SqlSugar
+namespace SyZero
 {
     public static class SyZeroSqlSugarExtension
     {
@@ -43,7 +51,7 @@ namespace SyZero.SqlSugar
                             }
                             if (attributes.Any(it => it is DatabaseGeneratedAttribute))
                             {
-                                var databaseGeneratedAttribute  = (DatabaseGeneratedAttribute)attributes.FirstOrDefault(it => it is DatabaseGeneratedAttribute);
+                                var databaseGeneratedAttribute = (DatabaseGeneratedAttribute)attributes.FirstOrDefault(it => it is DatabaseGeneratedAttribute);
                                 column.IsIdentity = databaseGeneratedAttribute.DatabaseGeneratedOption == DatabaseGeneratedOption.Identity;
                             }
                             if (attributes.Any(it => it is ColumnAttribute))
@@ -54,6 +62,19 @@ namespace SyZero.SqlSugar
                             if (attributes.Any(it => it is NotMappedAttribute))
                             {
                                 column.IsIgnore = true;
+                            }
+
+                            // int?  decimal?这种 isnullable=true
+                            if (property.PropertyType.IsGenericType &&
+                            property.PropertyType.GetGenericTypeDefinition() == typeof(Nullable<>))
+                            {
+                                column.IsNullable = true;
+                            }
+                            else if (property.PropertyType == typeof(string) &&
+                                     property.GetCustomAttribute<RequiredAttribute>() == null)
+                            {
+                                //string类型如果没有Required isnullable=true
+                                column.IsNullable = true;
                             }
                         },
                         EntityNameService = (type, entity) =>
@@ -66,14 +87,50 @@ namespace SyZero.SqlSugar
                         }
                     }
                 };
+
                 return connection;
-            }).As<ConnectionConfig>().InstancePerLifetimeScope().PropertiesAutowired();
+            }).As<ConnectionConfig>().SingleInstance().PropertiesAutowired();
 
             // 注册 DbContext
             builder.RegisterType<TContext>()
-                .AsSelf()
+                .As<ISyZeroDbContext>()
                 .InstancePerLifetimeScope().PropertiesAutowired();
+
+            //注册仓储泛型
+            builder.RegisterGeneric(typeof(SqlSugarRepository<>)).As(typeof(IRepository<>)).InstancePerLifetimeScope().PropertiesAutowired();
+            ////注册持久化
+            builder.RegisterType<UnitOfWork>().As<IUnitOfWork>().InstancePerLifetimeScope().PropertiesAutowired();
+
             return builder;
+        }
+
+        /// <summary>
+        /// 注册SqlSugar
+        /// </summary>
+        /// <typeparam name="TContext"></typeparam>
+        /// <param name="builder"></param>
+        /// <param name="configuration"></param>
+        /// <returns></returns>
+        public static ContainerBuilder AddSyZeroSqlSuga(this ContainerBuilder builder)
+        {
+            builder.AddSyZeroSqlSugar<SyZeroDbContext>();
+            return builder;
+        }
+
+        /// <summary>
+        /// 初始化表
+        /// </summary>
+        /// <param name="app"></param>
+        /// <returns></returns>
+        public static IApplicationBuilder InitTables(this IApplicationBuilder app)
+        {
+            System.Console.WriteLine("检查数据库,初始化表...");
+            AutofacUtil.GetService<ISyZeroDbContext>()
+            .CodeFirst.SetStringDefaultLength(200)
+            .InitTables(ReflectionHelper.GetTypes()
+            .Where(m => typeof(IEntity).IsAssignableFrom(m) && m != typeof(IEntity) && m != typeof(Entity))
+            .ToArray());
+            return app;
         }
     }
 }

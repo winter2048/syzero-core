@@ -7,20 +7,24 @@ using System.Threading.Tasks;
 using SyZero.Domain.Entities;
 using SyZero.Domain.Repository;
 using SyZero.SqlSugar.DbContext;
+using SyZero.Util;
 
 namespace SyZero.SqlSugar.Repositories
 {
-    public class SqlSugarRepository<TDbContext, TEntity> : IRepository<TEntity>
+    public class SqlSugarRepository<TEntity> : IRepository<TEntity>
       where TEntity : class, IEntity, new()
-      where TDbContext : SyZeroDbContext
     {
-        protected TDbContext _dbContext;
+        protected ISyZeroDbContext _dbContext;
         protected SimpleClient<TEntity> _dbSet;
 
-        public SqlSugarRepository(TDbContext dbContext)
+        public SqlSugarRepository(ISyZeroDbContext dbContext = null)
         {
+            if (dbContext == null)
+            {
+                dbContext = AutofacUtil.GetService<ISyZeroDbContext>();
+            }
             _dbContext = dbContext;
-            _dbSet = new SimpleClient<TEntity>(_dbContext);
+            _dbSet = _dbContext.GetSimpleClient<TEntity>();
         }
 
         #region Count

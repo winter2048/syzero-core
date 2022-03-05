@@ -10,5 +10,14 @@
             </summary>
             <returns></returns>
         </member>
+        <member name="M:SyZero.SyZeroRedisExtension.AddSyZeroRedis(Autofac.ContainerBuilder)">
+            <summary>
+            注册RedisModule
+            </summary>
+            <typeparam name="TContext"></typeparam>
+            <param name="builder"></param>
+            <param name="configuration"></param>
+            <returns></returns>
+        </member>
     </members>
 </doc>
