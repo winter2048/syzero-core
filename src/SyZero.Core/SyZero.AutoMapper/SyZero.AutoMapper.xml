@@ -9,5 +9,14 @@
             实体映射注入
             </summary>
         </member>
+        <member name="M:SyZero.SyZeroAutoMapperExtension.AddSyZeroAutoMapper(Autofac.ContainerBuilder)">
+            <summary>
+            AutoMapperModule
+            </summary>
+            <typeparam name="TContext"></typeparam>
+            <param name="builder"></param>
+            <param name="configuration"></param>
+            <returns></returns>
+        </member>
     </members>
 </doc>

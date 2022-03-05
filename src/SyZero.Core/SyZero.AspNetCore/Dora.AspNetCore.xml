@@ -45,6 +45,15 @@
             权限中间件
             </summary>
         </member>
+        <member name="M:SyZero.SyZeroAspNetExtension.AddSyZeroController(Autofac.ContainerBuilder)">
+            <summary>
+            注册SyZeroControllerModule
+            </summary>
+            <typeparam name="TContext"></typeparam>
+            <param name="builder"></param>
+            <param name="configuration"></param>
+            <returns></returns>
+        </member>
         <member name="M:Microsoft.AspNetCore.Builder.MvcOptionsExtensions.UseCentralRoutePrefix(Microsoft.AspNetCore.Mvc.MvcOptions,Microsoft.AspNetCore.Mvc.Routing.IRouteTemplateProvider)">
             <summary>
             扩展方法

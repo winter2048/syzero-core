@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 namespace SyZero.SqlSugar.DbContext
 {
-    public class SyZeroDbContext : SqlSugarClient
+    public class SyZeroDbContext : SqlSugarClient, ISyZeroDbContext
     {
         public SyZeroDbContext(ConnectionConfig config):base(config)
         {
-
+            
         }
         //public SyZeroDbContext()
         //{

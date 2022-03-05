@@ -5,12 +5,11 @@ using SyZero.SqlSugar.DbContext;
 
 namespace SyZero.SqlSugar
 {
-    public class UnitOfWork<TDbContext> : IUnitOfWork
-         where TDbContext : SyZeroDbContext
+    public class UnitOfWork : IUnitOfWork
     {
-        private TDbContext dataContext;
+        private ISyZeroDbContext dataContext;
 
-        public UnitOfWork(TDbContext _dataContext)
+        public UnitOfWork(ISyZeroDbContext _dataContext)
         {
             this.dataContext = _dataContext;
         }
@@ -38,22 +37,22 @@ namespace SyZero.SqlSugar
 
         public async Task BeginTransactionAsync()
         {
-            await Task.Run(this.dataContext.Context.Ado.BeginTran);
+            await Task.Run(this.dataContext.Ado.BeginTran);
         }
 
         public async Task CommitTransactionAsync()
         {
-            await Task.Run(this.dataContext.Context.Ado.CommitTran);
+            await Task.Run(this.dataContext.Ado.CommitTran);
         }
 
         public async Task RollbackTransactionAsync()
         {
-            await Task.Run(this.dataContext.Context.Ado.RollbackTran);
+            await Task.Run(this.dataContext.Ado.RollbackTran);
         }
 
         public async Task DisposeTransactionAsync()
         {
-            await Task.Run(this.dataContext.Context.Ado.Dispose);
+            await Task.Run(this.dataContext.Ado.Dispose);
         }
 
 

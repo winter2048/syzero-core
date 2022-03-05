@@ -1817,5 +1817,14 @@
             <param name="xPath">范例: @"Skill/First/SkillItem"</param>
             <returns></returns>
         </member>
+        <member name="M:SyZero.SyZeroCommonExtension.AddSyZeroCommon(Autofac.ContainerBuilder)">
+            <summary>
+            注册CommonModule
+            </summary>
+            <typeparam name="TContext"></typeparam>
+            <param name="builder"></param>
+            <param name="configuration"></param>
+            <returns></returns>
+        </member>
     </members>
 </doc>

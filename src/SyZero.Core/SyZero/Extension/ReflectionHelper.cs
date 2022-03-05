@@ -37,8 +37,19 @@ namespace SyZero
             return assemblies;
         }
 
+        /// <summary>
+        ///   获取所有的程序集
+        /// </summary>
+        public static IEnumerable<Type> GetTypes()
+        {
+            List<Type> types = new List<Type>();
+            foreach (var item in GetAssemblies())
+            {
+                types.AddRange(item.GetTypes());
+            }
+            return types;
+        }
 
-    
 
         public static TAttribute GetSingleAttributeOrDefaultByFullSearch<TAttribute>(TypeInfo info)
             where TAttribute : Attribute
