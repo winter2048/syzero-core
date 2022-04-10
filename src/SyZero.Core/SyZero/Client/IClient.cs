@@ -17,10 +17,7 @@ namespace SyZero.Client
         /// <param name="requestTemplate"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        Task<ResponseTemplate> ExecuteAsync(RequestTemplate requestTemplate, CancellationToken cancellationToken);
-
-
-
+        Task<ResponseTemplate<T>> ExecuteAsync<T>(RequestTemplate requestTemplate, CancellationToken cancellationToken);
 
     }
 }

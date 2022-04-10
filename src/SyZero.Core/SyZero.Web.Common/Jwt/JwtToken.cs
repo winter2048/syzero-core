@@ -5,6 +5,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using SyZero.Runtime.Security;
+using System.Linq;
 
 namespace SyZero.Web.Common.Jwt
 {
@@ -45,7 +46,9 @@ namespace SyZero.Web.Common.Jwt
                     IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(AppConfig.GetSection("JWT:SecurityKey")))//拿到SecurityKey
                 };
                 SecurityToken securityToken; // 接受解码后的token对象
-                return tokenHandler.ValidateToken(token, validationParameters, out securityToken);
+                var claimsPrincipal = tokenHandler.ValidateToken(token, validationParameters, out securityToken);
+                claimsPrincipal.Identities.First().AddClaim(new Claim(SyClaimTypes.Token, token));
+                return claimsPrincipal;
             }
             catch
             {

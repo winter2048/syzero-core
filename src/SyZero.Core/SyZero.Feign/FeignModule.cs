@@ -19,33 +19,27 @@ namespace SyZero.Feign
 
         protected override void Load(ContainerBuilder builder)
         {
-            var asssAll = ReflectionHelper.GetAssemblies();
-            var definedTypes = new List<TypeInfo>();
-            foreach (var assembly in asssAll)
-            {
-                var definedType = assembly.DefinedTypes.ToList();
-                foreach (var typeInfo in definedType)
-                    definedTypes.Add(typeInfo);
-            }
+            var definedTypes = ReflectionHelper.GetTypes();
 
             var baseFallback = typeof(IFallback);
             var baseType = typeof(IApplicationService);
-            var types = definedTypes.Where(typeInfo => baseType.IsAssignableFrom(typeInfo.AsType()) && typeInfo.AsType() != baseType);
+            var types = definedTypes.Where(type => baseType.IsAssignableFrom(type) && type != baseType);
             var interfaceTypeInfos = types.Where(t => t.IsInterface);
 
-            var implTypeInfos = types.Where(t => t.IsClass && !t.IsAbstract && !baseFallback.IsAssignableFrom(t.AsType()));
-            var fallbackTypeInfos = types.Where(t => t.IsClass && !t.IsAbstract && baseFallback.IsAssignableFrom(t.AsType()));
-            var test = interfaceTypeInfos.Where(p => !p.AsType().IsGenericType && !implTypeInfos.Any(t => p.IsAssignableFrom(t)) && p.ImplementedInterfaces.Any(i => i == typeof(IApplicationService)));
+            var implTypeInfos = types.Where(t => t.IsClass && !t.IsAbstract && !baseFallback.IsAssignableFrom(t));
+            var fallbackTypeInfos = types.Where(t => t.IsClass && !t.IsAbstract && baseFallback.IsAssignableFrom(t));
+
+            var test = interfaceTypeInfos.Where(p => !p.IsGenericType && !implTypeInfos.Any(t => p.IsAssignableFrom(t)) && baseType.IsAssignableFrom(p));
 
             builder.RegisterType<ClientInterceptor>();
 
             foreach (var targetType in test)
             {
-                var fallbackType = fallbackTypeInfos.FirstOrDefault(t => targetType.IsAssignableFrom(t.AsType()));
+                var fallbackType = fallbackTypeInfos.FirstOrDefault(t => targetType.IsAssignableFrom(t));
                 if (fallbackType != null) {
                     builder
-                       .RegisterType(fallbackType.AsType())
-                       .As(targetType.AsType())
+                       .RegisterType(fallbackType)
+                       .As(targetType)
                        .InterceptedBy(typeof(ClientInterceptor))
                        .EnableInterfaceInterceptors();
                 }

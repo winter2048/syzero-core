@@ -71,5 +71,17 @@ namespace SyZero.Runtime.Session
             }
         }
 
+        public string Token
+        {
+            get
+            {
+                var tenantIdClaim = Principal?.Claims.FirstOrDefault(c => c.Type == SyClaimTypes.Token);
+                if (!string.IsNullOrEmpty(tenantIdClaim?.Value))
+                {
+                    return tenantIdClaim.Value;
+                }
+                return null;
+            }
+        }
     }
 }

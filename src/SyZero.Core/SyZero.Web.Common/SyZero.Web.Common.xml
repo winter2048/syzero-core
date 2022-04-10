@@ -286,6 +286,11 @@
                 业务数据对象
             </summary>
         </member>
+        <member name="T:SyZero.Web.Common.Util.HttpRestClient">
+            <summary>
+            HttpRestClient class
+            </summary>
+        </member>
         <member name="P:SyZero.Web.Common.HttpResultMessage`1.Entity">
             <summary>
             数据集

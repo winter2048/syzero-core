@@ -46,11 +46,20 @@ namespace SyZero
         /// 自定义异常
         /// </summary>
         /// <param name="Data">客户端接收对象 例如: {status=1,data="这是消息!"}</param>
-        public SyMessageException(object Message)
+        public SyMessageException(object message)
             : base($"自定义异常 请忽略!{SyMessageBoxStatus.Custom.ToString()}")
         {
-            this.Model = new SyMessageBoxModel(Message, SyMessageBoxStatus.Custom);
+            this.Model = new SyMessageBoxModel(message, SyMessageBoxStatus.Custom);
         }
 
+        /// <summary>
+        /// 自定义返回
+        /// </summary>
+        /// <param name="Messager"></param>
+        public SyMessageException(string message, SyMessageBoxStatus syMessageBoxStatus)
+            : base(message)
+        {
+            this.Model = new SyMessageBoxModel(message, syMessageBoxStatus);
+        }
     }
 }

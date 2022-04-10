@@ -11,6 +11,7 @@
 // </copyright>
 // *****************************************************************************************************************
 
+using Autofac;
 using Microsoft.Extensions.Configuration;
 using NConsul;
 using System;
@@ -18,6 +19,7 @@ using System.Threading;
 using SyZero;
 using SyZero.Consul;
 using SyZero.Consul.Config;
+using SyZero.Service;
 
 namespace Microsoft.Extensions.Configuration
 {

@@ -1,7 +1,9 @@
 ﻿using Autofac;
+using SyZero.Client;
 using SyZero.Runtime.Security;
 using SyZero.Serialization;
 using SyZero.Web.Common.Jwt;
+using SyZero.Web.Common.Util;
 
 namespace SyZero.Web.Common
 {
@@ -15,6 +17,7 @@ namespace SyZero.Web.Common
             builder.RegisterType<JwtToken>().As<IToken>().SingleInstance();
             builder.RegisterType<PrizeUtil>().As<IPrizeUtil>().SingleInstance();
             builder.RegisterType<AliasMethod>().As<IAliasMethod>().InstancePerLifetimeScope();
+            builder.RegisterType<HttpRestClient>().As<IClient>().InstancePerLifetimeScope();
         }
     }
 }

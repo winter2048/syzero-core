@@ -3,6 +3,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using NConsul;
 using System;
+using System.Collections.Generic;
 using SyZero;
 using SyZero.Consul.Config;
 
@@ -60,7 +61,11 @@ namespace Microsoft.AspNetCore.Builder
                 Name = serverOptions.Name, // 服务名
                 Address = serverOptions.WanIp,
                 Port = serverOptions.Port.ToInt32(), // 服务端口
-                Check = Check
+                Check = Check,
+                Meta = new Dictionary<string, string>
+                {
+                    { "Protocol", serverOptions.Protocol.ToString() }
+                }
             };
 
             // 注册服务

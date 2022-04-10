@@ -34,7 +34,10 @@ namespace SyZero.Runtime.Session
         /// </summary>
         List<string> Permission { get; }
 
-
-
+        /// <summary>
+        /// 获取当前用户名称或空。
+        /// 如果没有用户登录，则为空。
+        /// </summary>
+        string Token { get; }
     }
 }
