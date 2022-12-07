@@ -1,9 +1,9 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <TargetFramework>netstandard2.1</TargetFramework>
     <PackageId>SyZero.Feign</PackageId>
-    <Version>1.0.6</Version>
+    <Version>2.0.0</Version>
     <Authors>winter2048</Authors>
     <Company>SYZERO</Company>
     <Description>SyZero-Feign</Description>

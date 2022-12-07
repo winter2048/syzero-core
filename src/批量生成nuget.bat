@@ -2,9 +2,9 @@
 set nowPath=%cd%
 cd \
 cd %nowPath%
-echo ¿ªÊ¼Éú³É
+echo å¼€å§‹ç”Ÿæˆ
 
-echo ¿ªÊ¼Éú³ÉSyZero
+echo å¼€å§‹ç”ŸæˆSyZero
 cd SyZero.Core\SyZero
 del /f /s /q %USERPROFILE%\.nuget\packages\SyZero
 del /f /s /q bin\Release\*.nupkg
@@ -14,7 +14,7 @@ copy /y bin\Release\*.nupkg ..\..\..\nuget\*.nupkg
 cd %nowPath%
 
 
-echo ¿ªÊ¼Éú³ÉSyZero.ApiGateway
+echo å¼€å§‹ç”ŸæˆSyZero.ApiGateway
 cd SyZero.Core\SyZero.ApiGateway
 del /f /s /q %USERPROFILE%\.nuget\packages\SyZero.ApiGateway
 del /f /s /q bin\Release\*.nupkg
@@ -23,7 +23,7 @@ dotnet pack --configuration Release
 copy /y bin\Release\*.nupkg ..\..\..\nuget\*.nupkg
 cd %nowPath%
 
-echo ¿ªÊ¼Éú³ÉSyZero.AspNetCore
+echo å¼€å§‹ç”ŸæˆSyZero.AspNetCore
 cd SyZero.Core\SyZero.AspNetCore
 del /f /s /q %USERPROFILE%\.nuget\packages\SyZero.AspNetCore
 del /f /s /q bin\Release\*.nupkg
@@ -32,7 +32,7 @@ dotnet pack --configuration Release
 copy /y bin\Release\*.nupkg ..\..\..\nuget\*.nupkg
 cd %nowPath%
 
-echo ¿ªÊ¼Éú³ÉSyZero.AutoMapper
+echo å¼€å§‹ç”ŸæˆSyZero.AutoMapper
 cd SyZero.Core\SyZero.AutoMapper
 del /f /s /q %USERPROFILE%\.nuget\packages\SyZero.AutoMapper
 del /f /s /q bin\Release\*.nupkg
@@ -41,7 +41,7 @@ dotnet pack --configuration Release
 copy /y bin\Release\*.nupkg ..\..\..\nuget\*.nupkg
 cd %nowPath%
 
-echo ¿ªÊ¼Éú³ÉSyZero.Consul
+echo å¼€å§‹ç”ŸæˆSyZero.Consul
 cd SyZero.Core\SyZero.Consul
 del /f /s /q %USERPROFILE%\.nuget\packages\SyZero.Consul
 del /f /s /q bin\Release\*.nupkg
@@ -50,7 +50,7 @@ dotnet pack --configuration Release
 copy /y bin\Release\*.nupkg ..\..\..\nuget\*.nupkg
 cd %nowPath%
 
-echo ¿ªÊ¼Éú³ÉSyZero.DynamicWebApi
+echo å¼€å§‹ç”ŸæˆSyZero.DynamicWebApi
 cd SyZero.Core\SyZero.DynamicWebApi
 del /f /s /q %USERPROFILE%\.nuget\packages\SyZero.DynamicWebApi
 del /f /s /q bin\Release\*.nupkg
@@ -59,7 +59,7 @@ dotnet pack --configuration Release
 copy /y bin\Release\*.nupkg ..\..\..\nuget\*.nupkg
 cd %nowPath%
 
-echo ¿ªÊ¼Éú³ÉSyZero.EntityFrameworkCore
+echo å¼€å§‹ç”ŸæˆSyZero.EntityFrameworkCore
 cd SyZero.Core\SyZero.EntityFrameworkCore
 del /f /s /q %USERPROFILE%\.nuget\packages\SyZero.EntityFrameworkCore
 del /f /s /q bin\Release\*.nupkg
@@ -68,7 +68,7 @@ dotnet pack --configuration Release
 copy /y bin\Release\*.nupkg ..\..\..\nuget\*.nupkg
 cd %nowPath%
 
-echo ¿ªÊ¼Éú³ÉSyZero.Feign
+echo å¼€å§‹ç”ŸæˆSyZero.Feign
 cd SyZero.Core\SyZero.Feign
 del /f /s /q %USERPROFILE%\.nuget\packages\SyZero.Feign
 del /f /s /q bin\Release\*.nupkg
@@ -77,7 +77,7 @@ dotnet pack --configuration Release
 copy /y bin\Release\*.nupkg ..\..\..\nuget\*.nupkg
 cd %nowPath%
 
-echo ¿ªÊ¼Éú³ÉSyZero.Log4Net
+echo å¼€å§‹ç”ŸæˆSyZero.Log4Net
 cd SyZero.Core\SyZero.Log4Net
 del /f /s /q %USERPROFILE%\.nuget\packages\SyZero.Log4Net
 del /f /s /q bin\Release\*.nupkg
@@ -86,7 +86,7 @@ dotnet pack --configuration Release
 copy /y bin\Release\*.nupkg ..\..\..\nuget\*.nupkg
 cd %nowPath%
 
-echo ¿ªÊ¼Éú³ÉSyZero.MongoDB
+echo å¼€å§‹ç”ŸæˆSyZero.MongoDB
 cd SyZero.Core\SyZero.MongoDB
 del /f /s /q %USERPROFILE%\.nuget\packages\SyZero.MongoDB
 del /f /s /q bin\Release\*.nupkg
@@ -95,16 +95,17 @@ dotnet pack --configuration Release
 copy /y bin\Release\*.nupkg ..\..\..\nuget\*.nupkg
 cd %nowPath%
 
-echo ¿ªÊ¼Éú³ÉSyZero.Nacos
-cd SyZero.Core\SyZero.Nacos
-del /f /s /q %USERPROFILE%\.nuget\packages\SyZero.Nacos
-del /f /s /q bin\Release\*.nupkg
-dotnet build --configuration Release
-dotnet pack --configuration Release
-copy /y bin\Release\*.nupkg ..\..\..\nuget\*.nupkg
-cd %nowPath%
+@REM SyZero.Nacoså–æ¶ˆbuild
+@REM echo å¼€å§‹ç”ŸæˆSyZero.Nacos
+@REM cd SyZero.Core\SyZero.Nacos
+@REM del /f /s /q %USERPROFILE%\.nuget\packages\SyZero.Nacos
+@REM del /f /s /q bin\Release\*.nupkg
+@REM dotnet build --configuration Release
+@REM dotnet pack --configuration Release
+@REM copy /y bin\Release\*.nupkg ..\..\..\nuget\*.nupkg
+@REM cd %nowPath%
 
-echo ¿ªÊ¼Éú³ÉSyZero.RabbitMQ
+echo å¼€å§‹ç”ŸæˆSyZero.RabbitMQ
 cd SyZero.Core\SyZero.RabbitMQ
 del /f /s /q %USERPROFILE%\.nuget\packages\SyZero.RabbitMQ
 del /f /s /q bin\Release\*.nupkg
@@ -113,7 +114,7 @@ dotnet pack --configuration Release
 copy /y bin\Release\*.nupkg ..\..\..\nuget\*.nupkg
 cd %nowPath%
 
-echo ¿ªÊ¼Éú³ÉSyZero.Redis
+echo å¼€å§‹ç”ŸæˆSyZero.Redis
 cd SyZero.Core\SyZero.Redis
 del /f /s /q %USERPROFILE%\.nuget\packages\SyZero.Redis
 del /f /s /q bin\Release\*.nupkg
@@ -122,7 +123,7 @@ dotnet pack --configuration Release
 copy /y bin\Release\*.nupkg ..\..\..\nuget\*.nupkg
 cd %nowPath%
 
-echo ¿ªÊ¼Éú³ÉSyZero.SqlSugar
+echo å¼€å§‹ç”ŸæˆSyZero.SqlSugar
 cd SyZero.Core\SyZero.SqlSugar
 del /f /s /q %USERPROFILE%\.nuget\packages\SyZero.SqlSugar
 del /f /s /q bin\Release\*.nupkg
@@ -131,7 +132,7 @@ dotnet pack --configuration Release
 copy /y bin\Release\*.nupkg ..\..\..\nuget\*.nupkg
 cd %nowPath%
 
-echo ¿ªÊ¼Éú³ÉSyZero.Swagger
+echo å¼€å§‹ç”ŸæˆSyZero.Swagger
 cd SyZero.Core\SyZero.Swagger
 del /f /s /q %USERPROFILE%\.nuget\packages\SyZero.Swagger
 del /f /s /q bin\Release\*.nupkg
@@ -140,7 +141,7 @@ dotnet pack --configuration Release
 copy /y bin\Release\*.nupkg ..\..\..\nuget\*.nupkg
 cd %nowPath%
 
-echo ¿ªÊ¼Éú³ÉSyZero.Web.Common
+echo å¼€å§‹ç”ŸæˆSyZero.Web.Common
 cd SyZero.Core\SyZero.Web.Common
 del /f /s /q %USERPROFILE%\.nuget\packages\SyZero.Web.Common
 del /f /s /q bin\Release\*.nupkg
@@ -149,5 +150,5 @@ dotnet pack --configuration Release
 copy /y bin\Release\*.nupkg ..\..\..\nuget\*.nupkg
 cd %nowPath%
 
-echo Íê³É
+echo å®Œæˆ
 Pause
