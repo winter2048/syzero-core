@@ -10,7 +10,6 @@ using System.ComponentModel;
 using System.Dynamic;
 using System.Linq;
 using System.Reflection;
-using System.Runtime.Loader;
 using SyZero.Application.Service;
 using SyZero.Runtime.Session;
 
@@ -45,7 +44,7 @@ namespace SyZero
                 try
                 {
                     System.Console.WriteLine(lib.Name);
-                    var assembly = AssemblyLoadContext.Default.LoadFromAssemblyName(new AssemblyName(lib.Name));
+                    var assembly = Assembly.Load(new AssemblyName(lib.Name));
                     asss.Add(assembly);
                 }
                 catch
