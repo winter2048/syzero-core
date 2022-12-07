@@ -2,7 +2,7 @@
 set nowPath=%cd%
 cd \
 cd %nowPath%
-echo ¿ªÊ¼Éú³É
+echo å¼€å§‹ç”Ÿæˆ
 
 del /f /s /q %USERPROFILE%\.nuget\packages\SyZero
 
@@ -26,5 +26,5 @@ del /f /s /q %USERPROFILE%\.nuget\packages\SyZero.Redis
 
 del /f /s /q %USERPROFILE%\.nuget\packages\SyZero.Web.Common
 
-echo Íê³É
+echo å®Œæˆ
 Pause

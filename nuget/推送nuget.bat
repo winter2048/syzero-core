@@ -2,21 +2,21 @@
 set nowPath=%cd%
 cd \
 cd %nowPath%
-echo.ÇëÊäÈëÄãÒªÍÆËÍµÄÄ¿±ê£¬±ÈÈç£ºgithub/ms
+echo.è¯·è¾“å…¥ä½ è¦æ¨é€çš„ç›®æ ‡ï¼Œæ¯”å¦‚ï¼šgithub/ms
 set /p source=
-echo.ÇëÊäÈëÄãµÄapi_key
+echo.è¯·è¾“å…¥ä½ çš„api_key
 set /p api_key=
 if "%source%" == "github" set source_url="https://nuget.pkg.github.com/OWNER/index.json"
 if "%source%" == "ms" set source_url="https://api.nuget.org/v3/index.json"
 
-echo ÍÆËÍÖÁ%source%
+echo æ¨é€è‡³%source%
 
 for /f "delims=" %%a in ('dir /b/a-d/oN *nupkg*') do (
     echo ""
-    echo %%a: ¿ªÊ¼ÍÆËÍ
+    echo %%a: å¼€å§‹æ¨é€
     dotnet nuget push "%%a"  --api-key "%api_key%" --source "%source_url%"
-    echo %%a: ÍÆËÍÍê³É
+    echo %%a: æ¨é€å®Œæˆ
 )
 
-echo Íê³É
+echo å®Œæˆ
 Pause
