@@ -1,0 +1,6 @@
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Version>1.0.7</Version>
+    <NoWarn>1701;1702;1591;1570;1723;1572;1573;1711</NoWarn>
+  </PropertyGroup>
+</Project>
