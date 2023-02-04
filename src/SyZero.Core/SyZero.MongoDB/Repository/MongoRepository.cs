@@ -48,11 +48,13 @@ namespace SyZero.MongoDB
         #endregion
 
         #region Count
+        [Obsolete]
         public long Count(Expression<Func<TEntity, bool>> where)
         {
             return _collection.Count(where);
         }
 
+        [Obsolete]
         public async Task<long> CountAsync(Expression<Func<TEntity, bool>> where, CancellationToken cancellationToken = default(CancellationToken))
         {
             return await _collection.CountAsync(where, null, cancellationToken);

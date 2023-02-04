@@ -33,6 +33,29 @@ namespace SyZero.Web.Common
         }
 
         /// <summary>
+        /// 通过传入的请求信息访问服务端，并返回结果对象
+        /// </summary>
+        /// <param name="baseUrl"></param>
+        /// <param name="request">外部设定的请求</param>
+        /// <returns>返回Jobject通用对象</returns>
+        public static async Task<JObject> ExecuteAsync(string baseUrl, RestRequest request)
+        {
+            var client = new RestClient(baseUrl);
+            //client.BaseUrl = new Uri(baseUrl);
+            var response = await client.ExecuteAsync(request);
+            if (response.ErrorException != null)
+            {
+                return null;
+            }
+            //返回的内容为Html则返回不对象化
+            if (response.Content.Contains("<html xmlns="))
+            {
+                return null;
+            }
+            return JObject.Parse(response.Content);
+        }
+
+        /// <summary>
         /// 通过传入的请求信息访问服务端，并返回T
         /// </summary>
         /// <typeparam name="T"></typeparam>
@@ -44,6 +67,26 @@ namespace SyZero.Web.Common
             var client = new RestClient(baseUrl);
             //client.BaseUrl = new Uri(baseUrl);
             var response = client.Execute(request);
+            if (response.ErrorException != null)
+            {
+                return null;
+            }
+
+            return JsonConvert.DeserializeObject<T>(response.Content);
+        }
+
+        /// <summary>
+        /// 通过传入的请求信息访问服务端，并返回T
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="baseUrl"></param>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        public static async Task<T> ExecuteAsync<T>(string baseUrl, RestRequest request) where T : class, new()
+        {
+            var client = new RestClient(baseUrl);
+            //client.BaseUrl = new Uri(baseUrl);
+            var response = await client.ExecuteAsync(request);
             if (response.ErrorException != null)
             {
                 return null;
@@ -257,7 +300,7 @@ namespace SyZero.Web.Common
             catch (Exception ex) { return default(T); }
         }
 
-        public static T WechatGet<T>(string resource, string token = "")
+        public static async Task<T> WechatGet<T>(string resource, string token = "")
         {
             try
             {
@@ -271,7 +314,7 @@ namespace SyZero.Web.Common
 
 
 
-                IRestResponse response = client.Execute(request);
+                IRestResponse response = await client.ExecuteAsync(request);
                 var resultStr = response.Content;
                 var result = default(T);
                 //if (remoteInvokeResult.GetType().IsValueType)

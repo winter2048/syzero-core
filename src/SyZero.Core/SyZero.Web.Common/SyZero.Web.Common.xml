@@ -430,7 +430,24 @@
             <param name="request">外部设定的请求</param>
             <returns>返回Jobject通用对象</returns>
         </member>
+        <member name="M:SyZero.Web.Common.RestHelper.ExecuteAsync(System.String,RestSharp.RestRequest)">
+            <summary>
+            通过传入的请求信息访问服务端，并返回结果对象
+            </summary>
+            <param name="baseUrl"></param>
+            <param name="request">外部设定的请求</param>
+            <returns>返回Jobject通用对象</returns>
+        </member>
         <member name="M:SyZero.Web.Common.RestHelper.Execute``1(System.String,RestSharp.RestRequest)">
+            <summary>
+            通过传入的请求信息访问服务端，并返回T
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="baseUrl"></param>
+            <param name="request"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SyZero.Web.Common.RestHelper.ExecuteAsync``1(System.String,RestSharp.RestRequest)">
             <summary>
             通过传入的请求信息访问服务端，并返回T
             </summary>

@@ -9,7 +9,7 @@
             领域模型
             </summary>
             <typeparam name="TDbContext"></typeparam>
-            <typeparam name="IEntity"></typeparam>
+            <typeparam name="TEntity"></typeparam>
         </member>
         <member name="M:SyZero.EntityFrameworkCore.SyZeroEntityFrameworkExtension.AddSyZeroEntityFramework``1(Autofac.ContainerBuilder)">
             <summary>

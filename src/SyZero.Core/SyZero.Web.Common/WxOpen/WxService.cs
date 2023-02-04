@@ -27,20 +27,23 @@ namespace SyZero.Web.Common
         /// <returns></returns>
         public async Task<WxAccessToken> GetWxToken()
         {
-            WxAccessToken accessToken = new WxAccessToken();
-            string grant_type = "client_credential";
-            string wxacodeUrl = "https://api.weixin.qq.com";
-            string url = string.Format("/cgi-bin/token?grant_type={0}&appid={1}&secret={2}", grant_type, appId, appSecret);
-            RestRequest request = new RestRequest(url, Method.GET);
-            request.AddHeader("Content-Type", "application/json");
-            //获取微信凭证
-            var result = RestHelper.Execute(wxacodeUrl, request);
-            if (result == null) return accessToken;
-            accessToken.access_token = result["access_token"].ToString();
-            accessToken.expires_in = result["expires_in"].ToString();
-            access_token = accessToken.access_token;
-            Console.WriteLine("[获取小程序AccessToken]accessToken:" + accessToken.expires_in);
-            return accessToken;
+            return await Task.Run(() =>
+            {
+                WxAccessToken accessToken = new WxAccessToken();
+                string grant_type = "client_credential";
+                string wxacodeUrl = "https://api.weixin.qq.com";
+                string url = string.Format("/cgi-bin/token?grant_type={0}&appid={1}&secret={2}", grant_type, appId, appSecret);
+                RestRequest request = new RestRequest(url, Method.GET);
+                request.AddHeader("Content-Type", "application/json");
+                //获取微信凭证
+                var result = RestHelper.Execute(wxacodeUrl, request);
+                if (result == null) return accessToken;
+                accessToken.access_token = result["access_token"].ToString();
+                accessToken.expires_in = result["expires_in"].ToString();
+                access_token = accessToken.access_token;
+                Console.WriteLine("[获取小程序AccessToken]accessToken:" + accessToken.expires_in);
+                return accessToken;
+            });
         }
 
         /// <summary>
@@ -49,12 +52,15 @@ namespace SyZero.Web.Common
         /// <returns></returns>
         public async Task<SelfmenuInfoResult> GetCurrentSelfmenuInfo()
         {
-            string wxacodeUrl = "https://api.weixin.qq.com";
-            string url = $"/cgi-bin/get_current_selfmenu_info?access_token={access_token}";
-            RestRequest request = new RestRequest(url, Method.GET);
-            request.AddHeader("Content-Type", "application/json");
-            var result = RestHelper.Execute<SelfmenuInfoResult>(wxacodeUrl, request);
-            return result;
+            return await Task.Run(() =>
+            {
+                string wxacodeUrl = "https://api.weixin.qq.com";
+                string url = $"/cgi-bin/get_current_selfmenu_info?access_token={access_token}";
+                RestRequest request = new RestRequest(url, Method.GET);
+                request.AddHeader("Content-Type", "application/json");
+                var result = RestHelper.Execute<SelfmenuInfoResult>(wxacodeUrl, request);
+                return result;
+            });
         }
 
         /// <summary>
@@ -63,15 +69,18 @@ namespace SyZero.Web.Common
         /// <returns></returns>
         public async Task<WxOpenJsonResult> SetSelfmenuInfo(CreateSelfmenuInfo info)
         {
-            string wxacodeUrl = "https://api.weixin.qq.com";
-            string url = $"/cgi-bin/menu/create?access_token={access_token}";
-            RestRequest request = new RestRequest(url, Method.POST);
-            request.AddHeader("Content-Type", "application/json");
-            var jsonSetting = new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore };
-            var json = JsonConvert.SerializeObject(info, Formatting.Indented, jsonSetting);
-            request.AddJsonBody(json);
-            var result = RestHelper.Execute<WxOpenJsonResult>(wxacodeUrl, request);
-            return result;
+            return await Task.Run(() =>
+            {
+                string wxacodeUrl = "https://api.weixin.qq.com";
+                string url = $"/cgi-bin/menu/create?access_token={access_token}";
+                RestRequest request = new RestRequest(url, Method.POST);
+                request.AddHeader("Content-Type", "application/json");
+                var jsonSetting = new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore };
+                var json = JsonConvert.SerializeObject(info, Formatting.Indented, jsonSetting);
+                request.AddJsonBody(json);
+                var result = RestHelper.Execute<WxOpenJsonResult>(wxacodeUrl, request);
+                return result;
+            });
         }
 
         /// <summary>
@@ -80,15 +89,18 @@ namespace SyZero.Web.Common
         /// <returns></returns>
         public async Task<WxOpenJsonResult> SendTemplateMessage(WxTemplateMessage info)
         {
-            string wxacodeUrl = "https://api.weixin.qq.com";
-            string url = $"/cgi-bin/message/template/send?access_token={access_token}";
-            RestRequest request = new RestRequest(url, Method.POST);
-            request.AddHeader("Content-Type", "application/json");
-            var jsonSetting = new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore };
-            var json = JsonConvert.SerializeObject(info, Formatting.Indented, jsonSetting);
-            request.AddJsonBody(json);
-            var result = RestHelper.Execute<WxOpenJsonResult>(wxacodeUrl, request);
-            return result;
+            return await Task.Run(() =>
+            {
+                string wxacodeUrl = "https://api.weixin.qq.com";
+                string url = $"/cgi-bin/message/template/send?access_token={access_token}";
+                RestRequest request = new RestRequest(url, Method.POST);
+                request.AddHeader("Content-Type", "application/json");
+                var jsonSetting = new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore };
+                var json = JsonConvert.SerializeObject(info, Formatting.Indented, jsonSetting);
+                request.AddJsonBody(json);
+                var result = RestHelper.Execute<WxOpenJsonResult>(wxacodeUrl, request);
+                return result;
+            });
         }
 
         /// <summary>
@@ -97,13 +109,16 @@ namespace SyZero.Web.Common
         /// <returns></returns>
         public async Task<WxAauthResult> Login(string code)
         {
-            string wxacodeUrl = "https://api.weixin.qq.com";
-            string grant_type = "authorization_code";
-            string url = $"/sns/oauth2/access_token?appid={appId}&secret={appSecret}&code={code}&grant_type={grant_type}";
-            RestRequest request = new RestRequest(url, Method.GET);
-            request.AddHeader("Content-Type", "application/json");
-            var result = RestHelper.Execute<WxAauthResult>(wxacodeUrl, request);
-            return result;
+            return await Task.Run(() =>
+            {
+                string wxacodeUrl = "https://api.weixin.qq.com";
+                string grant_type = "authorization_code";
+                string url = $"/sns/oauth2/access_token?appid={appId}&secret={appSecret}&code={code}&grant_type={grant_type}";
+                RestRequest request = new RestRequest(url, Method.GET);
+                request.AddHeader("Content-Type", "application/json");
+                var result = RestHelper.Execute<WxAauthResult>(wxacodeUrl, request);
+                return result;
+            });
         }
 
         /// <summary>
@@ -112,12 +127,15 @@ namespace SyZero.Web.Common
         /// <returns></returns>
         public async Task<WxUserInfoResult> GetUserInfo(string openId)
         {
-            string wxacodeUrl = "https://api.weixin.qq.com";
-            string url = $"/cgi-bin/user/info?access_token={access_token}&openid={openId}&lang=zh_CN";
-            RestRequest request = new RestRequest(url, Method.GET);
-            request.AddHeader("Content-Type", "application/json");
-            var result = RestHelper.Execute<WxUserInfoResult>(wxacodeUrl, request);
-            return result;
+            return await Task.Run(() =>
+            {
+                string wxacodeUrl = "https://api.weixin.qq.com";
+                string url = $"/cgi-bin/user/info?access_token={access_token}&openid={openId}&lang=zh_CN";
+                RestRequest request = new RestRequest(url, Method.GET);
+                request.AddHeader("Content-Type", "application/json");
+                var result = RestHelper.Execute<WxUserInfoResult>(wxacodeUrl, request);
+                return result;
+            });
         }
 
 
@@ -127,37 +145,40 @@ namespace SyZero.Web.Common
         /// <returns></returns>
         public async Task<WxJSAPIParametersResult> GetJSAPIParameters(string openurl)
         {
-            string wxacodeUrl = "https://api.weixin.qq.com";
-            string url = $"/cgi-bin/ticket/getticket?access_token={access_token}&type=jsapi";
-            RestRequest request = new RestRequest(url, Method.GET);
-            request.AddHeader("Content-Type", "application/json");
-            var ticketResult = RestHelper.Execute<WxTicketResult>(wxacodeUrl, request);
-            if (ticketResult.errcode != WxOpenReturnCode.RequestSuccess)
+            return await Task.Run(() =>
             {
+                string wxacodeUrl = "https://api.weixin.qq.com";
+                string url = $"/cgi-bin/ticket/getticket?access_token={access_token}&type=jsapi";
+                RestRequest request = new RestRequest(url, Method.GET);
+                request.AddHeader("Content-Type", "application/json");
+                var ticketResult = RestHelper.Execute<WxTicketResult>(wxacodeUrl, request);
+                if (ticketResult.errcode != WxOpenReturnCode.RequestSuccess)
+                {
+                    return new WxJSAPIParametersResult()
+                    {
+                        errcode = ticketResult.errcode,
+                        errmsg = ticketResult.errmsg
+                    };
+                }
+
+                TimeSpan ts = DateTime.UtcNow - new DateTime(1970, 1, 1, 0, 0, 0, 0);
+                var timestamp = Convert.ToInt64(ts.TotalSeconds);
+                var noncestr = Guid.NewGuid().ToString().Replace("-", "");
+                var jmdata = "jsapi_ticket={0}&noncestr={1}&timestamp={2}&url={3}";
+                jmdata = string.Format(jmdata, ticketResult.ticket, noncestr, ts, openurl);
+
+
+
                 return new WxJSAPIParametersResult()
                 {
-                    errcode = ticketResult.errcode,
-                    errmsg = ticketResult.errmsg
+                    errcode = WxOpenReturnCode.RequestSuccess,
+                    ticket = ticketResult.ticket,
+                    noncestr = noncestr,
+                    signature = GetSignature(ticketResult.ticket, noncestr, timestamp, openurl),
+                    timestamp = timestamp.ToString(),
+                    url = openurl
                 };
-            }
-
-            TimeSpan ts = DateTime.UtcNow - new DateTime(1970, 1, 1, 0, 0, 0, 0);
-            var timestamp = Convert.ToInt64(ts.TotalSeconds);
-            var noncestr = Guid.NewGuid().ToString().Replace("-", "");
-            var jmdata = "jsapi_ticket={0}&noncestr={1}&timestamp={2}&url={3}";
-            jmdata = string.Format(jmdata, ticketResult.ticket, noncestr, ts, openurl);
-
-
-
-            return new WxJSAPIParametersResult()
-            {
-                errcode = WxOpenReturnCode.RequestSuccess,
-                ticket = ticketResult.ticket,
-                noncestr = noncestr,
-                signature = GetSignature(ticketResult.ticket, noncestr, timestamp, openurl),
-                timestamp = timestamp.ToString(),
-                url = openurl
-            };
+            });
         }
 
 

@@ -1,5 +1,5 @@
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
     <Target Name="AfterBuild" AfterTargets="Build">
-        <Message Text="ssssssss" Importance="high" />
+        <Message Text="AfterBuild" Importance="high" />
     </Target>
 </Project>

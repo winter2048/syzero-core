@@ -37,7 +37,7 @@ namespace SyZero.Web.Common
             {
                 string urlFormat = "https://api.weixin.qq.com/sns/jscode2session?appid={0}&secret={1}&js_code={2}&grant_type={3}";
                 var url = string.Format(urlFormat, appId, appSecret, code, "authorization_code");
-                var jsonResult = RestHelper.WechatGet<JsCode2JsonResult>(url, "");
+                var jsonResult = await RestHelper.WechatGet<JsCode2JsonResult>(url, "");
                 return jsonResult;
             }
             catch (Exception ex)
@@ -59,7 +59,7 @@ namespace SyZero.Web.Common
             RestRequest request = new RestRequest(url, Method.GET);
             request.AddHeader("Content-Type", "application/json");
             //获取微信凭证
-            var result = RestHelper.Execute(wxacodeUrl, request);
+            var result = await RestHelper.ExecuteAsync(wxacodeUrl, request);
             if (result == null) return accessToken;
             accessToken.access_token = result["access_token"].ToString();
             accessToken.expires_in = result["expires_in"].ToString();
@@ -87,7 +87,7 @@ namespace SyZero.Web.Common
             RestRequest request = new RestRequest(url, Method.POST);
             request.AddHeader("Content-Type", "application/json");
             request.AddJsonBody(requestDto);
-            var result = RestHelper.Execute<WxacodeReturn>(wxacodeUrl, request);
+            var result = await RestHelper.ExecuteAsync<WxacodeReturn>(wxacodeUrl, request);
 
             return result;
         }
@@ -129,7 +129,7 @@ namespace SyZero.Web.Common
                 writer.Write(payload, 0, payload.Length);
                 writer.Close();
                 System.Net.HttpWebResponse response;
-                response = (System.Net.HttpWebResponse)request.GetResponse();
+                response =  (System.Net.HttpWebResponse) await request.GetResponseAsync();
                 System.IO.Stream s;
                 s = response.GetResponseStream();//返回图片数据流
                 byte[] tt = StreamToBytes(s);//将数据流转为byte[]
@@ -172,7 +172,7 @@ namespace SyZero.Web.Common
             RestRequest request = new RestRequest(url, Method.POST);
             request.AddHeader("Content-Type", "application/json");
             request.AddJsonBody(requestDto);
-            var result = RestHelper.Execute<WxDailyVisitTrendResult>(wxacodeUrl, request);
+            var result = await RestHelper.ExecuteAsync<WxDailyVisitTrendResult>(wxacodeUrl, request);
             return result;
         }
 
