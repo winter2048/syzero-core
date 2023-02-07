@@ -1,4 +1,6 @@
 ﻿using Autofac;
+using RestSharp;
+using System.Net.Http;
 using SyZero.Client;
 using SyZero.Runtime.Security;
 using SyZero.Serialization;
@@ -18,6 +20,12 @@ namespace SyZero.Web.Common
             builder.RegisterType<PrizeUtil>().As<IPrizeUtil>().SingleInstance();
             builder.RegisterType<AliasMethod>().As<IAliasMethod>().InstancePerLifetimeScope();
             builder.RegisterType<HttpRestClient>().As<IClient>().InstancePerLifetimeScope();
+
+            //builder.RegisterType<RestClient>().SingleInstance();
+            builder.Register(p =>
+            {
+                return new RestClient(new HttpClient());
+            }).As<RestClient>().SingleInstance();
         }
     }
 }

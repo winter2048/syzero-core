@@ -1,8 +1,10 @@
 ﻿using Autofac;
+using Autofac.Core;
 using Autofac.Extras.DynamicProxy;
 using Castle.DynamicProxy;
 using Dynamitey;
 using ImpromptuInterface;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.Dynamic;
@@ -48,7 +50,6 @@ namespace SyZero.Feign
                     throw new Exception($"{targetType.Name}未实现Fallback！");
                 }
             }
-
            
         }
     }

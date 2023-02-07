@@ -24,7 +24,6 @@ namespace SyZero.AspNetCore.Middleware
         }
         public async Task InvokeAsync(HttpContext context, RequestDelegate next)
         {
-            Thread.CurrentPrincipal = null;
             context.User = null;
             if (context.Request.Headers.ContainsKey("Authorization"))
             {
@@ -34,7 +33,6 @@ namespace SyZero.AspNetCore.Middleware
 
                 if (Principal != null)
                 {
-                    Thread.CurrentPrincipal = Principal;
                     context.User = Principal;
                 }
             }

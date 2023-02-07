@@ -28,5 +28,6 @@ namespace SyZero.Client
             HttpMethod = httpMethod;
             Url = url;
         }
+
     }
 }

@@ -4,6 +4,8 @@ using RestSharp;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using System.Xml.Linq;
+using SyZero.Util;
 
 namespace SyZero.Web.Common
 {
@@ -15,10 +17,9 @@ namespace SyZero.Web.Common
         /// <param name="baseUrl"></param>
         /// <param name="request">外部设定的请求</param>
         /// <returns>返回Jobject通用对象</returns>
-        public static JObject Execute(string baseUrl, RestRequest request)
+        public static JObject Execute(RestRequest request)
         {
-            var client = new RestClient(baseUrl);
-            //client.BaseUrl = new Uri(baseUrl);
+            var client = AutofacUtil.GetService<RestClient>();
             var response = client.Execute(request);
             if (response.ErrorException != null)
             {
@@ -38,10 +39,9 @@ namespace SyZero.Web.Common
         /// <param name="baseUrl"></param>
         /// <param name="request">外部设定的请求</param>
         /// <returns>返回Jobject通用对象</returns>
-        public static async Task<JObject> ExecuteAsync(string baseUrl, RestRequest request)
+        public static async Task<JObject> ExecuteAsync(RestRequest request)
         {
-            var client = new RestClient(baseUrl);
-            //client.BaseUrl = new Uri(baseUrl);
+            var client = AutofacUtil.GetService<RestClient>();
             var response = await client.ExecuteAsync(request);
             if (response.ErrorException != null)
             {
@@ -62,10 +62,9 @@ namespace SyZero.Web.Common
         /// <param name="baseUrl"></param>
         /// <param name="request"></param>
         /// <returns></returns>
-        public static T Execute<T>(string baseUrl, RestRequest request) where T : class, new()
+        public static T Execute<T>(RestRequest request) where T : class, new()
         {
-            var client = new RestClient(baseUrl);
-            //client.BaseUrl = new Uri(baseUrl);
+            var client = AutofacUtil.GetService<RestClient>();
             var response = client.Execute(request);
             if (response.ErrorException != null)
             {
@@ -82,10 +81,9 @@ namespace SyZero.Web.Common
         /// <param name="baseUrl"></param>
         /// <param name="request"></param>
         /// <returns></returns>
-        public static async Task<T> ExecuteAsync<T>(string baseUrl, RestRequest request) where T : class, new()
+        public static async Task<T> ExecuteAsync<T>(RestRequest request) where T : class, new()
         {
-            var client = new RestClient(baseUrl);
-            //client.BaseUrl = new Uri(baseUrl);
+            var client = AutofacUtil.GetService<RestClient>();
             var response = await client.ExecuteAsync(request);
             if (response.ErrorException != null)
             {
@@ -95,10 +93,9 @@ namespace SyZero.Web.Common
             return JsonConvert.DeserializeObject<T>(response.Content);
         }
 
-        public static string ExecuteToString(string baseUrl, RestRequest request)
+        public static string ExecuteToString(RestRequest request)
         {
-            var client = new RestClient();
-            client.BaseUrl = new Uri(baseUrl);
+            var client = AutofacUtil.GetService<RestClient>();
             var response = client.Execute(request);
             if (response.ErrorException != null)
             {
@@ -114,13 +111,13 @@ namespace SyZero.Web.Common
         /// <param name="baseUrl"></param>
         /// <param name="resource"></param>
         /// <param name="postData"></param>
-        public static string PostJson(string baseUrl, string resource, dynamic postData)
+        public static string PostJson(string url,object body)
         {
-            var client = new RestClient(baseUrl);
-            var request = new RestRequest(resource, Method.POST);
+            var client = AutofacUtil.GetService<RestClient>();
+            var request = new RestRequest(url, Method.Post);
             request.RequestFormat = DataFormat.Json;
             request.AddHeader("Content-Type", "application/json");
-            request.AddBody(postData); // uses JsonSerializer
+            request.AddBody(body); // uses JsonSerializer
 
             var response = client.Execute(request);
             return response.Content;
@@ -130,17 +127,17 @@ namespace SyZero.Web.Common
         /// PostJson数据，返回值T
         /// </summary>
         /// <returns></returns>
-        public static HttpResultMessage<T> PostJson<T>(string baseUrl, string resource, dynamic postData, string token = "")
+        public static HttpResultMessage<T> PostJson<T>(string url, object body, string token = "")
         {
-            var client = new RestClient(baseUrl);
-            var request = new RestRequest(resource, Method.POST);
+            var client = AutofacUtil.GetService<RestClient>();
+            var request = new RestRequest(url, Method.Post);
             request.RequestFormat = DataFormat.Json;
             request.AddHeader("Content-Type", "application/json");
             request.AddHeader("Authorization", token);
-            request.AddBody(postData); // uses JsonSerializer
+            request.AddBody(body); // uses JsonSerializer
 
 
-            IRestResponse response = client.Execute(request);
+            RestResponse response = client.Execute(request);
             var content = response.Content; // raw content as string
             //if (!string.IsNullOrWhiteSpace(content))
             //{
@@ -183,15 +180,15 @@ namespace SyZero.Web.Common
             return result;
         }
 
-        public static HttpResultMessage PostJsonAsUrl(string baseUrl, string resource, dynamic postData)
+        public static HttpResultMessage PostJsonAsUrl(string url, object body)
         {
-            var client = new RestClient(baseUrl);
-            var request = new RestRequest(resource, Method.POST);
+            var client = AutofacUtil.GetService<RestClient>();
+            var request = new RestRequest(url, Method.Post);
             request.RequestFormat = DataFormat.Json;
             request.AddHeader("Content-Type", "application/json");
-            request.AddBody(postData); // uses JsonSerializer
+            request.AddBody(body); // uses JsonSerializer
 
-            IRestResponse response = client.Execute(request);
+            RestResponse response = client.Execute(request);
             //var content = response.Content; // raw content as string
             //if (!string.IsNullOrWhiteSpace(content))
             //{
@@ -203,24 +200,23 @@ namespace SyZero.Web.Common
         }
 
 
-        public static T EasemobReqUrl<T>(string resource, Method method, dynamic postData, string token = "")
+        public static T EasemobReqUrl<T>(string url, Method method, object body, string token = "")
         {
             try
             {
-
-                var client = new RestClient();
-                var request = new RestRequest(resource, method);
+                var client = AutofacUtil.GetService<RestClient>();
+                var request = new RestRequest(url, method);
                 request.RequestFormat = DataFormat.Json;
                 request.AddHeader("Content-Type", "application/json");
                 if (!string.IsNullOrEmpty(token) && token.Length > 1) { request.AddHeader("Authorization", "Bearer " + token); }
                 // request.AddHeader("Authorization", token);
-                if (method != Method.GET)
+                if (method != Method.Get)
                 {
-                    request.AddBody(postData); // uses JsonSerializer
+                    request.AddBody(body); // uses JsonSerializer
                 }
 
 
-                IRestResponse response = client.Execute(request);
+                RestResponse response = client.Execute(request);
                 var resultStr = response.Content;
                 var result = default(T);
                 //if (remoteInvokeResult.GetType().IsValueType)
@@ -263,22 +259,21 @@ namespace SyZero.Web.Common
         }
 
 
-        public static T WechatPost<T>(string resource, dynamic postData, string token = "")
+        public static T WechatPost<T>(string url, object body, string token = "")
         {
             try
             {
-
-                var client = new RestClient();
-                var request = new RestRequest(resource, Method.POST);
+                var client = AutofacUtil.GetService<RestClient>();
+                var request = new RestRequest(url, Method.Post);
                 request.RequestFormat = DataFormat.Json;
                 request.AddHeader("Content-Type", "application/json");
                 if (!string.IsNullOrEmpty(token) && token.Length > 1) { request.AddHeader("Authorization", "Bearer " + token); }
                 // request.AddHeader("Authorization", token);
-                request.AddBody(postData); // uses JsonSerializer
+                request.AddBody(body); // uses JsonSerializer
 
 
 
-                IRestResponse response = client.Execute(request);
+                RestResponse response = client.Execute(request);
                 var resultStr = response.Content;
                 var result = default(T);
                 //if (remoteInvokeResult.GetType().IsValueType)
@@ -300,13 +295,12 @@ namespace SyZero.Web.Common
             catch (Exception ex) { return default(T); }
         }
 
-        public static async Task<T> WechatGet<T>(string resource, string token = "")
+        public static async Task<T> WechatGet<T>(string url, string token = "")
         {
             try
             {
-
-                var client = new RestClient();
-                var request = new RestRequest(resource, Method.GET);
+                var client = AutofacUtil.GetService<RestClient>();
+                var request = new RestRequest(url, Method.Get);
                 request.RequestFormat = DataFormat.Json;
                 request.AddHeader("Content-Type", "application/json");
                 if (!string.IsNullOrEmpty(token) && token.Length > 1) { request.AddHeader("Authorization", token); }
@@ -314,7 +308,7 @@ namespace SyZero.Web.Common
 
 
 
-                IRestResponse response = await client.ExecuteAsync(request);
+                RestResponse response = await client.ExecuteAsync(request);
                 var resultStr = response.Content;
                 var result = default(T);
                 //if (remoteInvokeResult.GetType().IsValueType)
@@ -337,11 +331,11 @@ namespace SyZero.Web.Common
         }
         public async static Task<string> RestPost(string url, Dictionary<string, string> header = null, Dictionary<string, string> parameter = null, string body = "")
         {
-            return await Request(url, header, parameter, body, Method.POST);
+            return await Request(url, header, parameter, body, Method.Post);
         }
         public async static Task<string> RestGet(string url, Dictionary<string, string> header = null, Dictionary<string, string> parameter = null)
         {
-            return await Request(url, header, parameter, string.Empty, Method.GET);
+            return await Request(url, header, parameter, string.Empty, Method.Get);
         }
         private async static Task<string> Request(string url, Dictionary<string, string> header, Dictionary<string, string> parameter, string body, Method method)
         {

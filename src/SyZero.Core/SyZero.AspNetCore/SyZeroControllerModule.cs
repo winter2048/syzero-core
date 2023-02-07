@@ -38,8 +38,7 @@ namespace SyZero.AspNetCore
             builder.RegisterAssemblyTypes(asss.ToArray())
                 .Where(m => baseType.IsAssignableFrom(m) && m != baseType).PropertiesAutowired();
 
-
-
+            builder.RegisterType<HttpContextAccessor>().As<IHttpContextAccessor>().SingleInstance();
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Castle.DynamicProxy;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -47,7 +48,12 @@ namespace SyZero.Feign
                 var returnType = GetReturnType();
                 
                 RequestTemplate requestTemplate = new RequestTemplate(apiMethodAttribute.HttpMethod, url);
-                requestTemplate.Headers.Add("Authorization", sySession.Token);
+                requestTemplate.Headers.Add("Authorization", sySession.Token ?? "");
+                if (invocation.Arguments.Length > 0)
+                {
+                    requestTemplate.Body = jsonSerialize.ObjectToJSON(invocation.Arguments[0]);
+                }
+
                 var cxecuteAsync = client.GetType().GetMethod("ExecuteAsync").MakeGenericMethod(new Type[] { returnType });
                 Task responseTemplateTask = cxecuteAsync.Invoke(client, new object[] { requestTemplate, new System.Threading.CancellationToken() }) as Task;
                 responseTemplateTask.Wait();
