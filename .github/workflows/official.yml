@@ -11,6 +11,9 @@ jobs:
   build:
 
     runs-on: windows-latest
+    permissions:
+      packages: write
+      contents: read
 
     steps:
     - uses: actions/checkout@v3
@@ -18,6 +21,7 @@ jobs:
       uses: actions/setup-dotnet@v3
       with:
         dotnet-version: 6.0.x
+        source-url: https://nuget.pkg.github.com/OWNER/index.json
       env:
         NUGET_AUTH_TOKEN: ${{secrets.TOKEN}}
 
@@ -38,4 +42,4 @@ jobs:
           ./nuget/*.nupkg
 
     - name: Publish the package to GPR
-      run: dotnet nuget push ./nuget/*.nupkg --source https://nuget.pkg.github.com/OWNER/index.json
+      run: dotnet nuget push ./nuget/*.nupkg
