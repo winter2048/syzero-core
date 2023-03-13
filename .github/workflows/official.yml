@@ -11,9 +11,6 @@ jobs:
   build:
 
     runs-on: windows-latest
-    permissions:
-      packages: write
-      contents: read
 
     steps:
     - uses: actions/checkout@v3
@@ -41,5 +38,5 @@ jobs:
         path: |
           ./nuget/*.nupkg
 
-    - name: Publish the package to GPR
-      run: .\.github\workflows\script\push_package.cmd
+    - name: Publish the package to github
+      run: .\.github\workflows\script\push_package.cmd $GB_NUGET_TOKEN https://nuget.pkg.github.com/winter2048/index.json
