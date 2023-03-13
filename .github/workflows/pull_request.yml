@@ -4,8 +4,6 @@
 name: .NET
 
 on:
-  push:
-    branches: [ "master" ]
   pull_request:
     branches: [ "master" ]
 
@@ -20,7 +18,9 @@ jobs:
       uses: actions/setup-dotnet@v3
       with:
         dotnet-version: 6.0.x
+
     - name: Restore dependencies
       run: dotnet restore ./src/SyZero.sln
+
     - name: Build
-      run: dotnet build ./src/SyZero.sln --no-restore
+      run: dotnet build --configuration Release ./src/SyZero.sln --no-restore
