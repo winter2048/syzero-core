@@ -12,6 +12,7 @@ using Microsoft.OpenApi.Models;
 using System.IO;
 using System.Xml.XPath;
 using SyZero.Swagger;
+using SyZero;
 
 namespace Microsoft.Extensions.DependencyInjection
 {
@@ -24,9 +25,8 @@ namespace Microsoft.Extensions.DependencyInjection
                 options.SwaggerDoc("v1", new OpenApiInfo
                 {
                     Version = "v1",
-                    Title = "SyZero.Blog接口文档",
-                    Description = "RESTful API for SyZero.Blog",
-                    Contact = new OpenApiContact() { Name = "SYZERO", Email = "522112669@qq.com", Url = new Uri("http://test6.syzero.com") }
+                    Title = $"{AppConfig.ServerOptions.Name}接口文档",
+                    Description = $"RESTful API for {AppConfig.ServerOptions.Name}"
                 });
                 options.DocInclusionPredicate((docName, description) => true);
                 // Define the BearerAuth scheme that's in use
