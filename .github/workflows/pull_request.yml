@@ -10,7 +10,7 @@ on:
 jobs:
   build:
 
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
 
     steps:
     - uses: actions/checkout@v3
@@ -24,3 +24,6 @@ jobs:
 
     - name: Build
       run: dotnet build --configuration Release ./src/SyZero.sln --no-restore
+
+    - name: Create the package
+      run: dotnet pack --configuration Release ./src/SyZero.sln --no-restore
