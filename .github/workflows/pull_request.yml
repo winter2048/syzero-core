@@ -24,6 +24,3 @@ jobs:
 
     - name: Build
       run: dotnet build --configuration Release ./src/SyZero.sln --no-restore
-
-    - name: Create the package
-      run: dotnet pack --configuration Release ./src/SyZero.sln --no-restore
