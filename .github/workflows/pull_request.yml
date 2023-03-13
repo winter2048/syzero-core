@@ -5,7 +5,7 @@ name: Pull_Request
 
 on:
   pull_request:
-    branches: [ "master" ]
+    branches: [ "master", "workflow_dev" ]
 
 jobs:
   build:
