@@ -42,6 +42,11 @@ namespace SyZero.Application.Routing
             return $"{apiPreFix}/{areaName}/{cname.Substring(1)}/{action.Name}".Replace("//", "/");
         }
 
+        public static string GetRouteUrlByInterface(string endPoint,string areaName, MemberInfo action)
+        {
+            return $"{endPoint}/{GetRouteUrlByInterface(areaName, action)}";
+        }
+
         public static string GetControllerName(string controllerName)
         {
             return controllerName.RemovePostFix(RemoveControllerPostfixes.ToArray());

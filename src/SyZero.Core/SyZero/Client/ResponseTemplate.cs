@@ -6,13 +6,17 @@ using System.Text;
 
 namespace SyZero.Client
 {
-    public class ResponseTemplate
+    public class ResponseTemplate<T> 
     {
         public HttpStatusCode HttpStatusCode { set; get; }
+        
+        public SyMessageBoxStatus Code { set; get; }
 
-        public Stream Body { set; get; }
+        public string Msg { set; get; }
 
-        public IDictionary<string, IEnumerable<string>> Headers { get; set; } = new Dictionary<string, IEnumerable<string>>();
+        public T Body { set; get; }
+
+        public IDictionary<string, string> Headers { get; set; } = new Dictionary<string, string>();
 
         public void EnsureSuccessStatusCode()
         {

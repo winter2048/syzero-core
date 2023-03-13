@@ -8,6 +8,7 @@ namespace SyZero.MongoDB
     {
         public IMongoDatabase _db;
 
+        [System.Obsolete]
         public MongoContext(IOptions<MongoOptions> options)
 
         {

@@ -286,6 +286,11 @@
                 业务数据对象
             </summary>
         </member>
+        <member name="T:SyZero.Web.Common.Util.HttpRestClient">
+            <summary>
+            HttpRestClient class
+            </summary>
+        </member>
         <member name="P:SyZero.Web.Common.HttpResultMessage`1.Entity">
             <summary>
             数据集
@@ -417,7 +422,7 @@
             <param name="allQuantity"></param>
             <returns></returns>
         </member>
-        <member name="M:SyZero.Web.Common.RestHelper.Execute(System.String,RestSharp.RestRequest)">
+        <member name="M:SyZero.Web.Common.RestHelper.Execute(RestSharp.RestRequest)">
             <summary>
             通过传入的请求信息访问服务端，并返回结果对象
             </summary>
@@ -425,7 +430,15 @@
             <param name="request">外部设定的请求</param>
             <returns>返回Jobject通用对象</returns>
         </member>
-        <member name="M:SyZero.Web.Common.RestHelper.Execute``1(System.String,RestSharp.RestRequest)">
+        <member name="M:SyZero.Web.Common.RestHelper.ExecuteAsync(RestSharp.RestRequest)">
+            <summary>
+            通过传入的请求信息访问服务端，并返回结果对象
+            </summary>
+            <param name="baseUrl"></param>
+            <param name="request">外部设定的请求</param>
+            <returns>返回Jobject通用对象</returns>
+        </member>
+        <member name="M:SyZero.Web.Common.RestHelper.Execute``1(RestSharp.RestRequest)">
             <summary>
             通过传入的请求信息访问服务端，并返回T
             </summary>
@@ -434,7 +447,16 @@
             <param name="request"></param>
             <returns></returns>
         </member>
-        <member name="M:SyZero.Web.Common.RestHelper.PostJson(System.String,System.String,System.Object)">
+        <member name="M:SyZero.Web.Common.RestHelper.ExecuteAsync``1(RestSharp.RestRequest)">
+            <summary>
+            通过传入的请求信息访问服务端，并返回T
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="baseUrl"></param>
+            <param name="request"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SyZero.Web.Common.RestHelper.PostJson(System.String,System.Object)">
             <summary>
             PostJson数据 无返回值
             </summary>
@@ -442,7 +464,7 @@
             <param name="resource"></param>
             <param name="postData"></param>
         </member>
-        <member name="M:SyZero.Web.Common.RestHelper.PostJson``1(System.String,System.String,System.Object,System.String)">
+        <member name="M:SyZero.Web.Common.RestHelper.PostJson``1(System.String,System.Object,System.String)">
             <summary>
             PostJson数据，返回值T
             </summary>

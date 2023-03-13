@@ -42,5 +42,11 @@ namespace SyZero.Runtime.Security
         /// Default: <see cref="AvatarUrl"/>
         /// </summary>
         public static string AvatarUrl { get; set; } = "avatarUrl";
+
+        /// <summary>
+        /// Token.
+        /// Default: <see cref="Token"/>
+        /// </summary>
+        public static string Token { get; set; } = "token";
     }
 }

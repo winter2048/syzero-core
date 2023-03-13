@@ -1,35 +1,35 @@
-//*****************************µ¥µØÖ·¶àÊµÀı¸ºÔØ¾ùºâ+Consul********************************
+ï»¿//*****************************å•åœ°å€å¤šå®ä¾‹è´Ÿè½½å‡è¡¡+Consul********************************
 {
   "Routes": [
     {
-      "DownstreamPathTemplate": "/api/{url}", //·şÎñµØÖ·--url±äÁ¿
+      "DownstreamPathTemplate": "/api/{url}", //æœåŠ¡åœ°å€--urlå˜é‡
       "DownstreamScheme": "http",
-      "UpstreamPathTemplate": "/api/oauth/{url}", //Íø¹ØµØÖ·--url±äÁ¿
+      "UpstreamPathTemplate": "/api/oauth/{url}", //ç½‘å…³åœ°å€--urlå˜é‡
       "UpstreamHttpMethod": [ "Get", "Post" ],
       "UseServiceDiscovery": true,
-      "ServiceName": "SyZero.OAuth", //consul·şÎñÃû³Æ
+      "ServiceName": "SyZero.OAuth", //consulæœåŠ¡åç§°
       "LoadBalancerOptions": {
-        "Type": "RoundRobin" //ÂÖÑ¯      LeastConnection-×îÉÙÁ¬½ÓÊıµÄ·şÎñÆ÷   NoLoadBalance²»¸ºÔØ¾ùºâ
+        "Type": "RoundRobin" //è½®è¯¢      LeastConnection-æœ€å°‘è¿æ¥æ•°çš„æœåŠ¡å™¨   NoLoadBalanceä¸è´Ÿè½½å‡è¡¡
       }
     },
     {
-      "DownstreamPathTemplate": "/api/{url}", //·şÎñµØÖ·--url±äÁ¿
+      "DownstreamPathTemplate": "/api/{url}", //æœåŠ¡åœ°å€--urlå˜é‡
       "DownstreamScheme": "http",
-      "UpstreamPathTemplate": "/api/blog/{url}", //Íø¹ØµØÖ·--url±äÁ¿
+      "UpstreamPathTemplate": "/api/blog/{url}", //ç½‘å…³åœ°å€--urlå˜é‡
       "UpstreamHttpMethod": [ "Get", "Post" ],
       "UseServiceDiscovery": true,
-      "ServiceName": "SyZero.Blog", //consul·şÎñÃû³Æ
+      "ServiceName": "SyZero.Blog", //consulæœåŠ¡åç§°
       "LoadBalancerOptions": {
-        "Type": "RoundRobin" //ÂÖÑ¯      LeastConnection-×îÉÙÁ¬½ÓÊıµÄ·şÎñÆ÷   NoLoadBalance²»¸ºÔØ¾ùºâ
+        "Type": "RoundRobin" //è½®è¯¢      LeastConnection-æœ€å°‘è¿æ¥æ•°çš„æœåŠ¡å™¨   NoLoadBalanceä¸è´Ÿè½½å‡è¡¡
       }
     }
   ],
   "GlobalConfiguration": {
-    "BaseUrl": "http://127.0.0.1:729", //Íø¹Ø¶ÔÍâµØÖ·
+    "BaseUrl": "http://127.0.0.1:729", //ç½‘å…³å¯¹å¤–åœ°å€
     "ServiceDiscoveryProvider": {
       "Host": "127.0.0.1",
       "Port": 8500,
-      "Type": "Consul" //ÓÉConsulÌá¹©·şÎñ·¢ÏÖ, Ã¿´ÎÇëÇóÈ¥consul
+      "Type": "Consul" //ç”±Consulæä¾›æœåŠ¡å‘ç°, æ¯æ¬¡è¯·æ±‚å»consul
     }
 
   }

@@ -1,9 +1,8 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <TargetFramework>net6.0</TargetFramework>
     <PackageId>SyZero.AspNetCore</PackageId>
-    <Version>1.0.6</Version>
     <Authors>winter2048</Authors>
     <Company>SYZERO</Company>
     <Description>SyZero中的Web层扩展</Description>
@@ -14,13 +13,11 @@
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
     <RepositoryUrl>https://github.com/winter2048/syzero-core</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
-    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
     <PackageLicenseExpression></PackageLicenseExpression>
     <SignAssembly>false</SignAssembly>
 
     <DocumentationFile>Dora.AspNetCore.xml</DocumentationFile>
-    <NoWarn>1701;1702;1591</NoWarn>
   </PropertyGroup>
 
   <ItemGroup>

@@ -1,22 +1,33 @@
-﻿using System.Collections.Generic;
+﻿using Microsoft.AspNetCore.Http;
+using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading;
 using SyZero.Dependency;
 using SyZero.Runtime.Security;
 using SyZero.Serialization;
+using SyZero.Util;
 
 namespace SyZero.Runtime.Session
 {
     public class SySession : ISySession, ISingletonDependency
     {
-        public virtual ClaimsPrincipal Principal => Thread.CurrentPrincipal as ClaimsPrincipal;
-
         private readonly IJsonSerialize _jsonSerialize;
 
-        public SySession(IJsonSerialize jsonSerialize)
+        private readonly IHttpContextAccessor _httpContextAccessor;
+
+        public SySession(IJsonSerialize jsonSerialize, IHttpContextAccessor httpContextAccessor)
         {
             _jsonSerialize = jsonSerialize;
+            _httpContextAccessor = httpContextAccessor;
+        }
+
+        public ClaimsPrincipal Principal
+        {
+            get
+            {
+                return _httpContextAccessor.HttpContext.User;
+            }
         }
 
         public long? UserId
@@ -71,5 +82,17 @@ namespace SyZero.Runtime.Session
             }
         }
 
+        public string Token
+        {
+            get
+            {
+                var tenantIdClaim = Principal?.Claims.FirstOrDefault(c => c.Type == SyClaimTypes.Token);
+                if (!string.IsNullOrEmpty(tenantIdClaim?.Value))
+                {
+                    return tenantIdClaim.Value;
+                }
+                return null;
+            }
+        }
     }
 }

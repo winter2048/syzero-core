@@ -17,7 +17,7 @@ namespace SyZero.Client
         public string Body { get; set; }
 
         public List<KeyValuePair<string, string>> FormValue { set; get; } = new List<KeyValuePair<string, string>>();
-        public IDictionary<string, IList<string>> Headers { get; set; } = new Dictionary<string, IList<string>>();
+        public IDictionary<string, string> Headers { get; set; } = new Dictionary<string, string>();
 
         public RequestTemplate()
         {
@@ -28,5 +28,6 @@ namespace SyZero.Client
             HttpMethod = httpMethod;
             Url = url;
         }
+
     }
 }

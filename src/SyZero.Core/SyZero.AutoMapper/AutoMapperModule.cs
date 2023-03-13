@@ -4,7 +4,6 @@ using Microsoft.Extensions.DependencyModel;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using System.Runtime.Loader;
 
 namespace SyZero.AutoMapper
 {
@@ -24,7 +23,7 @@ namespace SyZero.AutoMapper
                 try
                 {
                     //System.Console.WriteLine(lib.Name);
-                    var assembly = AssemblyLoadContext.Default.LoadFromAssemblyName(new AssemblyName(lib.Name));
+                    var assembly = Assembly.Load(new AssemblyName(lib.Name));
                     asss.Add(assembly);
                 }
                 catch

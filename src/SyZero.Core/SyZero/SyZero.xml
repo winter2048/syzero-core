@@ -218,7 +218,7 @@
             客户端IClient
             </summary>
         </member>
-        <member name="M:SyZero.Client.IClient.ExecuteAsync(SyZero.Client.RequestTemplate,System.Threading.CancellationToken)">
+        <member name="M:SyZero.Client.IClient.ExecuteAsync``1(SyZero.Client.RequestTemplate,System.Threading.CancellationToken)">
             <summary>
             请求
             </summary>
@@ -816,6 +816,12 @@
             </summary>
             <param name="Data">客户端接收对象 例如: {status=1,data="这是消息!"}</param>
         </member>
+        <member name="M:SyZero.SyMessageException.#ctor(System.String,SyZero.SyMessageBoxStatus)">
+            <summary>
+            自定义返回
+            </summary>
+            <param name="Messager"></param>
+        </member>
         <member name="M:SyZero.SyMessageBoxModel.#ctor(System.Object,SyZero.SyMessageBoxStatus)">
             <summary>
             自定义
@@ -946,6 +952,12 @@
             Default: <see cref="P:SyZero.Runtime.Security.SyClaimTypes.AvatarUrl"/>
             </summary>
         </member>
+        <member name="P:SyZero.Runtime.Security.SyClaimTypes.Token">
+            <summary>
+            Token.
+            Default: <see cref="P:SyZero.Runtime.Security.SyClaimTypes.Token"/>
+            </summary>
+        </member>
         <member name="T:SyZero.Runtime.Session.ISySession">
             <summary>
             运行时会话
@@ -975,6 +987,12 @@
             如果没有用户登录，则为空。
             </summary>
         </member>
+        <member name="P:SyZero.Runtime.Session.ISySession.Token">
+            <summary>
+            获取当前用户名称或空。
+            如果没有用户登录，则为空。
+            </summary>
+        </member>
         <member name="T:SyZero.Serialization.IJsonSerialize">
             <summary>
             Json序列化
@@ -993,6 +1011,13 @@
             </summary>
             <typeparam name="T">对象类型</typeparam>
             <param name="jsonText">Json字符串</param>
+            <returns></returns>
+        </member>
+        <member name="M:SyZero.Service.IServiceManagement.GetService(System.String)">
+            <summary>
+            根据服务名称获取服务实例
+            </summary>
+            <param name="serviceName"></param>
             <returns></returns>
         </member>
         <member name="M:SyZero.SyZeroExtension.AddSyZero(Autofac.ContainerBuilder)">

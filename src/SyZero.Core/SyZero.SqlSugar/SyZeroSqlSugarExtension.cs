@@ -22,7 +22,6 @@ namespace SyZero
         /// </summary>
         /// <typeparam name="TContext"></typeparam>
         /// <param name="builder"></param>
-        /// <param name="configuration"></param>
         /// <returns></returns>
         public static ContainerBuilder AddSyZeroSqlSugar<TContext>(this ContainerBuilder builder)
             where TContext : SyZeroDbContext

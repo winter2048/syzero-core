@@ -37,7 +37,7 @@ namespace SyZero.Web.Common
             {
                 string urlFormat = "https://api.weixin.qq.com/sns/jscode2session?appid={0}&secret={1}&js_code={2}&grant_type={3}";
                 var url = string.Format(urlFormat, appId, appSecret, code, "authorization_code");
-                var jsonResult = RestHelper.WechatGet<JsCode2JsonResult>(url, "");
+                var jsonResult = await RestHelper.WechatGet<JsCode2JsonResult>(url, "");
                 return jsonResult;
             }
             catch (Exception ex)
@@ -54,12 +54,11 @@ namespace SyZero.Web.Common
         {
             WxAccessToken accessToken = new WxAccessToken();
             string grant_type = "client_credential";
-            string wxacodeUrl = "https://api.weixin.qq.com";
-            string url = string.Format("/cgi-bin/token?grant_type={0}&appid={1}&secret={2}", grant_type, appId, appSecret);
-            RestRequest request = new RestRequest(url, Method.GET);
+            string wxacodeUrl = string.Format("https://api.weixin.qq.com/cgi-bin/token?grant_type={0}&appid={1}&secret={2}", grant_type, appId, appSecret);
+            RestRequest request = new RestRequest(wxacodeUrl, Method.Get);
             request.AddHeader("Content-Type", "application/json");
             //获取微信凭证
-            var result = RestHelper.Execute(wxacodeUrl, request);
+            var result = await RestHelper.ExecuteAsync(request);
             if (result == null) return accessToken;
             accessToken.access_token = result["access_token"].ToString();
             accessToken.expires_in = result["expires_in"].ToString();
@@ -74,8 +73,7 @@ namespace SyZero.Web.Common
         /// <returns></returns>
         public async Task<WxacodeReturn> SubscribeMessage(string openid, string templateId, object data)
         {
-            string wxacodeUrl = "https://api.weixin.qq.com";
-            string url = $"/cgi-bin/message/subscribe/send?access_token={access_token}";
+            string wxacodeUrl = $"https://api.weixin.qq.com/cgi-bin/message/subscribe/send?access_token={access_token}";
 
             //获取微信凭证
             var requestDto = new WxSubscribeResult
@@ -84,10 +82,10 @@ namespace SyZero.Web.Common
                 touser = openid,
                 data = data
             };
-            RestRequest request = new RestRequest(url, Method.POST);
+            RestRequest request = new RestRequest(wxacodeUrl, Method.Post);
             request.AddHeader("Content-Type", "application/json");
             request.AddJsonBody(requestDto);
-            var result = RestHelper.Execute<WxacodeReturn>(wxacodeUrl, request);
+            var result = await RestHelper.ExecuteAsync<WxacodeReturn>(request);
 
             return result;
         }
@@ -129,7 +127,7 @@ namespace SyZero.Web.Common
                 writer.Write(payload, 0, payload.Length);
                 writer.Close();
                 System.Net.HttpWebResponse response;
-                response = (System.Net.HttpWebResponse)request.GetResponse();
+                response =  (System.Net.HttpWebResponse) await request.GetResponseAsync();
                 System.IO.Stream s;
                 s = response.GetResponseStream();//返回图片数据流
                 byte[] tt = StreamToBytes(s);//将数据流转为byte[]
@@ -161,18 +159,17 @@ namespace SyZero.Web.Common
         /// <returns></returns>
         public async Task<WxDailyVisitTrendResult> GetDailyVisitTrend(DateTime begin_date, DateTime end_date)
         {
-            string wxacodeUrl = "https://api.weixin.qq.com";
-            string url = $"/datacube/getweanalysisappiddailyvisittrend?access_token={access_token}";
+            string wxacodeUrl = $"https://api.weixin.qq.com/datacube/getweanalysisappiddailyvisittrend?access_token={access_token}";
 
             var requestDto = new
             {
                 begin_date = begin_date.ToString("yyyyMMdd"),
                 end_date = end_date.ToString("yyyyMMdd")
             };
-            RestRequest request = new RestRequest(url, Method.POST);
+            RestRequest request = new RestRequest(wxacodeUrl, Method.Post);
             request.AddHeader("Content-Type", "application/json");
             request.AddJsonBody(requestDto);
-            var result = RestHelper.Execute<WxDailyVisitTrendResult>(wxacodeUrl, request);
+            var result = await RestHelper.ExecuteAsync<WxDailyVisitTrendResult>(request);
             return result;
         }
 

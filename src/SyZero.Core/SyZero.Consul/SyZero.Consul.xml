@@ -90,6 +90,15 @@
             是否在配置改变的时候重新加载
             </summary>
         </member>
+        <member name="M:SyZero.SyZeroConsulExtension.AddConsul(Autofac.ContainerBuilder)">
+            <summary>
+            注册IServiceManagement
+            </summary>
+            <typeparam name="TContext"></typeparam>
+            <param name="builder"></param>
+            <param name="configuration"></param>
+            <returns></returns>
+        </member>
         <member name="T:Microsoft.Extensions.Configuration.ConsulConfigurationBuilderExtensions">
             <summary>
             </summary>
