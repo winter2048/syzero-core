@@ -39,4 +39,5 @@ jobs:
           ./nuget/*.nupkg
 
     - name: Publish the package to github
-      run: .\.github\workflows\script\push_package.cmd $GB_NUGET_TOKEN https://nuget.pkg.github.com/winter2048/index.json
+      run: .\.github\workflows\script\push_package.ps1 -token ${{secrets.GB_NUGET_TOKEN}} -source "https://nuget.pkg.github.com/winter2048/index.json"
+      shell: powershell
