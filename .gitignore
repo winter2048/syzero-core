@@ -18,6 +18,7 @@ build/
 bld/
 [Bb]in/
 [Oo]bj/
+nuget/*.nupkg
 
 # Visual Studio cache/options directory
 .vs/
