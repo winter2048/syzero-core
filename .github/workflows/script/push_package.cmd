@@ -1,6 +1,6 @@
 @echo off
 
-set source_url="https://nuget.pkg.github.com/OWNER/index.json"
+set source_url="https://nuget.pkg.github.com/winter2048/index.json"
 
 echo 推送至%source_url%
 
