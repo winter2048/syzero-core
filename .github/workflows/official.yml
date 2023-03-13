@@ -22,7 +22,8 @@ jobs:
       with:
         dotnet-version: 6.0.x
       env:
-        NUGET_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
+        GITHUB_NUGET_TOKEN: ${{secrets.GITHUB_TOKEN}}
+        MS_NUGET_TOKEN: ${{secrets.MS_NUGET_TOKEN}}
 
     - name: Restore dependencies
       run: dotnet restore ./src/SyZero.sln
