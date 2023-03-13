@@ -4,7 +4,7 @@
 name: .NET
 
 on:
-  pull_request:
+  push:
     branches: [ "master" ]
 
 jobs:
@@ -24,3 +24,13 @@ jobs:
 
     - name: Build
       run: dotnet build --configuration Release ./src/SyZero.sln --no-restore
+
+    - name: Create the package
+      run: dotnet pack --configuration Release ./src/SyZero.sln --no-restore
+
+    - name: Upload package
+      uses: actions/upload-artifact@v3
+      with:
+        name: build
+        path: |
+          ./nuget/*.nupkg
