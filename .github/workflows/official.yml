@@ -5,7 +5,7 @@ name: Official
 
 on:
   push:
-    branches: [ "master" ]
+    branches: [ "master", "workflow_dev" ]
 
 jobs:
   build:
@@ -21,9 +21,8 @@ jobs:
       uses: actions/setup-dotnet@v3
       with:
         dotnet-version: 6.0.x
-        source-url: https://nuget.pkg.github.com/OWNER/index.json
       env:
-        NUGET_AUTH_TOKEN: ${{secrets.TOKEN}}
+        NUGET_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
 
     - name: Restore dependencies
       run: dotnet restore ./src/SyZero.sln
@@ -42,4 +41,4 @@ jobs:
           ./nuget/*.nupkg
 
     - name: Publish the package to GPR
-      run: dotnet nuget push ./nuget/*.nupkg
+      run: .\.github\workflows\script\push_package.cmd
