@@ -12,6 +12,7 @@ on:
 env:
   GB_NUGET_TOKEN: ${{secrets.GB_NUGET_TOKEN}}
   MS_NUGET_TOKEN: ${{secrets.MS_NUGET_TOKEN}}
+  BUILD_BUILDNUMBER: ${{ steps.setup_buildnumber.outputs.BUILD_BUILDNUMBER }}
 
 jobs:
   build:
