@@ -62,11 +62,10 @@ jobs:
           name: build
 
       - name: Publish the package to github
-        uses: myci-actions/publish-nuget@5
-        with:
-          filename: '*.nupkg'
-          api-key: '${{ env.GB_NUGET_TOKEN }}'
-          repo-url: 'https://nuget.pkg.github.com/winter2048/index.json'
+        run: |
+          nuget push *.nupkg -Source "https://nuget.pkg.github.com/winter2048/index.json" -ApiKey "${{ env.GB_NUGET_TOKEN }}" -SkipDuplicate
+          Write-Host "done publishing packages"
+        shell: powershell
 
   publish_nuget:
     needs: build
@@ -78,8 +77,7 @@ jobs:
           name: build
 
       - name: Publish the package to nuget
-        uses: myci-actions/publish-nuget@5
-        with:
-          filename: '*.nupkg'
-          api-key: '${{ env.MS_NUGET_TOKEN }}'
-          repo-url: 'https://api.nuget.org/v3/index.json'
+        run: |
+          nuget push *.nupkg -Source "https://api.nuget.org/v3/index.json" -ApiKey "${{ env.MS_NUGET_TOKEN }}" -SkipDuplicate
+          Write-Host "done publishing packages"
+        shell: powershell
