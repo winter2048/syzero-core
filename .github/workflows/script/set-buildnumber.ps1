@@ -27,6 +27,7 @@ $env:BUILD_BUILDNUMBER = $MyCustomBuildVersion
 [Environment]::SetEnvironmentVariable("BUILD_BUILDNUMBER", $MyCustomBuildVersion, "Machine")
 echo "BUILD_BUILDNUMBER=$MyCustomBuildVersion" >> $env:GITHUB_OUTPUT
 echo "BUILD_BUILDNUMBER=$MyCustomBuildVersion" >> $env:GITHUB_ENV
+echo "GITHUB_RUN_NUMBER=$MyCustomBuildVersion" >> $env:GITHUB_ENV
 Write-Host "Setting the value of current build version :  $MyCustomBuildVersion"
 
 dir env:

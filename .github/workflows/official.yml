@@ -62,6 +62,7 @@ jobs:
           name: build
 
       - name: Publish the package to github
+        if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/dev'
         run: |
           dotnet nuget push *.nupkg --api-key "${{ env.GB_NUGET_TOKEN }}" --source "https://nuget.pkg.github.com/winter2048/index.json" --skip-duplicate
           Write-Host "done publishing packages"
@@ -77,6 +78,7 @@ jobs:
           name: build
 
       - name: Publish the package to nuget
+        if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/dev'
         run: |
           dotnet nuget push *.nupkg --api-key "${{ env.MS_NUGET_TOKEN }}" --source "https://api.nuget.org/v3/index.json" --skip-duplicate
           Write-Host "done publishing packages"
