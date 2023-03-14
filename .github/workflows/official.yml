@@ -12,7 +12,6 @@ on:
 env:
   GB_NUGET_TOKEN: ${{secrets.GB_NUGET_TOKEN}}
   MS_NUGET_TOKEN: ${{secrets.MS_NUGET_TOKEN}}
-  BUILD_BUILDNUMBER: ${{ steps.setup_buildnumber.outputs.BUILD_BUILDNUMBER }}
 
 jobs:
   build:
@@ -46,6 +45,8 @@ jobs:
 
     - name: Create the package
       run: dotnet pack --configuration Release ./src/SyZero.sln --no-restore
+      env:
+        BUILD_BUILDNUMBER: ${{ steps.setup_buildnumber.outputs.BUILD_BUILDNUMBER }}
 
     - name: Upload package
       uses: actions/upload-artifact@v3
