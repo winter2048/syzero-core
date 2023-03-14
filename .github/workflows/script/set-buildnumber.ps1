@@ -1,10 +1,21 @@
 param(
-    [int]$major = 1,
-    [int]$minor = 1,
-    [int]$patch = 0,
+    [int]$major,
+    [int]$minor,
+    [int]$patch,
     [string]$tag,
     [string]$ref
 )
+
+$version = Get-Content "$PSScriptRoot\..\.version"
+if (!$major) {
+    $major = $version.Split(".")[0]
+}
+if (!$minor) {
+    $minor = $version.Split(".")[1]
+}
+if (!$patch) {
+    $patch = $version.Split(".")[2]
+}
 
 $ProductMajorVersion = $major
 $ProductMinorVersion = $minor
