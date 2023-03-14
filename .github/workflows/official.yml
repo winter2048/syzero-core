@@ -34,8 +34,8 @@ jobs:
       if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/workflow_dev'
       uses: tvdias/github-tagger@v0.0.1
       with:
-        repo-token: ${{secrets.GB_NUGET_TOKEN}}
-        tag: ${{ steps.setup_buildnumber.outputs.BUILD_BUILDNUMBER }}
+        repo-token: ${{ env.GB_NUGET_TOKEN }}
+        tag: ${{ env.BUILD_BUILDNUMBER }}
 
     - name: Restore dependencies
       run: dotnet restore ./src/SyZero.sln
@@ -55,5 +55,5 @@ jobs:
 
     - name: Publish the package to github
       if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/workflow_dev'
-      run: .\.github\workflows\script\push-package.ps1 -token ${{secrets.GB_NUGET_TOKEN}} -source "https://nuget.pkg.github.com/winter2048/index.json"
+      run: .\.github\workflows\script\push-package.ps1 -token ${{ env.GB_NUGET_TOKEN }} -source "https://nuget.pkg.github.com/winter2048/index.json"
       shell: powershell
