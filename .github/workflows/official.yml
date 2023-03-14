@@ -63,7 +63,7 @@ jobs:
 
       - name: Publish the package to github
         run: |
-          nuget push *.nupkg -Source "https://nuget.pkg.github.com/winter2048/index.json" -ApiKey "${{ env.GB_NUGET_TOKEN }}" -SkipDuplicate
+          dotnet nuget push *.nupkg --api-key "${{ env.GB_NUGET_TOKEN }}" --source "https://nuget.pkg.github.com/winter2048/index.json" --skip-duplicate
           Write-Host "done publishing packages"
         shell: powershell
 
@@ -78,6 +78,6 @@ jobs:
 
       - name: Publish the package to nuget
         run: |
-          nuget push *.nupkg -Source "https://api.nuget.org/v3/index.json" -ApiKey "${{ env.MS_NUGET_TOKEN }}" -SkipDuplicate
+          dotnet nuget push *.nupkg --api-key "${{ env.MS_NUGET_TOKEN }}" --source "https://api.nuget.org/v3/index.json" --skip-duplicate
           Write-Host "done publishing packages"
         shell: powershell
