@@ -5,7 +5,7 @@ name: Official
 
 on:
   push:
-    branches: [ "master", "workflow_dev" ]
+    branches: [ "master", "dev", "workflow_dev" ]
 
 jobs:
   build:
@@ -21,6 +21,18 @@ jobs:
       env:
         GB_NUGET_TOKEN: ${{secrets.GB_NUGET_TOKEN}}
         MS_NUGET_TOKEN: ${{secrets.MS_NUGET_TOKEN}}
+
+    - name: Setup BuildNumber
+      id: setup_buildnumber
+      run: .\.github\workflows\script\set-buildnumber.ps1 -ref ${{github.ref}} -major 1 -minor 1 -patch 0
+      shell: powershell
+
+    - name: Tag commit
+      if: github.ref == 'ref/head/master' || github.ref == 'ref/head/workflow_dev'
+      uses: tvdias/github-tagger@v0.0.1
+      with:
+        repo-token: ${{secrets.GB_NUGET_TOKEN}}
+        tag: ${{ steps.setup_buildnumber.outputs.BUILD_BUILDNUMBER }}
 
     - name: Restore dependencies
       run: dotnet restore ./src/SyZero.sln
@@ -39,5 +51,6 @@ jobs:
           ./nuget/*.nupkg
 
     - name: Publish the package to github
-      run: .\.github\workflows\script\push_package.ps1 -token ${{secrets.GB_NUGET_TOKEN}} -source "https://nuget.pkg.github.com/winter2048/index.json"
+      if: github.ref == 'ref/head/master' || github.ref == 'ref/head/workflow_dev'
+      run: .\.github\workflows\script\push-package.ps1 -token ${{secrets.GB_NUGET_TOKEN}} -source "https://nuget.pkg.github.com/winter2048/index.json"
       shell: powershell
