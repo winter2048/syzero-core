@@ -7,6 +7,10 @@ on:
   push:
     branches: [ "master", "dev", "workflow_dev" ]
 
+env:
+  GB_NUGET_TOKEN: ${{secrets.GB_NUGET_TOKEN}}
+  MS_NUGET_TOKEN: ${{secrets.MS_NUGET_TOKEN}}
+
 jobs:
   build:
 
@@ -18,9 +22,6 @@ jobs:
       uses: actions/setup-dotnet@v3
       with:
         dotnet-version: 6.0.x
-      env:
-        GB_NUGET_TOKEN: ${{secrets.GB_NUGET_TOKEN}}
-        MS_NUGET_TOKEN: ${{secrets.MS_NUGET_TOKEN}}
 
     - name: Setup BuildNumber
       id: setup_buildnumber
@@ -42,8 +43,6 @@ jobs:
 
     - name: Create the package
       run: dotnet pack --configuration Release ./src/SyZero.sln --no-restore
-      env:
-        BUILD_BUILDNUMBER: ${{ steps.setup_buildnumber.outputs.BUILD_BUILDNUMBER }}
 
     - name: Upload package
       uses: actions/upload-artifact@v3
