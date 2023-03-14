@@ -24,8 +24,7 @@ if ($tag -and $tag -ne "master") {
     $MyCustomBuildVersion = "$MyCustomBuildVersion-$tag.$BuildMajorVersion.$BuildMinorVersion"
 }
 $env:BUILD_BUILDNUMBER = $MyCustomBuildVersion
-[Environment]::SetEnvironmentVariable("BUILD_BUILDNUMBER", $MyCustomBuildVersion, "User")
+[Environment]::SetEnvironmentVariable("BUILD_BUILDNUMBER", $MyCustomBuildVersion, "Machine")
 Write-Host "Setting the value of current build version :  $env:BUILD_BUILDNUMBER"
 echo "::set-output name=BUILD_BUILDNUMBER::$env:BUILD_BUILDNUMBER"
-echo BUILD_BUILDNUMBER=$($env:BUILD_BUILDNUMBER) >> $GITHUB_ENV
-cat $GITHUB_ENV
+dir env:
