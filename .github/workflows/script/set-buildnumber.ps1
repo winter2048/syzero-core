@@ -12,10 +12,7 @@ $ProductpatchVersion = $patch
 $MyCustomBuildVersion = "$ProductMajorVersion.$ProductMinorVersion.$ProductpatchVersion"
 
 if ($ref) {
-    $tag = $ref.Split("/")[-1]
-    if ($tag -eq "workflow_dev") {
-        $tag = "test"
-    }
+    $tag = $ref.Split("/")[-1].Replace("_","-")
 }
 if ($tag -and $tag -ne "master") {
     $BaselineYear = 2023
