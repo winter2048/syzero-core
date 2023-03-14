@@ -3,42 +3,81 @@
 
 name: Official
 
+# run-name: Deploy to ${{ inputs.deploy_target }} by @${{ github.actor }}
+
 on:
   push:
-    branches: [ "master", "workflow_dev" ]
+    branches: [ "master", "dev", "workflow_dev" ]
+
+env:
+  GB_NUGET_TOKEN: ${{secrets.GB_NUGET_TOKEN}}
+  MS_NUGET_TOKEN: ${{secrets.MS_NUGET_TOKEN}}
 
 jobs:
   build:
-
     runs-on: windows-latest
-    permissions:
-      packages: write
-      contents: read
-
     steps:
-    - uses: actions/checkout@v3
-    - name: Setup .NET
-      uses: actions/setup-dotnet@v3
-      with:
-        dotnet-version: 6.0.x
-      env:
-        NUGET_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
+      - uses: actions/checkout@v3
 
-    - name: Restore dependencies
-      run: dotnet restore ./src/SyZero.sln
+      - name: Setup BuildNumber
+        id: setup_buildnumber
+        run: .\.github\workflows\script\set-buildnumber.ps1 -ref ${{github.ref}} -major 1 -minor 1 -patch 0
+        shell: powershell
 
-    - name: Build
-      run: dotnet build --configuration Release ./src/SyZero.sln --no-restore
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: 6.0.x
 
-    - name: Create the package
-      run: dotnet pack --configuration Release ./src/SyZero.sln --no-restore
+      - name: Tag commit
+        if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/dev'
+        uses: tvdias/github-tagger@v0.0.1
+        with:
+          repo-token: ${{ env.GB_NUGET_TOKEN }}
+          tag: ${{ env.BUILD_BUILDNUMBER }}
 
-    - name: Upload package
-      uses: actions/upload-artifact@v3
-      with:
-        name: build
-        path: |
-          ./nuget/*.nupkg
+      - name: Restore dependencies
+        run: dotnet restore ./src/SyZero.sln
 
-    - name: Publish the package to GPR
-      run: .\.github\workflows\script\push_package.cmd
+      - name: Build
+        run: dotnet build --configuration Release ./src/SyZero.sln --no-restore
+
+      - name: Create the package
+        run: dotnet pack --configuration Release ./src/SyZero.sln --no-restore
+
+      - name: Upload package
+        uses: actions/upload-artifact@v3
+        with:
+          name: build
+          path: |
+            ./nuget/*.nupkg
+  
+  publish_github:
+    needs: build
+    runs-on: windows-latest
+    steps:
+      - name: Download build artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: build
+
+      - name: Publish the package to github
+        run: |
+          dotnet nuget push *.nupkg --api-key "${{ env.GB_NUGET_TOKEN }}" --source "https://nuget.pkg.github.com/winter2048/index.json" --skip-duplicate
+          Write-Host "done publishing packages"
+        shell: powershell
+
+  publish_nuget:
+    needs: build
+    runs-on: windows-latest
+    steps:
+      - name: Download build artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: build
+
+      - name: Publish the package to nuget
+        run: |
+          dotnet nuget push *.nupkg --api-key "${{ env.MS_NUGET_TOKEN }}" --source "https://api.nuget.org/v3/index.json" --skip-duplicate
+          Write-Host "done publishing packages"
+        shell: powershell
