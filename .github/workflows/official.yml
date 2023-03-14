@@ -65,8 +65,8 @@ jobs:
         uses: myci-actions/publish-nuget@5
         with:
           filename: '*.nupkg'
-          api-key: ${{ env.GB_NUGET_TOKEN }}
-          repo-url: https://nuget.pkg.github.com/winter2048/index.json
+          api-key: '${{ env.GB_NUGET_TOKEN }}'
+          repo-url: 'https://nuget.pkg.github.com/winter2048/index.json'
 
   publish_nuget:
     needs: build
@@ -81,5 +81,5 @@ jobs:
         uses: myci-actions/publish-nuget@5
         with:
           filename: '*.nupkg'
-          api-key: ${{ env.MS_NUGET_TOKEN }}
-          repo-url: https://api.nuget.org/v3/index.json
+          api-key: '${{ env.MS_NUGET_TOKEN }}'
+          repo-url: 'https://api.nuget.org/v3/index.json'
