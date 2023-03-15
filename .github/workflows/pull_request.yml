@@ -20,14 +20,15 @@ jobs:
     - uses: actions/checkout@v3
 
     - name: Check version
+      if: github.base.ref == 'master'
       run: |
         dir env:
         $version = Get-Content "./.github/workflows/.version"
         git remote set-url origin https://$($env:GB_NUGET_TOKEN)@github.com/$($env:GITHUB_REPOSITORY).git
         $tag = git ls-remote --tags | Select-String -Pattern refs/tags/$version$
         if($tag){
-          throw "Duplicate version number! ($version)" 
           echo "::error ::Duplicate version number! ($version)"
+          throw "error: Duplicate version number! ($version)"
         }
       shell: powershell
 
