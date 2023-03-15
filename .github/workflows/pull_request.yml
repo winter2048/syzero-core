@@ -7,6 +7,10 @@ on:
   pull_request:
     branches: [ "master", "dev", "workflow_dev" ]
 
+env:
+  GB_NUGET_TOKEN: ${{secrets.GB_NUGET_TOKEN}}
+  MS_NUGET_TOKEN: ${{secrets.MS_NUGET_TOKEN}}
+
 jobs:
   build:
 
@@ -14,6 +18,19 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
+
+    - name: Check version
+      if: github.ref == 'refs/heads/master'
+      run: |
+        $version = Get-Content "./.github/workflows/.version"
+        git remote set-url origin https://$($env:GB_NUGET_TOKEN)@github.com/$($env:GITHUB_REPOSITORY).git
+        $tag = git ls-remote --tags | Select-String -Pattern refs/tags/$version$
+        if($tag){
+          throw "Duplicate version number! ($version)" 
+          echo "::error ::Duplicate version number! ($version)"
+        }
+      shell: powershell
+
     - name: Setup .NET
       uses: actions/setup-dotnet@v3
       with:
