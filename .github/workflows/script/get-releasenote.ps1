@@ -19,8 +19,8 @@ foreach ($row in $releaseNotes) {
     }
 
     if ($isAdd) {
-        $node += "`r`n$row"
+        $node += "$row`r`n"
     }
 }
 Write-Host $node
-echo "releasenote=$node" >> $env:GITHUB_OUTPUT
+Set-Content "$PSScriptRoot\..\..\..\ReleaseNote.md" -Value $node -Encoding utf8
