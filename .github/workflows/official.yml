@@ -21,7 +21,7 @@ jobs:
 
       - name: Setup BuildNumber
         id: setup_buildnumber
-        run: .\.github\workflows\script\set-buildnumber.ps1 -refName "${{ github.ref_name }}"
+        run: .\.github\workflows\script\set-buildnumber.ps1 -refName ${{ github.ref_name }}
         shell: powershell
 
       - name: Setup .NET
