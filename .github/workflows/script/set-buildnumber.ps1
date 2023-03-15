@@ -22,7 +22,7 @@ $ProductMinorVersion = $minor
 $ProductpatchVersion = $patch
 $MyCustomBuildVersion = "$ProductMajorVersion.$ProductMinorVersion.$ProductpatchVersion"
 
-if ($ref) {
+if ($refName) {
     $tag = $refName.Replace("_","-")
 }
 if ($tag -and $tag -ne "master") {
