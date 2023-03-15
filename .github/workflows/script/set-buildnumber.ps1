@@ -3,7 +3,7 @@ param(
     [int]$minor,
     [int]$patch,
     [string]$tag,
-    [string]$ref
+    [string]$refName
 )
 
 $version = Get-Content "$PSScriptRoot\..\.version"
@@ -23,7 +23,7 @@ $ProductpatchVersion = $patch
 $MyCustomBuildVersion = "$ProductMajorVersion.$ProductMinorVersion.$ProductpatchVersion"
 
 if ($ref) {
-    $tag = $ref.Split("/")[-1].Replace("_","-")
+    $tag = $refName.Replace("_","-")
 }
 if ($tag -and $tag -ne "master") {
     $BaselineYear = 2023
