@@ -34,7 +34,7 @@ jobs:
         uses: tvdias/github-tagger@v0.0.1
         with:
           repo-token: ${{ env.GB_NUGET_TOKEN }}
-          tag: ${{ env.BUILD_BUILDNUMBER }}
+          tag: v${{ env.BUILD_BUILDNUMBER }}
 
       - name: Restore dependencies
         run: dotnet restore ./src/SyZero.sln
@@ -59,7 +59,7 @@ jobs:
           bodyFile: "ReleaseNotes.md"
           token: ${{ env.GB_NUGET_TOKEN }}
           prerelease: ${{ github.head_ref == 'master' }}
-          tag: ${{ env.BUILD_BUILDNUMBER }}
+          tag: v${{ env.BUILD_BUILDNUMBER }}
   
   publish_github:
     needs: build
