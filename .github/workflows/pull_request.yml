@@ -28,6 +28,7 @@ jobs:
         $tag = git ls-remote --tags | Select-String -Pattern refs/tags/$version$
         if($tag){
           echo "::error ::Duplicate version number! ($version)"
+          throw "error: Duplicate version number! ($version)"
         }
       shell: powershell
 
