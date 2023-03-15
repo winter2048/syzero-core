@@ -29,13 +29,6 @@ jobs:
         with:
           dotnet-version: 6.0.x
 
-      - name: Tag commit
-        if: github.ref_name == 'master' || github.ref_name == 'dev'
-        uses: tvdias/github-tagger@v0.0.1
-        with:
-          repo-token: ${{ env.GB_NUGET_TOKEN }}
-          tag: v${{ env.BUILD_BUILDNUMBER }}
-
       - name: Restore dependencies
         run: dotnet restore ./src/SyZero.sln
 
@@ -57,12 +50,19 @@ jobs:
         run: .\.github\workflows\script\get-releasenote.ps1 -version ${{ env.BUILD_BUILDNUMBER }}
         shell: powershell
 
+      - name: Tag commit
+        if: github.ref_name == 'master' || github.ref_name == 'dev'
+        uses: tvdias/github-tagger@v0.0.1
+        with:
+          repo-token: ${{ env.GB_NUGET_TOKEN }}
+          tag: v${{ env.BUILD_BUILDNUMBER }}
+
       - name: Create Release
         uses: ncipollo/release-action@v1
         if: github.ref_name == 'master' || github.ref_name == 'dev'
         with:
           artifacts: "./nuget/*.nupkg"
-          body: ${{ steps.get_releasenote.outputs.releasenote }}
+          bodyFile: 'ReleaseNote.md'
           token: ${{ env.GB_NUGET_TOKEN }}
           prerelease: ${{ github.ref_name == 'dev' }}
           tag: v${{ env.BUILD_BUILDNUMBER }}
