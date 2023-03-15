@@ -52,11 +52,17 @@ jobs:
           path: |
             ./nuget/*.nupkg
 
-      - uses: ncipollo/release-action@v1
+      - name: Get Release Note
+        id: get_releasenote
+        run: .\.github\workflows\script\get-releasenote.ps1 -version ${{ env.BUILD_BUILDNUMBER }}
+        shell: powershell
+
+      - name: Create Release
+        uses: ncipollo/release-action@v1
         if: github.ref_name == 'master' || github.ref_name == 'dev'
         with:
           artifacts: "./nuget/*.nupkg"
-          bodyFile: "ReleaseNotes.md"
+          body: ${{ steps.get_releasenote.outputs.releasenote }}
           token: ${{ env.GB_NUGET_TOKEN }}
           prerelease: ${{ github.ref_name == 'master' }}
           tag: v${{ env.BUILD_BUILDNUMBER }}
