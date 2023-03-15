@@ -21,7 +21,7 @@ jobs:
 
       - name: Setup BuildNumber
         id: setup_buildnumber
-        run: .\.github\workflows\script\set-buildnumber.ps1 -ref ${{github.ref}}
+        run: .\.github\workflows\script\set-buildnumber.ps1 -refName ${{ github.head_ref }}
         shell: powershell
 
       - name: Setup .NET
@@ -30,11 +30,11 @@ jobs:
           dotnet-version: 6.0.x
 
       - name: Tag commit
-        if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/dev'
+        if: github.head_ref == 'master' || github.head_ref == 'dev'
         uses: tvdias/github-tagger@v0.0.1
         with:
           repo-token: ${{ env.GB_NUGET_TOKEN }}
-          tag: ${{ env.BUILD_BUILDNUMBER }}
+          tag: v${{ env.BUILD_BUILDNUMBER }}
 
       - name: Restore dependencies
         run: dotnet restore ./src/SyZero.sln
@@ -53,13 +53,13 @@ jobs:
             ./nuget/*.nupkg
 
       - uses: ncipollo/release-action@v1
-        if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/dev'
+        if: github.head_ref == 'master' || github.head_ref == 'dev'
         with:
           artifacts: "./nuget/*.nupkg"
           bodyFile: "ReleaseNotes.md"
           token: ${{ env.GB_NUGET_TOKEN }}
-          prerelease: ${{ github.ref == 'refs/heads/dev' }}
-          tag: ${{ env.BUILD_BUILDNUMBER }}
+          prerelease: ${{ github.head_ref == 'master' }}
+          tag: v${{ env.BUILD_BUILDNUMBER }}
   
   publish_github:
     needs: build
@@ -71,7 +71,7 @@ jobs:
           name: build
 
       - name: Publish the package to github
-        if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/dev'
+        if: github.head_ref == 'master' || github.head_ref == 'dev'
         run: |
           dotnet nuget push *.nupkg --api-key "${{ env.GB_NUGET_TOKEN }}" --source "https://nuget.pkg.github.com/winter2048/index.json" --skip-duplicate
           Write-Host "done publishing packages"
@@ -87,7 +87,7 @@ jobs:
           name: build
 
       - name: Publish the package to nuget
-        if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/dev'
+        if: github.head_ref == 'master' || github.head_ref == 'dev'
         run: |
           dotnet nuget push *.nupkg --api-key "${{ env.MS_NUGET_TOKEN }}" --source "https://api.nuget.org/v3/index.json" --skip-duplicate
           Write-Host "done publishing packages"
