@@ -20,7 +20,7 @@ jobs:
     - uses: actions/checkout@v3
 
     - name: Check version
-      if: ${{env.GITHUB_BASE_REF}} == 'master'
+      if: github.base_ref == 'master'
       run: |
         dir env:
         $version = Get-Content "./.github/workflows/.version"
