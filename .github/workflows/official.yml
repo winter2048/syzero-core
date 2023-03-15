@@ -21,7 +21,7 @@ jobs:
 
       - name: Setup BuildNumber
         id: setup_buildnumber
-        run: .\.github\workflows\script\set-buildnumber.ps1 -refName ${{ github.head_ref }}
+        run: .\.github\workflows\script\set-buildnumber.ps1 -refName ${{ github.ref_name }}
         shell: powershell
 
       - name: Setup .NET
@@ -30,7 +30,7 @@ jobs:
           dotnet-version: 6.0.x
 
       - name: Tag commit
-        if: github.head_ref == 'master' || github.head_ref == 'dev'
+        if: github.ref_name == 'master' || github.ref_name == 'dev'
         uses: tvdias/github-tagger@v0.0.1
         with:
           repo-token: ${{ env.GB_NUGET_TOKEN }}
@@ -53,12 +53,12 @@ jobs:
             ./nuget/*.nupkg
 
       - uses: ncipollo/release-action@v1
-        if: github.head_ref == 'master' || github.head_ref == 'dev'
+        if: github.ref_name == 'master' || github.ref_name == 'dev'
         with:
           artifacts: "./nuget/*.nupkg"
           bodyFile: "ReleaseNotes.md"
           token: ${{ env.GB_NUGET_TOKEN }}
-          prerelease: ${{ github.head_ref == 'master' }}
+          prerelease: ${{ github.ref_name == 'master' }}
           tag: v${{ env.BUILD_BUILDNUMBER }}
   
   publish_github:
@@ -71,7 +71,7 @@ jobs:
           name: build
 
       - name: Publish the package to github
-        if: github.head_ref == 'master' || github.head_ref == 'dev'
+        if: github.ref_name == 'master' || github.ref_name == 'dev'
         run: |
           dotnet nuget push *.nupkg --api-key "${{ env.GB_NUGET_TOKEN }}" --source "https://nuget.pkg.github.com/winter2048/index.json" --skip-duplicate
           Write-Host "done publishing packages"
@@ -87,7 +87,7 @@ jobs:
           name: build
 
       - name: Publish the package to nuget
-        if: github.head_ref == 'master' || github.head_ref == 'dev'
+        if: github.ref_name == 'master' || github.ref_name == 'dev'
         run: |
           dotnet nuget push *.nupkg --api-key "${{ env.MS_NUGET_TOKEN }}" --source "https://api.nuget.org/v3/index.json" --skip-duplicate
           Write-Host "done publishing packages"
