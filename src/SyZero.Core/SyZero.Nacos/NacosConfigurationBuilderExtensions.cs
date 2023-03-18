@@ -12,6 +12,8 @@
 // *****************************************************************************************************************
 
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Nacos.AspNetCore.V2;
 using Nacos.Microsoft.Extensions.Configuration;
 using System;
 using System.Threading;
@@ -24,23 +26,23 @@ namespace SyZero.Nacos
     /// </summary>
     public static class NacosConfigurationBuilderExtensions
     {
-        public static IConfigurationBuilder AddNacos(this IConfigurationBuilder builder, CancellationToken cancellationToken, Action<NacosConfigurationSource> options)
-        {
-            return builder.AddNacosConfiguration(options);
-        }
+        //public static IConfigurationBuilder AddNacos(this IServiceCollection builder, CancellationToken cancellationToken, Action<NacosConfigurationSource> options)
+        //{
+        //    return builder.AddNacosAspNet(options);
+        //}
 
-        public static IConfigurationBuilder AddNacos(this IConfigurationBuilder builder, CancellationToken cancellationToken)
-        {
-            // 获取服务配置项
-            var nacosOptions = AppConfig.GetSection<NacosServiceOptions>("Nacos");
-            return builder.AddNacos(cancellationToken, source =>
-           {
-               source.DataId = AppConfig.ServerOptions.Name;
-               source.Group = "";
-               source.Tenant = "";
-               source.Optional = false;
-               source.ServerAddresses = nacosOptions.NacosAddresses;
-           });
-        }
+        //public static IConfigurationBuilder AddNacos(this IConfigurationBuilder builder, CancellationToken cancellationToken)
+        //{
+        //    // 获取服务配置项
+        //    var nacosOptions = AppConfig.GetSection<NacosServiceOptions>("Nacos");
+        //    return builder.AddNacos(cancellationToken, source =>
+        //   {
+        //       source.DataId = AppConfig.ServerOptions.Name;
+        //       source.Group = "";
+        //       source.Tenant = "";
+        //       source.Optional = false;
+        //       source.ServerAddresses = nacosOptions.NacosAddresses;
+        //   });
+        //}
     }
 }
