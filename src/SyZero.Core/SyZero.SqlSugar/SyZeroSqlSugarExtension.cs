@@ -36,8 +36,8 @@ namespace SyZero
                     InitKeyType = InitKeyType.Attribute,
                     SlaveConnectionConfigs = AppConfig.ConnectionOptions.Slave.Select(p => new SlaveConnectionConfig()
                     {
-                        HitRate = p.Value,
-                        ConnectionString = p.Key
+                        HitRate = p.HitRate,
+                        ConnectionString = p.ConnectionString
                     }).ToList(),
                     ConfigureExternalServices = new ConfigureExternalServices()
                     {
