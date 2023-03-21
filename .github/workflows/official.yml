@@ -64,7 +64,7 @@ jobs:
           artifacts: "./nuget/*.nupkg"
           bodyFile: 'ReleaseNote.md'
           token: ${{ env.GB_NUGET_TOKEN }}
-          prerelease: ${{ github.ref_name == 'dev' }}
+          prerelease: ${{ github.ref_name != 'master' }}
           tag: v${{ env.BUILD_BUILDNUMBER }}
   
   publish_github:

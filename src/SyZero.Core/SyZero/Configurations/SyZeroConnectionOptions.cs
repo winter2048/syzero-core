@@ -21,6 +21,22 @@ namespace SyZero.Configurations
         /// <summary>
         /// 从数据库 连接字符串,权重
         /// </summary>
-        public Dictionary<string,int> Slave { get; set; } = new Dictionary<string,int>();
+        public List<SlaveConnectionOptions> Slave { get; set; } = new List<SlaveConnectionOptions>();
+    }
+
+    /// <summary>
+    /// 备数据库
+    /// </summary>
+    public class SlaveConnectionOptions
+    {
+        /// <summary>
+        /// 连接字符串
+        /// </summary>
+        public string ConnectionString { get; set; }
+
+        /// <summary>
+        /// 权重
+        /// </summary>
+        public int HitRate { get; set; } = 0;
     }
 }
