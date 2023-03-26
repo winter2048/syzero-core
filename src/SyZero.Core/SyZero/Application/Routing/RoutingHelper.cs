@@ -20,6 +20,15 @@ namespace SyZero.Application.Routing
             return apiMethod?.HttpMethod ?? HttpMethod.GET;
         }
 
+        public static string GetHttpTemplate(MemberInfo member)
+        {
+            MemberInfo method = member.GetInterfaceMemberInfo();
+
+            var apiMethod = method.GetCustomAttribute<ApiMethodAttribute>();
+
+            return apiMethod?.Template;
+        }
+
         public static string GetApiPreFix()
         {
             return "api";

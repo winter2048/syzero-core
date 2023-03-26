@@ -226,7 +226,7 @@ namespace SyZero.DynamicWebApi
 
         private void AddAppServiceSelector(string areaName, string controllerName, ActionModel action)
         {
-
+            var template = RoutingHelper.GetHttpTemplate(action.ActionMethod);
             var verb = RoutingHelper.GetHttpVerb(action.ActionMethod);
 
             var appServiceSelectorModel = action.Selectors[0];
@@ -234,6 +234,11 @@ namespace SyZero.DynamicWebApi
             if (appServiceSelectorModel.AttributeRouteModel == null)
             {
                 appServiceSelectorModel.AttributeRouteModel = CreateActionRouteModel(areaName, controllerName, action);
+            }
+
+            if (!string.IsNullOrEmpty(template))
+            {
+                appServiceSelectorModel.AttributeRouteModel.Template = template;
             }
 
             if (!appServiceSelectorModel.ActionConstraints.Any())

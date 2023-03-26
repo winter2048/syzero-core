@@ -7,7 +7,8 @@ namespace SyZero.Application.Routing
     [AttributeUsage(AttributeTargets.Interface | AttributeTargets.Class | AttributeTargets.Method)]
     public class ApiMethodAttribute : Attribute
     {
-        public ApiMethodAttribute(HttpMethod httpMethod) { 
+        public ApiMethodAttribute(HttpMethod httpMethod)
+        {
             this.HttpMethod = httpMethod;
         }
       
@@ -18,7 +19,6 @@ namespace SyZero.Application.Routing
         }
 
         public HttpMethod HttpMethod { get; }
-        public string Name { get; set; }
         public string Template { get; }
     }
 }
