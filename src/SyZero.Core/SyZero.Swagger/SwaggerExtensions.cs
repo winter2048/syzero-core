@@ -30,14 +30,13 @@ namespace Microsoft.Extensions.DependencyInjection
                 });
                 options.DocInclusionPredicate((docName, description) => true);
                 // Define the BearerAuth scheme that's in use
-                options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme()
+                options.AddSecurityDefinition("Authorization", new OpenApiSecurityScheme()
                 {
-                    Description = "在下框中输入请求头中需要添加Jwt授权Token：Bearer Token",
+                    Description = "在下框中输入请求头中需要添加Jwt授权Authorization:Token",
                     Name = "Authorization",
                     In = ParameterLocation.Header,
                     Type = SecuritySchemeType.ApiKey,
-                    BearerFormat = "JWT",
-                    Scheme = "Bearer"
+                    BearerFormat = "JWT"
                 });
                 options.AddSecurityRequirement(new OpenApiSecurityRequirement
                 {
@@ -46,7 +45,7 @@ namespace Microsoft.Extensions.DependencyInjection
                         {
                             Reference = new OpenApiReference {
                                 Type = ReferenceType.SecurityScheme,
-                                Id = "Bearer"
+                                Id = "Authorization"
                             }
                         },
                         new string[] { }

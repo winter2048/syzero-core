@@ -161,6 +161,14 @@
             <param name="key"></param>
             <returns></returns>
         </member>
+        <member name="M:SyZero.Cache.ICache.GetKeys(System.String)">
+            <summary>
+            根据前缀获取所有的key
+            例如：pro_*
+            </summary>
+            <param name="key"></param>
+            <returns></returns>
+        </member>
         <member name="M:SyZero.Cache.ICache.Get``1(System.String)">
             <summary>
             获取值

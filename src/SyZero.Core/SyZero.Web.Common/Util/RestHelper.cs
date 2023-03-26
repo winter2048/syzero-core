@@ -134,49 +134,26 @@ namespace SyZero.Web.Common
             request.RequestFormat = DataFormat.Json;
             request.AddHeader("Content-Type", "application/json");
             request.AddHeader("Authorization", token);
-            request.AddBody(body); // uses JsonSerializer
-
+            request.AddBody(body);
 
             RestResponse response = client.Execute(request);
-            var content = response.Content; // raw content as string
-            //if (!string.IsNullOrWhiteSpace(content))
-            //{
-            //    content = content.Replace("]\"", "]").Replace("\"[", "[");
-            //    content = content.Replace("}\"", "}").Replace("\"{", "{").Replace("\\\"", "\"");
-            //}
             var result = new HttpResultMessage<T>();
-            var resultStr = JsonConvert.DeserializeObject<HttpResultMessage<object>>(content);
-            //Console.WriteLine($"PostJson baseUrl{baseUrl} resource{resource} postData{JsonConvert.SerializeObject(postData)} content:{content}");
-            result.IsSucceed = resultStr.IsSucceed;
-            if (resultStr.IsSucceed)
+            result.IsSucceed = response.IsSuccessful;
+            if (result.IsSucceed)
             {
-                var remoteInvokeResult = resultStr.Entity;
-                if (remoteInvokeResult != null)
+                var content = response.Content;
+                if (!string.IsNullOrEmpty(content))
                 {
-                    if (remoteInvokeResult.GetType().IsValueType)
+                    if (typeof(T) == typeof(string))
                     {
-                        //if(typeof(T) == typeof(int))
-                        //{ }
-                        //result.Entity = (T)remoteInvokeResult;
-                        result.Entity = (T)Convert.ChangeType(remoteInvokeResult, typeof(T));
-                    }
-                    else if (typeof(T) == typeof(string))
-                    {
-                        result.Entity = (T)remoteInvokeResult;
+                        result.Entity = (T)Convert.ChangeType(content, typeof(T)); ;
                     }
                     else
                     {
-                        result.Entity = JsonConvert.DeserializeObject<T>(remoteInvokeResult.ToString());
+                        result.Entity = JsonConvert.DeserializeObject<T>(content.ToString());
                     }
-                    //result.Entity = JsonConvert.DeserializeObject<T>(resultStr.Entity);
-                }
-                else
-                {
-                    resultStr.IsSucceed = false;
-                    resultStr.Message = "状态值为空！";
                 }
             }
-            //Console.WriteLine(result.Message);
             return result;
         }
 
