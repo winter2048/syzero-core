@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Configuration;
+using System;
 using System.IO;
 using System.Linq;
 using SyZero.Configurations;
@@ -14,9 +15,11 @@ namespace SyZero
         {
             if (Configuration == null)
             {
+                var environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
                 Configuration = new ConfigurationBuilder()
                     .SetBasePath(Directory.GetCurrentDirectory())
-                    .AddJsonFile("appsettings.json", true)
+                    .AddJsonFile($"appsettings.json", true)
+                    .AddJsonFile($"appsettings.{environment}.json", true)
                     .Build();
             }
         }
