@@ -196,6 +196,8 @@ namespace SyZero.DynamicWebApi
                 areaName = AppConsts.DefaultAreaName;
             }
 
+            controller.Selectors[0].AttributeRouteModel = new AttributeRouteModel(new RouteAttribute(RoutingHelper.GetcontrollerRouteUrl(areaName, controller.ControllerName)));
+
             foreach (var action in controller.Actions)
             {
                 if (!CheckNoMapMethod(action))
@@ -279,8 +281,9 @@ namespace SyZero.DynamicWebApi
 
         private static AttributeRouteModel CreateActionRouteModel(string areaName, string controllerName, ActionModel action)
         {
+            var template = RoutingHelper.GetHttpTemplate(action.ActionMethod);
             var routeStr = RoutingHelper.GetRouteUrl(areaName, controllerName, action.ActionMethod);
-            return new AttributeRouteModel(new RouteAttribute(routeStr));
+            return new AttributeRouteModel(new RouteAttribute(template ?? action.ActionName));
         }
     }
 }

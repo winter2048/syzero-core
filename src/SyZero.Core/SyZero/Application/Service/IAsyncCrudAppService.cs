@@ -1,6 +1,7 @@
 ﻿
 
 using System.Threading.Tasks;
+using SyZero.Application.Routing;
 using SyZero.Application.Service.Dto;
 
 namespace SyZero.Application.Service
@@ -21,45 +22,30 @@ namespace SyZero.Application.Service
     }
 
     public interface IAsyncCrudAppService<TEntityDto, in TGetAllInput, in TCreateInput>
-        : IAsyncCrudAppService<TEntityDto, TGetAllInput, TCreateInput, TCreateInput>
+        : IAsyncCrudAppService<TEntityDto, TGetAllInput, TCreateInput, TEntityDto>
         where TEntityDto : IEntityDto
-        where TCreateInput : IEntityDto
     {
 
     }
 
     public interface IAsyncCrudAppService<TEntityDto, in TGetAllInput, in TCreateInput, in TUpdateInput>
-        : IAsyncCrudAppService<TEntityDto, TGetAllInput, TCreateInput, TUpdateInput, EntityDto>
-        where TEntityDto : IEntityDto
-        where TUpdateInput : IEntityDto
-    {
-
-    }
-
-    public interface IAsyncCrudAppService<TEntityDto, in TGetAllInput, in TCreateInput, in TUpdateInput, in TGetInput>
-        : IAsyncCrudAppService<TEntityDto, TGetAllInput, TCreateInput, TUpdateInput, TGetInput, EntityDto>
-        where TEntityDto : IEntityDto
-        where TUpdateInput : IEntityDto
-        where TGetInput : IEntityDto
-    {
-
-    }
-
-    public interface IAsyncCrudAppService<TEntityDto, in TGetAllInput, in TCreateInput, in TUpdateInput, in TGetInput, in TDeleteInput>
         : IApplicationService
         where TEntityDto : IEntityDto
         where TUpdateInput : IEntityDto
-        where TGetInput : IEntityDto
-        where TDeleteInput : IEntityDto
     {
-        Task<TEntityDto> Get(TGetInput input);
+        [ApiMethod(HttpMethod.GET, "{id}")]
+        Task<TEntityDto> Get(long input);
 
-        Task<PageResultDto<TEntityDto>> GetAll(TGetAllInput input);
+        [ApiMethod(HttpMethod.GET)]
+        Task<PageResultDto<TEntityDto>> List(TGetAllInput input);
 
+        [ApiMethod(HttpMethod.POST, "")]
         Task<TEntityDto> Create(TCreateInput input);
 
-        Task<TEntityDto> Update(TUpdateInput input);
+        [ApiMethod(HttpMethod.PUT, "{id}")]
+        Task<TEntityDto> Update(long id, TUpdateInput input);
 
-        Task<bool> Delete(TDeleteInput input);
+        [ApiMethod(HttpMethod.DELETE, "{id}")]
+        Task<bool> Delete(long id);
     }
 }

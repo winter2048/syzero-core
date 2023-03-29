@@ -34,6 +34,12 @@ namespace SyZero.Application.Routing
             return "api";
         }
 
+        public static string GetcontrollerRouteUrl(string areaName, string controllerName)
+        {
+            var apiPreFix = GetApiPreFix();
+            return $"{apiPreFix}/{areaName}/{GetControllerName(controllerName)}".Replace("//", "/");
+        }
+
         public static string GetRouteUrl(string areaName, string controllerName, MemberInfo action)
         {
             var apiPreFix = GetApiPreFix();
