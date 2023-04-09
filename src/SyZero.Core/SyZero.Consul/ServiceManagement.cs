@@ -5,23 +5,35 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using SyZero.Cache;
 using SyZero.Consul.Config;
 using SyZero.Runtime.Security;
 using SyZero.Service;
+using SyZero.Util;
 
 namespace SyZero.Consul
 {
     public class ServiceManagement : IServiceManagement
     {
+        private readonly IConsulClient _consulClient;
+        private readonly ICache _cache;
+
+        public ServiceManagement(IConsulClient consulClient,
+            ICache cache)
+        {
+            _consulClient = consulClient;
+            _cache = cache;
+        }
+
         public async Task<List<ServiceInfo>> GetService(string serviceName)
         {
-            var consulOptions = AppConfig.GetSection<ConsulServiceOptions>("Consul");
-            using (var consulClient = new ConsulClient(configuration =>
+            if (_cache.Exist($"Consul:{serviceName}"))
             {
-                configuration.Address = new Uri(consulOptions.ConsulAddress);
-            }))
+                return _cache.Get<List<ServiceInfo>>($"Consul:{serviceName}");
+            }
+            else
             {
-                var services = await consulClient.Catalog.Service(serviceName);
+                var services = await _consulClient.Catalog.Service(serviceName);
                 if (services.StatusCode != System.Net.HttpStatusCode.OK)
                 {
                     throw new Exception($"SyZero.Consul:Consul连接出错({services.StatusCode})!");
@@ -30,7 +42,7 @@ namespace SyZero.Consul
                 {
                     throw new Exception($"SyZero.Consul:未找到{serviceName}服务!");
                 }
-                return services.Response.Select(service => new ServiceInfo()
+                var serviceInfos = services.Response.Select(service => new ServiceInfo()
                 {
                     ServiceID = service.ServiceID,
                     ServiceName = service.ServiceName,
@@ -38,6 +50,8 @@ namespace SyZero.Consul
                     ServicePort = service.ServicePort,
                     ServiceProtocol = Enum.Parse<ProtocolType>(service.ServiceMeta.FirstOrDefault(meta => meta.Key == "Protocol").Value)
                 }).ToList();
+                _cache.Set($"Consul:{serviceName}", serviceInfos, 30);
+                return serviceInfos;
             }
         }
     }

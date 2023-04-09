@@ -22,6 +22,10 @@ namespace SyZero.Web.Common.Util
             var requset = new RestRequest(requestTemplate.Url, GetMethod(requestTemplate));
             requset.AddHeaders(requestTemplate.Headers);
             requset.AddJsonBody(requestTemplate.Body ?? "");
+            foreach (var item in requestTemplate.QueryValue)
+            {
+                requset.AddQueryParameter(item.Key, item.Value);
+            }
             var response = await client.ExecuteAsync(requset, cancellationToken);
             return GetResponseTemplate<T>(response);
         }

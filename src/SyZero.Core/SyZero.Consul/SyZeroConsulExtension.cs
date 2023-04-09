@@ -1,4 +1,6 @@
 ﻿using Autofac;
+using NConsul;
+using NConsul.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -18,7 +20,8 @@ namespace SyZero
         /// <returns></returns>
         public static ContainerBuilder AddConsul(this ContainerBuilder builder)
         {
-            builder.RegisterType<ServiceManagement>().As<IServiceManagement>().PropertiesAutowired();
+            builder.RegisterType<ConsulClient>().As<IConsulClient>().SingleInstance().PropertiesAutowired();
+            builder.RegisterType<ServiceManagement>().As<IServiceManagement>().SingleInstance().PropertiesAutowired();
             return builder;
         }
     }

@@ -54,6 +54,11 @@ namespace SyZero.Feign
                     requestTemplate.Body = jsonSerialize.ObjectToJSON(invocation.Arguments[0]);
                 }
 
+                foreach (var item in paramInfo)
+                {
+                    requestTemplate.QueryValue.Add(new KeyValuePair<string, string>(item.Name, invocation.Arguments[0].ToString()));
+                }
+
                 var cxecuteAsync = client.GetType().GetMethod("ExecuteAsync").MakeGenericMethod(new Type[] { returnType });
                 Task responseTemplateTask = cxecuteAsync.Invoke(client, new object[] { requestTemplate, new System.Threading.CancellationToken() }) as Task;
                 responseTemplateTask.Wait();

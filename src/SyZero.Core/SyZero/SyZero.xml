@@ -951,6 +951,12 @@
             Default: <see cref="F:System.Security.Claims.ClaimTypes.Name"/>
             </summary>
         </member>
+        <member name="P:SyZero.Runtime.Security.SyClaimTypes.NickName">
+            <summary>
+            NickName
+            Default: <see cref="P:SyZero.Runtime.Security.SyClaimTypes.NickName"/>
+            </summary>
+        </member>
         <member name="P:SyZero.Runtime.Security.SyClaimTypes.UserId">
             <summary>
             UserId.
