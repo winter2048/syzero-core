@@ -75,6 +75,7 @@ namespace SyZero.Feign
             }
             catch (Exception ex)
             {
+                Console.WriteLine($"Feign error:{ex.Message}");
                 invocation.Proceed();
                 if (ex is SyMessageException)
                 {

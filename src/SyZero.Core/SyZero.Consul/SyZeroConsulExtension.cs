@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using SyZero.Consul;
+using SyZero.Consul.Config;
 using SyZero.Service;
 
 namespace SyZero
@@ -20,7 +21,15 @@ namespace SyZero
         /// <returns></returns>
         public static ContainerBuilder AddConsul(this ContainerBuilder builder)
         {
-            builder.RegisterType<ConsulClient>().As<IConsulClient>().SingleInstance().PropertiesAutowired();
+            // 获取服务配置项
+            var consulOptions = AppConfig.GetSection<ConsulServiceOptions>("Consul");
+            builder.Register(p =>
+            {
+                return new ConsulClient(config =>
+                {
+                    config.Address = new Uri(consulOptions.ConsulAddress);
+                });
+            }).As<IConsulClient>().SingleInstance().PropertiesAutowired();
             builder.RegisterType<ServiceManagement>().As<IServiceManagement>().SingleInstance().PropertiesAutowired();
             return builder;
         }
