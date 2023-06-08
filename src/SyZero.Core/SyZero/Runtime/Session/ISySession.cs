@@ -39,5 +39,9 @@ namespace SyZero.Runtime.Session
         /// 如果没有用户登录，则为空。
         /// </summary>
         string Token { get; }
+
+        ISySession Parse(ClaimsPrincipal claimsPrincipal);
+
+        ISySession Parse(string token);
     }
 }

@@ -16,17 +16,20 @@ namespace SyZero.Runtime.Session
 
         private readonly IHttpContextAccessor _httpContextAccessor;
 
+        private ClaimsPrincipal _principal;
+
         public SySession(IJsonSerialize jsonSerialize, IHttpContextAccessor httpContextAccessor)
         {
             _jsonSerialize = jsonSerialize;
             _httpContextAccessor = httpContextAccessor;
+            _principal = _httpContextAccessor.HttpContext.User;
         }
 
         public ClaimsPrincipal Principal
         {
             get
             {
-                return _httpContextAccessor.HttpContext.User;
+                return _principal;
             }
         }
 
@@ -93,6 +96,18 @@ namespace SyZero.Runtime.Session
                 }
                 return null;
             }
+        }
+
+        public ISySession Parse(string token)
+        {
+            this._principal = AutofacUtil.GetService<IToken>().GetPrincipal(token);
+            return this;
+        }
+
+        ISySession ISySession.Parse(ClaimsPrincipal claimsPrincipal)
+        {
+            this._principal = claimsPrincipal;
+            return this;
         }
     }
 }
