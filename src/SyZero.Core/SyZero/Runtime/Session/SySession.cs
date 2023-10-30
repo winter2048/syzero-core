@@ -16,28 +16,19 @@ namespace SyZero.Runtime.Session
 
         private readonly IHttpContextAccessor _httpContextAccessor;
 
-        private ClaimsPrincipal _principal;
+        public ClaimsPrincipal Principal { get { return _httpContextAccessor.HttpContext.User; } }
 
         public SySession(IJsonSerialize jsonSerialize, IHttpContextAccessor httpContextAccessor)
         {
             _jsonSerialize = jsonSerialize;
             _httpContextAccessor = httpContextAccessor;
-            _principal = _httpContextAccessor.HttpContext.User;
-        }
-
-        public ClaimsPrincipal Principal
-        {
-            get
-            {
-                return _principal;
-            }
         }
 
         public long? UserId
         {
             get
             {
-                var tenantIdClaim = Principal?.Claims.FirstOrDefault(c => c.Type == SyClaimTypes.UserId);
+                var tenantIdClaim = _httpContextAccessor.HttpContext.User.Identities?.FirstOrDefault().Claims.FirstOrDefault(c => c.Type == SyClaimTypes.UserId);
                 if (!string.IsNullOrEmpty(tenantIdClaim?.Value))
                 {
                     return tenantIdClaim.Value.ToLong();
@@ -50,7 +41,7 @@ namespace SyZero.Runtime.Session
         {
             get
             {
-                var tenantIdClaim = Principal?.Claims.FirstOrDefault(c => c.Type == SyClaimTypes.UserRole);
+                var tenantIdClaim = _httpContextAccessor.HttpContext.User.Identities?.FirstOrDefault().Claims.FirstOrDefault(c => c.Type == SyClaimTypes.UserRole);
                 if (!string.IsNullOrEmpty(tenantIdClaim?.Value))
                 {
                     return tenantIdClaim.Value;
@@ -63,7 +54,7 @@ namespace SyZero.Runtime.Session
         {
             get
             {
-                var tenantIdClaim = Principal?.Claims.FirstOrDefault(c => c.Type == SyClaimTypes.UserName);
+                var tenantIdClaim = _httpContextAccessor.HttpContext.User.Identities?.FirstOrDefault().Claims.FirstOrDefault(c => c.Type == SyClaimTypes.UserName);
                 if (!string.IsNullOrEmpty(tenantIdClaim?.Value))
                 {
                     return tenantIdClaim.Value;
@@ -76,7 +67,7 @@ namespace SyZero.Runtime.Session
         {
             get
             {
-                var tenantIdClaim = Principal?.Claims.FirstOrDefault(c => c.Type == SyClaimTypes.Permission);
+                var tenantIdClaim = _httpContextAccessor.HttpContext.User.Identities?.FirstOrDefault().Claims.FirstOrDefault(c => c.Type == SyClaimTypes.Permission);
                 if (!string.IsNullOrEmpty(tenantIdClaim?.Value))
                 {
                     return _jsonSerialize.JSONToObject<List<string>>(tenantIdClaim.Value);
@@ -89,7 +80,7 @@ namespace SyZero.Runtime.Session
         {
             get
             {
-                var tenantIdClaim = Principal?.Claims.FirstOrDefault(c => c.Type == SyClaimTypes.Token);
+                var tenantIdClaim = _httpContextAccessor.HttpContext.User.Identities?.FirstOrDefault().Claims.FirstOrDefault(c => c.Type == SyClaimTypes.Token);
                 if (!string.IsNullOrEmpty(tenantIdClaim?.Value))
                 {
                     return tenantIdClaim.Value;
@@ -100,13 +91,13 @@ namespace SyZero.Runtime.Session
 
         public ISySession Parse(string token)
         {
-            this._principal = AutofacUtil.GetService<IToken>().GetPrincipal(token);
+            _httpContextAccessor.HttpContext.User = AutofacUtil.GetService<IToken>().GetPrincipal(token);
             return this;
         }
 
         ISySession ISySession.Parse(ClaimsPrincipal claimsPrincipal)
         {
-            this._principal = claimsPrincipal;
+            _httpContextAccessor.HttpContext.User = claimsPrincipal;
             return this;
         }
     }
