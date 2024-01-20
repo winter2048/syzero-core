@@ -324,6 +324,12 @@
             动态配置
             </summary>
         </member>
+        <member name="T:SyZero.Dependency.IScopedDependency">
+            <summary>
+            实现此接口的所有类都自动注册到依赖项
+            作为瞬变物体注入
+            </summary>
+        </member>
         <member name="T:SyZero.Dependency.ISingletonDependency">
             <summary>
             单例
@@ -1049,7 +1055,7 @@
             <param name="serviceName"></param>
             <returns></returns>
         </member>
-        <member name="M:SyZero.SyZeroExtension.AddSyZero(Autofac.ContainerBuilder)">
+        <member name="M:SyZero.SyZeroExtension.AddSyZero(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
             <summary>
             SyZeroModule
             </summary>
@@ -1078,30 +1084,6 @@
             实体映射
             </summary>
         </member>
-        <member name="T:SyZero.Util.AutofacUtil">
-            <summary>
-            Autofac依赖注入服务
-            </summary>
-        </member>
-        <member name="P:SyZero.Util.AutofacUtil.Container">
-            <summary>
-            Autofac依赖注入静态服务
-            </summary>
-        </member>
-        <member name="M:SyZero.Util.AutofacUtil.GetService``1">
-            <summary>
-            获取服务(Single)
-            </summary>
-            <typeparam name="T">接口类型</typeparam>
-            <returns></returns>
-        </member>
-        <member name="M:SyZero.Util.AutofacUtil.GetScopeService``1">
-            <summary>
-            获取服务(请求生命周期内)
-            </summary>
-            <typeparam name="T">接口类型</typeparam>
-            <returns></returns>
-        </member>
         <member name="M:SyZero.Util.ILockUtil.Release(System.String)">
             <summary>
             释放锁
@@ -1124,6 +1106,37 @@
             <param name="key">上锁的key</param>
             <param name="expiresMS">过期时间：秒，默认10秒。传入的expiresSenconds如果小于等于0，为了防止死锁：那么expiresSenconds也会调整为10</param>
             <param name="waitTimeSenconds">等待时间，默认10s</param>
+            <returns></returns>
+        </member>
+        <member name="T:SyZero.Util.SyZeroUtil">
+            <summary>
+            Autofac依赖注入服务
+            </summary>
+        </member>
+        <member name="P:SyZero.Util.SyZeroUtil.ServiceProvider">
+            <summary>
+            Autofac依赖注入静态服务
+            </summary>
+        </member>
+        <member name="M:SyZero.Util.SyZeroUtil.GetService``1">
+            <summary>
+            获取服务(Single)
+            </summary>
+            <typeparam name="T">接口类型</typeparam>
+            <returns></returns>
+        </member>
+        <member name="M:SyZero.Util.SyZeroUtil.GetSingletonService``1">
+            <summary>
+            获取单例
+            </summary>
+            <typeparam name="T">接口类型</typeparam>
+            <returns></returns>
+        </member>
+        <member name="M:SyZero.Util.SyZeroUtil.GetScopeService``1">
+            <summary>
+            获取服务(请求生命周期内)
+            </summary>
+            <typeparam name="T">接口类型</typeparam>
             <returns></returns>
         </member>
     </members>

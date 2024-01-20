@@ -2,7 +2,7 @@
 
 namespace SyZero.Application.Service
 {
-    public interface IApplicationService : ITransientDependency
+    public interface IApplicationService
     {
     }
 

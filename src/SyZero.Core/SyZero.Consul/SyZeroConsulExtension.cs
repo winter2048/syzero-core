@@ -1,4 +1,4 @@
-﻿using Autofac;
+﻿using Microsoft.Extensions.DependencyInjection;
 using NConsul;
 using NConsul.Interfaces;
 using System;
@@ -19,19 +19,19 @@ namespace SyZero
         /// <param name="builder"></param>
         /// <param name="configuration"></param>
         /// <returns></returns>
-        public static ContainerBuilder AddConsul(this ContainerBuilder builder)
+        public static IServiceCollection AddConsul(this IServiceCollection services)
         {
             // 获取服务配置项
             var consulOptions = AppConfig.GetSection<ConsulServiceOptions>("Consul");
-            builder.Register(p =>
+            services.AddSingleton<IConsulClient>(p =>
             {
                 return new ConsulClient(config =>
                 {
                     config.Address = new Uri(consulOptions.ConsulAddress);
                 });
-            }).As<IConsulClient>().SingleInstance().PropertiesAutowired();
-            builder.RegisterType<ServiceManagement>().As<IServiceManagement>().SingleInstance().PropertiesAutowired();
-            return builder;
+            });
+            services.AddSingleton<IServiceManagement, ServiceManagement>();
+            return services;
         }
     }
 }

@@ -1,11 +1,13 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using Dynamitey;
+using Microsoft.Extensions.DependencyInjection;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 
 namespace SyZero
 {
-    internal static class ServiceCollectionExtensions
+    public static class ServiceCollectionExtensions
     {
         public static bool IsAdded<T>(this IServiceCollection services)
         {
@@ -74,6 +76,65 @@ namespace SyZero
             var builder = serviceProviderFactory.CreateBuilder(services);
             builderAction?.Invoke(builder);
             return serviceProviderFactory.CreateServiceProvider(builder);
+        }
+
+        public static List<TypeInfo> GetTypesAssignableTo(this Assembly assembly, Type compareType)
+        {
+            var typeInfoList = assembly.DefinedTypes.Where(x => x.IsClass
+                                && !x.IsAbstract
+                                && x != compareType
+                                && x.GetInterfaces()
+                                        .Any(i => i.IsGenericType
+                                                && i.GetGenericTypeDefinition() == compareType))?.ToList();
+
+            return typeInfoList;
+        }
+
+        public static IServiceCollection AddClassesAsImplementedInterface(
+                this IServiceCollection services,
+                IEnumerable<Assembly> assemblys,
+                Type compareType,
+                ServiceLifetime lifetime = ServiceLifetime.Scoped)
+        {
+            foreach (var assembly in assemblys)
+            {
+                assembly.GetTypesAssignableTo(compareType).ForEach((type) =>
+                {
+                    foreach (var implementedInterface in type.ImplementedInterfaces)
+                    {
+                        switch (lifetime)
+                        {
+                            case ServiceLifetime.Scoped:
+                                services.AddScoped(implementedInterface, type);
+                                break;
+                            case ServiceLifetime.Singleton:
+                                services.AddSingleton(implementedInterface, type);
+                                break;
+                            case ServiceLifetime.Transient:
+                                services.AddTransient(implementedInterface, type);
+                                break;
+                        }
+                    }
+                });
+            }
+            return services;
+        }
+
+        public static IServiceCollection AddClassesAsImplementedInterface(
+        this IServiceCollection services,
+        Assembly assembly,
+        Type compareType,
+        ServiceLifetime lifetime = ServiceLifetime.Scoped)
+        {
+            return services.AddClassesAsImplementedInterface(new List<Assembly>() { assembly }, compareType, lifetime);
+        }
+
+        public static IServiceCollection AddClassesAsImplementedInterface(
+            this IServiceCollection services,
+            Type compareType,
+            ServiceLifetime lifetime = ServiceLifetime.Scoped)
+        {
+            return services.AddClassesAsImplementedInterface(ReflectionHelper.GetAssemblies(), compareType, lifetime);
         }
     }
 }

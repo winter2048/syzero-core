@@ -1,5 +1,4 @@
-﻿using Autofac;
-using SqlSugar;
+﻿using SqlSugar;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -12,6 +11,9 @@ using SyZero.Domain.Repository;
 using SyZero.SqlSugar;
 using System;
 using System.Reflection;
+using Microsoft.Extensions.DependencyInjection;
+using SyZero.Extension;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 
 namespace SyZero
 {
@@ -23,10 +25,10 @@ namespace SyZero
         /// <typeparam name="TContext"></typeparam>
         /// <param name="builder"></param>
         /// <returns></returns>
-        public static ContainerBuilder AddSyZeroSqlSugar<TContext>(this ContainerBuilder builder)
+        public static IServiceCollection AddSyZeroSqlSugar<TContext>(this IServiceCollection services)
             where TContext : SyZeroDbContext
         {
-            builder.Register(p =>
+            services.AddSingleton<ConnectionConfig>(p =>
             {
                 ConnectionConfig connection = new ConnectionConfig()
                 {
@@ -86,21 +88,17 @@ namespace SyZero
                         }
                     }
                 };
-
                 return connection;
-            }).As<ConnectionConfig>().SingleInstance().PropertiesAutowired();
-
-            // 注册 DbContext
-            builder.RegisterType<TContext>()
-                .As<ISyZeroDbContext>()
-                .InstancePerLifetimeScope().PropertiesAutowired();
-
+            });
+            //注册上下文
+            services.AddScoped<ISyZeroDbContext, TContext>();
             //注册仓储泛型
-            builder.RegisterGeneric(typeof(SqlSugarRepository<>)).As(typeof(IRepository<>)).InstancePerLifetimeScope().PropertiesAutowired();
+            //services.AddScoped(typeof(IRepository<>), typeof(SqlSugarRepository<>));
+            services.AddClassesAsImplementedInterface(typeof(IRepository<>));
             ////注册持久化
-            builder.RegisterType<UnitOfWork>().As<IUnitOfWork>().InstancePerLifetimeScope().PropertiesAutowired();
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
 
-            return builder;
+            return services;
         }
 
         /// <summary>
@@ -110,10 +108,10 @@ namespace SyZero
         /// <param name="builder"></param>
         /// <param name="configuration"></param>
         /// <returns></returns>
-        public static ContainerBuilder AddSyZeroSqlSuga(this ContainerBuilder builder)
+        public static IServiceCollection AddSyZeroSqlSuga(this IServiceCollection services)
         {
-            builder.AddSyZeroSqlSugar<SyZeroDbContext>();
-            return builder;
+            services.AddSyZeroSqlSugar<SyZeroDbContext>();
+            return services;
         }
 
         /// <summary>
@@ -124,7 +122,7 @@ namespace SyZero
         public static IApplicationBuilder InitTables(this IApplicationBuilder app)
         {
             System.Console.WriteLine("检查数据库,初始化表...");
-            AutofacUtil.GetService<ISyZeroDbContext>()
+            SyZeroUtil.GetService<ISyZeroDbContext>()
             .CodeFirst.SetStringDefaultLength(200)
             .InitTables(ReflectionHelper.GetTypes()
             .Where(m => typeof(IEntity).IsAssignableFrom(m) && m != typeof(IEntity) && m != typeof(Entity))

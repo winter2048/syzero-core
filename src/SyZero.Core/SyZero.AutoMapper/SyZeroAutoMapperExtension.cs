@@ -1,14 +1,10 @@
-﻿using Autofac;
-using System;
-using System.Collections.Generic;
-using System.Text;
-using SyZero.AutoMapper;
+﻿using AutoMapper;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace SyZero
 {
     public static class SyZeroAutoMapperExtension
     {
-
         /// <summary>
         /// AutoMapperModule
         /// </summary>
@@ -16,10 +12,12 @@ namespace SyZero
         /// <param name="builder"></param>
         /// <param name="configuration"></param>
         /// <returns></returns>
-        public static ContainerBuilder AddSyZeroAutoMapper(this ContainerBuilder builder)
+        public static IServiceCollection AddSyZeroAutoMapper(this IServiceCollection services)
         {
-            builder.RegisterModule<AutoMapperModule>();
-            return builder;
+            services.AddAutoMapper(ReflectionHelper.GetAssemblies());
+            services.AddScoped<SyZero.ObjectMapper.IObjectMapper, SyZero.AutoMapper.ObjectMapper>();
+
+            return services;
         }
     }
 }

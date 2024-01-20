@@ -18,7 +18,7 @@ namespace SyZero.Web.Common.Util
     {
         public async Task<ResponseTemplate<T>> ExecuteAsync<T>(RequestTemplate requestTemplate, CancellationToken cancellationToken)
         {
-            var client = AutofacUtil.GetService<RestClient>();
+            var client = SyZeroUtil.GetService<RestClient>();
             var requset = new RestRequest(requestTemplate.Url, GetMethod(requestTemplate));
             requset.AddHeaders(requestTemplate.Headers);
             requset.AddJsonBody(requestTemplate.Body ?? "");

@@ -4,7 +4,6 @@ using SyZero.Configurations;
 using SyZero.Util;
 using System.Linq;
 using System.Collections.Generic;
-using Autofac.Core;
 using Microsoft.Extensions.DependencyInjection;
 using Swashbuckle.AspNetCore.SwaggerGen;
 using System;

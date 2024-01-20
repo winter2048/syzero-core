@@ -90,7 +90,7 @@
             是否在配置改变的时候重新加载
             </summary>
         </member>
-        <member name="M:SyZero.SyZeroConsulExtension.AddConsul(Autofac.ContainerBuilder)">
+        <member name="M:SyZero.SyZeroConsulExtension.AddConsul(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
             <summary>
             注册IServiceManagement
             </summary>

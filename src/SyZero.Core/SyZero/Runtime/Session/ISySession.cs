@@ -7,7 +7,7 @@ namespace SyZero.Runtime.Session
     /// <summary>
     /// 运行时会话
     /// </summary>
-    public interface ISySession : ITransientDependency
+    public interface ISySession
     {
         ClaimsPrincipal Principal { get; }
         /// <summary>

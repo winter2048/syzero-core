@@ -15,7 +15,7 @@ namespace SyZero.Runtime.Security
         /// <returns></returns>
         public static bool IsHas(string permission)
         {
-            ISySession sySession = AutofacUtil.GetService<ISySession>();
+            ISySession sySession = SyZeroUtil.GetService<ISySession>();
             if (sySession.Permission != null && sySession.Permission.Contains(permission))
             {
                 return true;

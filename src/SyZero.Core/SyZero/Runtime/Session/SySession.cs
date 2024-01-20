@@ -10,7 +10,7 @@ using SyZero.Util;
 
 namespace SyZero.Runtime.Session
 {
-    public class SySession : ISySession, ISingletonDependency
+    public class SySession : ISySession
     {
         private readonly IJsonSerialize _jsonSerialize;
 
@@ -91,7 +91,7 @@ namespace SyZero.Runtime.Session
 
         public ISySession Parse(string token)
         {
-            _httpContextAccessor.HttpContext.User = AutofacUtil.GetService<IToken>().GetPrincipal(token);
+            _httpContextAccessor.HttpContext.User = SyZeroUtil.GetService<IToken>().GetPrincipal(token);
             return this;
         }
 

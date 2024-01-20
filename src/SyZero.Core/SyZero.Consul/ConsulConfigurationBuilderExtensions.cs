@@ -11,7 +11,6 @@
 // </copyright>
 // *****************************************************************************************************************
 
-using Autofac;
 using Microsoft.Extensions.Configuration;
 using NConsul;
 using System;

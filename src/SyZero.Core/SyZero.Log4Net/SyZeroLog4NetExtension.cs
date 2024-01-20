@@ -1,8 +1,5 @@
-﻿using Autofac;
-using System;
-using System.Collections.Generic;
-using System.Text;
-using SyZero.Log4Net;
+﻿using Microsoft.Extensions.DependencyInjection;
+using SyZero.Logger;
 
 namespace SyZero
 {
@@ -16,10 +13,10 @@ namespace SyZero
         /// <param name="builder"></param>
         /// <param name="configuration"></param>
         /// <returns></returns>
-        public static ContainerBuilder AddSyZeroLog4Net(this ContainerBuilder builder)
+        public static IServiceCollection AddSyZeroLog4Net(this IServiceCollection services)
         {
-            builder.RegisterModule<Log4NetModule>();
-            return builder;
+            services.AddSingleton<ILogger, Log4Net.Logger>();
+            return services;
         }
     }
 }

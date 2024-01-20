@@ -1,4 +1,3 @@
-using Autofac;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -34,13 +33,13 @@ namespace SyZero.Gateway
 
         }
 
-        public void ConfigureContainer(ContainerBuilder builder)
-        {
+        //public void ConfigureContainer(ContainerBuilder builder)
+        //{
 
-            //使用SyZero
-            builder.RegisterModule(new SyZeroModule());
+        //    //使用SyZero
+        //    builder.RegisterModule(new SyZeroModule());
 
-        }
+        //}
 
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

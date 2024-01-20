@@ -24,10 +24,10 @@ namespace SyZero.Feign
             try
             {
                 FeignOptions feignOptions = AppConfig.GetSection<FeignOptions>("Feign");
-                IJsonSerialize jsonSerialize = AutofacUtil.GetService<IJsonSerialize>();
-                ISySession sySession = AutofacUtil.GetService<ISySession>();
-                IClient client = AutofacUtil.GetService<IClient>();
-                IServiceManagement serviceManagement = AutofacUtil.GetService<IServiceManagement>();
+                IJsonSerialize jsonSerialize = SyZeroUtil.GetService<IJsonSerialize>();
+                ISySession sySession = SyZeroUtil.GetService<ISySession>();
+                IClient client = SyZeroUtil.GetService<IClient>();
+                IServiceManagement serviceManagement = SyZeroUtil.GetService<IServiceManagement>();
                 Console.WriteLine($"Feign arguments:{jsonSerialize.ObjectToJSON(invocation.Arguments)}");
 
                 var feignService = feignOptions.Service.FirstOrDefault(p => p.DllName == invocation.TargetType.Assembly.GetName().Name);

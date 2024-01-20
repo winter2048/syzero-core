@@ -10,7 +10,7 @@
             </summary>
             <returns></returns>
         </member>
-        <member name="M:SyZero.SyZeroRedisExtension.AddSyZeroRedis(Autofac.ContainerBuilder)">
+        <member name="M:SyZero.SyZeroRedisExtension.AddSyZeroRedis(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
             <summary>
             注册RedisModule
             </summary>
