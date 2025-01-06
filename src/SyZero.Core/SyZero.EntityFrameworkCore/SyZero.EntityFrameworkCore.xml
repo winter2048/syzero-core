@@ -11,7 +11,7 @@
             <typeparam name="TDbContext"></typeparam>
             <typeparam name="TEntity"></typeparam>
         </member>
-        <member name="M:SyZero.EntityFrameworkCore.SyZeroEntityFrameworkExtension.AddSyZeroEntityFramework``1(Autofac.ContainerBuilder)">
+        <member name="M:SyZero.EntityFrameworkCore.SyZeroEntityFrameworkExtension.AddSyZeroEntityFramework``1(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
             <summary>
             注册EntityFramework
             </summary>

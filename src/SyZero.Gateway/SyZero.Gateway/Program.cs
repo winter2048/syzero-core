@@ -1,4 +1,3 @@
-using Autofac.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
@@ -14,7 +13,6 @@ namespace SyZero.Gateway
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
-            .UseServiceProviderFactory(new AutofacServiceProviderFactory())
             .ConfigureAppConfiguration(conf =>
             {
                 conf.AddJsonFile("configuration.json", optional: false, reloadOnChange: true);
