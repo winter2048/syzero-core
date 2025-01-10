@@ -1,24 +1,21 @@
 ﻿using log4net;
+using log4net.Appender;
 using log4net.Config;
 using log4net.Repository.Hierarchy;
 using System;
 using System.IO;
+using System.Linq;
+using System.Reflection;
 using SyZero.Logger;
 
 namespace SyZero.Log4Net
 {
-    public class Logger : ILogger
+    public class Logger<T> : ILogger<T>, ILogger
     {
         private ILog logger;
         public Logger()
         {
-            if (logger == null)
-            {
-                var repository = LogManager.CreateRepository("NETCoreRepository");
-                //log4net从log4net.config文件中读取配置信息
-                XmlConfigurator.Configure(repository, new FileInfo("log4net.config"));
-                logger = LogManager.GetLogger(repository.Name, "InfoLogger");
-            }
+            logger = LogManager.GetLogger(typeof(T));
         }
         public void Error(string message, Exception exception = null)
         {
