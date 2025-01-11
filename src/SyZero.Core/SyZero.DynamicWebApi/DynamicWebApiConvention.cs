@@ -196,12 +196,15 @@ namespace SyZero.DynamicWebApi
                 areaName = AppConsts.DefaultAreaName;
             }
 
-            controller.Selectors[0].AttributeRouteModel = new AttributeRouteModel(new RouteAttribute(RoutingHelper.GetcontrollerRouteUrl(areaName, controller.ControllerName)));
+            var customApiName = controller.ControllerType.GetSingleAttributeOrDefaultByFullSearch<ApiAttribute>();
+            var controllerName = customApiName?.Name ?? controller.ControllerName;
+
+            controller.Selectors[0].AttributeRouteModel = new AttributeRouteModel(new RouteAttribute(RoutingHelper.GetcontrollerRouteUrl(areaName, controllerName)));
 
             foreach (var action in controller.Actions)
             {
                 if (!CheckNoMapMethod(action))
-                    ConfigureSelector(areaName, controller.ControllerName, action);
+                    ConfigureSelector(areaName, controllerName, action);
             }
         }
 

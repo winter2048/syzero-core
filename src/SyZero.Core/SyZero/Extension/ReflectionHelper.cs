@@ -51,7 +51,7 @@ namespace SyZero
         }
 
 
-        public static TAttribute GetSingleAttributeOrDefaultByFullSearch<TAttribute>(TypeInfo info)
+        public static TAttribute GetSingleAttributeOrDefaultByFullSearch<TAttribute>(this TypeInfo info)
             where TAttribute : Attribute
         {
             var attributeType = typeof(TAttribute);

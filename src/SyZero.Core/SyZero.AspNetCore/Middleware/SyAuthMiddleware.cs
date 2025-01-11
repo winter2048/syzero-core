@@ -25,7 +25,7 @@ namespace SyZero.AspNetCore.Middleware
         public async Task InvokeAsync(HttpContext context, RequestDelegate next)
         {
             context.User = null;
-            if (context.Request.Headers.TryGetValue("Authorization", out var token))
+            if (context.Request.Headers.TryGetValue("Authorization", out var token) && token.ToString().StartsWith("Bearer "))
             {
                 var tokenString = token.ToString().Replace("Bearer ", string.Empty);
 

@@ -31,11 +31,12 @@ namespace Microsoft.Extensions.DependencyInjection
                 // Define the BearerAuth scheme that's in use
                 options.AddSecurityDefinition("Authorization", new OpenApiSecurityScheme()
                 {
-                    Description = "在下框中输入请求头中需要添加Jwt授权Authorization:Token",
+                    Description = "在下框中输入请求头中需要添加Jwt授权Authorization:Bearer Token",
                     Name = "Authorization",
                     In = ParameterLocation.Header,
-                    Type = SecuritySchemeType.ApiKey,
-                    BearerFormat = "JWT"
+                    Type = SecuritySchemeType.Http,
+                    BearerFormat = "JWT",
+                    Scheme = "Bearer"
                 });
                 options.AddSecurityRequirement(new OpenApiSecurityRequirement
                 {
