@@ -19,6 +19,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\SyZero.Web.Common\SyZero.Web.Common.csproj" />
     <ProjectReference Include="..\SyZero\SyZero.csproj" />
   </ItemGroup>
 
@@ -31,5 +32,9 @@
       <Pack>True</Pack>
       <PackagePath></PackagePath>
     </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Refit.Newtonsoft.Json" Version="8.0.0" />
   </ItemGroup>
 </Project>

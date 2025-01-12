@@ -231,8 +231,8 @@ namespace SyZero.DynamicWebApi
 
         private void AddAppServiceSelector(string areaName, string controllerName, ActionModel action)
         {
-            var template = RoutingHelper.GetHttpTemplate(action.ActionMethod);
-            var verb = RoutingHelper.GetHttpVerb(action.ActionMethod);
+            var template = RoutingHelper.GetHttpTemplateV2(action.ActionMethod);
+            var verb = RoutingHelper.GetHttpVerbV2(action.ActionMethod);
 
             var appServiceSelectorModel = action.Selectors[0];
 
@@ -249,26 +249,8 @@ namespace SyZero.DynamicWebApi
             if (!appServiceSelectorModel.ActionConstraints.Any())
             {
                 appServiceSelectorModel.ActionConstraints.Add(new HttpMethodActionConstraint(new[] { verb.ToString() }));
-                switch (verb)
-                {
-                    case HttpMethod.GET:
-                        appServiceSelectorModel.EndpointMetadata.Add(new HttpGetAttribute());
-                        break;
-                    case HttpMethod.POST:
-                        appServiceSelectorModel.EndpointMetadata.Add(new HttpPostAttribute());
-                        break;
-                    case HttpMethod.PUT:
-                        appServiceSelectorModel.EndpointMetadata.Add(new HttpPutAttribute());
-                        break;
-                    case HttpMethod.DELETE:
-                        appServiceSelectorModel.EndpointMetadata.Add(new HttpDeleteAttribute());
-                        break;
-                    default:
-                        throw new Exception($"Unsupported http verb: {verb}.");
-                }
             }
         }
-
     
 
         private static void NormalizeSelectorRoutes(string areaName, string controllerName, ActionModel action)
@@ -284,7 +266,7 @@ namespace SyZero.DynamicWebApi
 
         private static AttributeRouteModel CreateActionRouteModel(string areaName, string controllerName, ActionModel action)
         {
-            var template = RoutingHelper.GetHttpTemplate(action.ActionMethod);
+            var template = RoutingHelper.GetHttpTemplateV2(action.ActionMethod);
             var routeStr = RoutingHelper.GetRouteUrl(areaName, controllerName, action.ActionMethod);
             return new AttributeRouteModel(new RouteAttribute(template ?? action.ActionName));
         }

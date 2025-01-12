@@ -32,24 +32,22 @@ namespace SyZero.Web.Common.Util
 
 
         private Method GetMethod(RequestTemplate requestTemplate) {
-            Method method;
-            switch (requestTemplate.HttpMethod)
+            Method method = Method.Get;
+            if (requestTemplate.HttpMethod == HttpMethod.Post)
             {
-                case Application.Routing.HttpMethod.POST:
-                    method = Method.Post;
-                    break;
-                case Application.Routing.HttpMethod.PUT:
-                    method = Method.Put;
-                    break;
-                case Application.Routing.HttpMethod.DELETE:
-                    method = Method.Delete;
-                    break;
-                case Application.Routing.HttpMethod.GET:
-                    method = Method.Get;
-                    break;
-                default:
-                    method = Method.Get;
-                    break;
+                method = Method.Post;
+            }
+            else if (requestTemplate.HttpMethod == HttpMethod.Put)
+            {
+                method = Method.Put;
+            }
+            else if (requestTemplate.HttpMethod == HttpMethod.Delete)
+            {
+                method = Method.Delete;
+            }
+            else if (requestTemplate.HttpMethod == HttpMethod.Get)
+            {
+                method = Method.Get;
             }
             return method;
         }

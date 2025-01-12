@@ -122,8 +122,8 @@ namespace SyZero
         public static IApplicationBuilder InitTables(this IApplicationBuilder app)
         {
             System.Console.WriteLine("检查数据库,初始化表...");
-            SyZeroUtil.GetService<ISyZeroDbContext>()
-            .CodeFirst.SetStringDefaultLength(200)
+            app.ApplicationServices.GetService<ISyZeroDbContext>()
+            .CodeFirst.SetStringDefaultLength(2000)
             .InitTables(ReflectionHelper.GetTypes()
             .Where(m => typeof(IEntity).IsAssignableFrom(m) && m != typeof(IEntity) && m != typeof(Entity))
             .ToArray());

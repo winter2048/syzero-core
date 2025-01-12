@@ -33,19 +33,19 @@ namespace SyZero.Application.Service
         where TEntityDto : IEntityDto
         where TUpdateInput : IEntityDto
     {
-        [ApiMethod(HttpMethod.GET, "{id}")]
+        [Get("{id}")]
         Task<TEntityDto> Get(long input);
 
-        [ApiMethod(HttpMethod.GET)]
+        [Get]
         Task<PageResultDto<TEntityDto>> List(TGetAllInput input);
 
-        [ApiMethod(HttpMethod.POST, "")]
+        [Post]
         Task<TEntityDto> Create(TCreateInput input);
 
-        [ApiMethod(HttpMethod.PUT, "{id}")]
+        [Put("{id}")]
         Task<TEntityDto> Update(long id, TUpdateInput input);
 
-        [ApiMethod(HttpMethod.DELETE, "{id}")]
+        [Delete("{id}")]
         Task<bool> Delete(long id);
     }
 }

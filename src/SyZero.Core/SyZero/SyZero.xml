@@ -851,7 +851,33 @@
             </summary>
             <param name="Messager"></param>
         </member>
+        <member name="M:SyZero.SyMessageException.#ctor(System.String,System.Int32)">
+            <summary>
+            自定义返回
+            </summary>
+            <param name="Messager"></param>
+        </member>
+        <member name="M:SyZero.SyMessageException.#ctor(SyZero.SyMessageBoxModel)">
+            <summary>
+            自定义返回
+            </summary>
+            <param name="Messager"></param>
+        </member>
         <member name="M:SyZero.SyMessageBoxModel.#ctor(System.Object,SyZero.SyMessageBoxStatus)">
+            <summary>
+            自定义
+            </summary>
+            <param name="data">数据对象 例如:{status=500,action="6666"}</param>
+            <param name="msgStatus"></param>
+        </member>
+        <member name="M:SyZero.SyMessageBoxModel.#ctor(System.Object,System.Int32)">
+            <summary>
+            自定义
+            </summary>
+            <param name="data">数据对象 例如:{status=500,action="6666"}</param>
+            <param name="msgStatus"></param>
+        </member>
+        <member name="M:SyZero.SyMessageBoxModel.#ctor">
             <summary>
             自定义
             </summary>
@@ -1138,6 +1164,120 @@
             </summary>
             <typeparam name="T">接口类型</typeparam>
             <returns></returns>
+        </member>
+        <member name="T:Refit.Implementation.Generated">
+            <inheritdoc />
+        </member>
+        <member name="T:Refit.Implementation.Generated.SyZeroApplicationServiceIAsyncCrudAppService`4">
+            <inheritdoc />
+        </member>
+        <member name="P:Refit.Implementation.Generated.SyZeroApplicationServiceIAsyncCrudAppService`4.Client">
+            <inheritdoc />
+        </member>
+        <member name="M:Refit.Implementation.Generated.SyZeroApplicationServiceIAsyncCrudAppService`4.#ctor(System.Net.Http.HttpClient,Refit.IRequestBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:Refit.Implementation.Generated.SyZeroApplicationServiceIAsyncCrudAppService`4.Get(System.Int64)">
+            <inheritdoc />
+        </member>
+        <member name="M:Refit.Implementation.Generated.SyZeroApplicationServiceIAsyncCrudAppService`4.List(`1)">
+            <inheritdoc />
+        </member>
+        <member name="M:Refit.Implementation.Generated.SyZeroApplicationServiceIAsyncCrudAppService`4.Create(`2)">
+            <inheritdoc />
+        </member>
+        <member name="M:Refit.Implementation.Generated.SyZeroApplicationServiceIAsyncCrudAppService`4.Update(System.Int64,`3)">
+            <inheritdoc />
+        </member>
+        <member name="M:Refit.Implementation.Generated.SyZeroApplicationServiceIAsyncCrudAppService`4.Delete(System.Int64)">
+            <inheritdoc />
+        </member>
+        <member name="M:Refit.Implementation.Generated.SyZeroApplicationServiceIAsyncCrudAppService`4.SyZero#Application#Service#IAsyncCrudAppService{TEntityDto,TGetAllInput,TCreateInput,TUpdateInput}#Get(System.Int64)">
+            <inheritdoc />
+        </member>
+        <member name="M:Refit.Implementation.Generated.SyZeroApplicationServiceIAsyncCrudAppService`4.SyZero#Application#Service#IAsyncCrudAppService{TEntityDto,TGetAllInput,TCreateInput,TUpdateInput}#List(`1)">
+            <inheritdoc />
+        </member>
+        <member name="M:Refit.Implementation.Generated.SyZeroApplicationServiceIAsyncCrudAppService`4.SyZero#Application#Service#IAsyncCrudAppService{TEntityDto,TGetAllInput,TCreateInput,TUpdateInput}#Create(`2)">
+            <inheritdoc />
+        </member>
+        <member name="M:Refit.Implementation.Generated.SyZeroApplicationServiceIAsyncCrudAppService`4.SyZero#Application#Service#IAsyncCrudAppService{TEntityDto,TGetAllInput,TCreateInput,TUpdateInput}#Update(System.Int64,`3)">
+            <inheritdoc />
+        </member>
+        <member name="M:Refit.Implementation.Generated.SyZeroApplicationServiceIAsyncCrudAppService`4.SyZero#Application#Service#IAsyncCrudAppService{TEntityDto,TGetAllInput,TCreateInput,TUpdateInput}#Delete(System.Int64)">
+            <inheritdoc />
+        </member>
+        <member name="T:Refit.Implementation.Generated.SyZeroApplicationServiceIAsyncCrudAppService`1">
+            <inheritdoc />
+        </member>
+        <member name="P:Refit.Implementation.Generated.SyZeroApplicationServiceIAsyncCrudAppService`1.Client">
+            <inheritdoc />
+        </member>
+        <member name="M:Refit.Implementation.Generated.SyZeroApplicationServiceIAsyncCrudAppService`1.#ctor(System.Net.Http.HttpClient,Refit.IRequestBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:Refit.Implementation.Generated.SyZeroApplicationServiceIAsyncCrudAppService`1.SyZero#Application#Service#IAsyncCrudAppService{TEntityDto,SyZero#Application#Service#Dto#PageAndSortQueryDto,TEntityDto,TEntityDto}#Get(System.Int64)">
+            <inheritdoc />
+        </member>
+        <member name="M:Refit.Implementation.Generated.SyZeroApplicationServiceIAsyncCrudAppService`1.SyZero#Application#Service#IAsyncCrudAppService{TEntityDto,SyZero#Application#Service#Dto#PageAndSortQueryDto,TEntityDto,TEntityDto}#List(SyZero.Application.Service.Dto.PageAndSortQueryDto)">
+            <inheritdoc />
+        </member>
+        <member name="M:Refit.Implementation.Generated.SyZeroApplicationServiceIAsyncCrudAppService`1.SyZero#Application#Service#IAsyncCrudAppService{TEntityDto,SyZero#Application#Service#Dto#PageAndSortQueryDto,TEntityDto,TEntityDto}#Create(`0)">
+            <inheritdoc />
+        </member>
+        <member name="M:Refit.Implementation.Generated.SyZeroApplicationServiceIAsyncCrudAppService`1.SyZero#Application#Service#IAsyncCrudAppService{TEntityDto,SyZero#Application#Service#Dto#PageAndSortQueryDto,TEntityDto,TEntityDto}#Update(System.Int64,`0)">
+            <inheritdoc />
+        </member>
+        <member name="M:Refit.Implementation.Generated.SyZeroApplicationServiceIAsyncCrudAppService`1.SyZero#Application#Service#IAsyncCrudAppService{TEntityDto,SyZero#Application#Service#Dto#PageAndSortQueryDto,TEntityDto,TEntityDto}#Delete(System.Int64)">
+            <inheritdoc />
+        </member>
+        <member name="T:Refit.Implementation.Generated.SyZeroApplicationServiceIAsyncCrudAppService`2">
+            <inheritdoc />
+        </member>
+        <member name="P:Refit.Implementation.Generated.SyZeroApplicationServiceIAsyncCrudAppService`2.Client">
+            <inheritdoc />
+        </member>
+        <member name="M:Refit.Implementation.Generated.SyZeroApplicationServiceIAsyncCrudAppService`2.#ctor(System.Net.Http.HttpClient,Refit.IRequestBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:Refit.Implementation.Generated.SyZeroApplicationServiceIAsyncCrudAppService`2.SyZero#Application#Service#IAsyncCrudAppService{TEntityDto,TGetAllInput,TEntityDto,TEntityDto}#Get(System.Int64)">
+            <inheritdoc />
+        </member>
+        <member name="M:Refit.Implementation.Generated.SyZeroApplicationServiceIAsyncCrudAppService`2.SyZero#Application#Service#IAsyncCrudAppService{TEntityDto,TGetAllInput,TEntityDto,TEntityDto}#List(`1)">
+            <inheritdoc />
+        </member>
+        <member name="M:Refit.Implementation.Generated.SyZeroApplicationServiceIAsyncCrudAppService`2.SyZero#Application#Service#IAsyncCrudAppService{TEntityDto,TGetAllInput,TEntityDto,TEntityDto}#Create(`0)">
+            <inheritdoc />
+        </member>
+        <member name="M:Refit.Implementation.Generated.SyZeroApplicationServiceIAsyncCrudAppService`2.SyZero#Application#Service#IAsyncCrudAppService{TEntityDto,TGetAllInput,TEntityDto,TEntityDto}#Update(System.Int64,`0)">
+            <inheritdoc />
+        </member>
+        <member name="M:Refit.Implementation.Generated.SyZeroApplicationServiceIAsyncCrudAppService`2.SyZero#Application#Service#IAsyncCrudAppService{TEntityDto,TGetAllInput,TEntityDto,TEntityDto}#Delete(System.Int64)">
+            <inheritdoc />
+        </member>
+        <member name="T:Refit.Implementation.Generated.SyZeroApplicationServiceIAsyncCrudAppService`3">
+            <inheritdoc />
+        </member>
+        <member name="P:Refit.Implementation.Generated.SyZeroApplicationServiceIAsyncCrudAppService`3.Client">
+            <inheritdoc />
+        </member>
+        <member name="M:Refit.Implementation.Generated.SyZeroApplicationServiceIAsyncCrudAppService`3.#ctor(System.Net.Http.HttpClient,Refit.IRequestBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:Refit.Implementation.Generated.SyZeroApplicationServiceIAsyncCrudAppService`3.SyZero#Application#Service#IAsyncCrudAppService{TEntityDto,TGetAllInput,TCreateInput,TEntityDto}#Get(System.Int64)">
+            <inheritdoc />
+        </member>
+        <member name="M:Refit.Implementation.Generated.SyZeroApplicationServiceIAsyncCrudAppService`3.SyZero#Application#Service#IAsyncCrudAppService{TEntityDto,TGetAllInput,TCreateInput,TEntityDto}#List(`1)">
+            <inheritdoc />
+        </member>
+        <member name="M:Refit.Implementation.Generated.SyZeroApplicationServiceIAsyncCrudAppService`3.SyZero#Application#Service#IAsyncCrudAppService{TEntityDto,TGetAllInput,TCreateInput,TEntityDto}#Create(`2)">
+            <inheritdoc />
+        </member>
+        <member name="M:Refit.Implementation.Generated.SyZeroApplicationServiceIAsyncCrudAppService`3.SyZero#Application#Service#IAsyncCrudAppService{TEntityDto,TGetAllInput,TCreateInput,TEntityDto}#Update(System.Int64,`0)">
+            <inheritdoc />
+        </member>
+        <member name="M:Refit.Implementation.Generated.SyZeroApplicationServiceIAsyncCrudAppService`3.SyZero#Application#Service#IAsyncCrudAppService{TEntityDto,TGetAllInput,TCreateInput,TEntityDto}#Delete(System.Int64)">
+            <inheritdoc />
         </member>
     </members>
 </doc>
