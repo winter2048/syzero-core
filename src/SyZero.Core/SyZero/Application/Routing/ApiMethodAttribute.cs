@@ -9,7 +9,7 @@ namespace SyZero.Application.Routing
     [AttributeUsage(AttributeTargets.Interface | AttributeTargets.Class | AttributeTargets.Method)]
     public class HttpMethodAttribute : Refit.HttpMethodAttribute
     {
-        public HttpMethodAttribute(HttpMethod httpMethod, string Path) : base("/" + Path)
+        public HttpMethodAttribute(HttpMethod httpMethod, string Path) : base(RoutingHelper.ApiUrlPre + Path)
         {
 
             this.httpMethod = httpMethod;

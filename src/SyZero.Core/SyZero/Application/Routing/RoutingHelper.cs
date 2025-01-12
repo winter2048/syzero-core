@@ -9,6 +9,8 @@ namespace SyZero.Application.Routing
 {
     public class RoutingHelper
     {
+        public const string ApiUrlPre = "/API";
+
         private readonly static List<string> RemoveControllerPostfixes = new List<string>() { "AppService", "ApplicationService" };
 
         public static System.Net.Http.HttpMethod GetHttpVerbV2(MemberInfo member)
@@ -26,7 +28,7 @@ namespace SyZero.Application.Routing
 
             var apiMethod = method.GetCustomAttribute<HttpMethodAttribute>();
 
-            return apiMethod?.Path.RemovePreFix("/");
+            return apiMethod?.Path.RemovePreFix(RoutingHelper.ApiUrlPre);
         }
 
 

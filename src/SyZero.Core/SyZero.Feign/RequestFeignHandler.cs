@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Threading;
 using SyZero.Application.Routing;
+using SyZero.Extension;
 
 namespace SyZero.Feign
 {
@@ -23,7 +24,7 @@ namespace SyZero.Feign
         {
             var builder = new UriBuilder(request.RequestUri);
 
-            if (!builder.Path.StartsWith("//"))
+            if (!builder.Path.StartsWith($"{RoutingHelper.ApiUrlPre}/"))
             {
                 var controllerName = "";
                 if (request.Properties.ContainsKey(HttpRequestMessageOptions.InterfaceType))
@@ -35,9 +36,14 @@ namespace SyZero.Feign
                     controllerName = customApiName?.Name ?? interfaceName;
                 }
 
-                builder.Path = $"/api/{_serverName}/{controllerName}{builder.Path}";
-                request.RequestUri = builder.Uri;
+                builder.Path = $"/api/{_serverName}/{controllerName}/{builder.Path.RemovePreFix(RoutingHelper.ApiUrlPre)}".RemovePostFix("/");
             }
+            else
+            {
+                builder.Path = builder.Path.RemovePreFix(RoutingHelper.ApiUrlPre);
+            }
+
+            request.RequestUri = builder.Uri;
 
             return await base.SendAsync(request, cancellationToken);
         }
