@@ -32,7 +32,7 @@ namespace SyZero.Application.Service
     }
 
     public abstract class AsyncCrudAppService<TEntity, TEntityDto, TGetAllInput, TCreateInput>
-    : AsyncCrudAppService<TEntity, TEntityDto, TGetAllInput, TCreateInput, TCreateInput>
+    : AsyncCrudAppService<TEntity, TEntityDto, TGetAllInput, TCreateInput, TEntityDto>
         where TEntity : class, IEntity
         where TEntityDto : IEntityDto
         where TCreateInput : IEntityDto
