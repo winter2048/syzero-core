@@ -49,7 +49,7 @@ namespace SyZero
                         options.Ip = System.Net.NetworkInformation.NetworkInterface.GetAllNetworkInterfaces()
                                       .Select(p => p.GetIPProperties())
                                       .SelectMany(p => p.UnicastAddresses)
-                                      .Where(p => p.Address.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork && p.DuplicateAddressDetectionState == DuplicateAddressDetectionState.Preferred && !System.Net.IPAddress.IsLoopback(p.Address))
+                                      .Where(p => p.Address.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork && p.IsDnsEligible && !System.Net.IPAddress.IsLoopback(p.Address))
                                       .FirstOrDefault()?.Address.ToString();
                     }
                     if (string.IsNullOrEmpty(options.WanIp))
@@ -57,7 +57,7 @@ namespace SyZero
                         options.WanIp = System.Net.NetworkInformation.NetworkInterface.GetAllNetworkInterfaces()
                                       .Select(p => p.GetIPProperties())
                                       .SelectMany(p => p.UnicastAddresses)
-                                      .Where(p => p.Address.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork && p.DuplicateAddressDetectionState == DuplicateAddressDetectionState.Preferred && !System.Net.IPAddress.IsLoopback(p.Address))
+                                      .Where(p => p.Address.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork && p.IsDnsEligible && !System.Net.IPAddress.IsLoopback(p.Address))
                                       .FirstOrDefault()?.Address.ToString();
                     }
                     serverOptions = options;
