@@ -39,7 +39,10 @@ namespace Microsoft.Extensions.Configuration
             var consulOptions = AppConfig.GetSection<ConsulServiceOptions>("Consul");
             return builder.AddConsul(AppConfig.ServerOptions.Name, cancellationToken, source =>
             {
-                source.ConsulClientConfiguration = cco => cco.Address = new Uri(consulOptions.ConsulAddress);
+                source.ConsulClientConfiguration = cco => {
+                    cco.Address = new Uri(consulOptions.ConsulAddress);
+                    cco.Token = consulOptions.Token;
+                };
                 source.Optional = true;
                 source.ReloadOnChange = true;
                 source.ReloadDelay = 300;

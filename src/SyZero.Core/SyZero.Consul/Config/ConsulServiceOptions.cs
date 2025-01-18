@@ -20,5 +20,10 @@
         /// </summary>
         public string HealthCheck { get; set; }
 
+        /// <summary>
+        /// Acl Token
+        /// </summary>
+        public string Token { get; set; }
+
     }
 }

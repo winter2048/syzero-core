@@ -24,6 +24,11 @@
             健康检查地址
             </summary>
         </member>
+        <member name="P:SyZero.Consul.Config.ConsulServiceOptions.Token">
+            <summary>
+            Acl Token
+            </summary>
+        </member>
         <member name="M:SyZero.Consul.ConsulConfigurationParser.GetConfig(System.Boolean,SyZero.Consul.IConsulConfigurationSource)">
             <summary>
             获取并转换Consul配置信息

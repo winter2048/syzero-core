@@ -3,6 +3,7 @@ using Microsoft.Extensions.Configuration;
 using System;
 using System.IO;
 using System.Linq;
+using System.Linq.Dynamic.Core;
 using System.Net.NetworkInformation;
 using System.Runtime.InteropServices;
 using SyZero.Configurations;
@@ -21,8 +22,9 @@ namespace SyZero
                 var environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
                 Configuration = new ConfigurationBuilder()
                     .SetBasePath(Directory.GetCurrentDirectory())
-                    .AddJsonFile($"appsettings.json", true)
-                    .AddJsonFile($"appsettings.{environment}.json", true)
+                    .AddJsonFile($"appsettings.json", true, true)
+                    .AddJsonFile($"appsettings.{environment}.json", true, true)
+                    .AddEnvironmentVariables()
                     .Build();
             }
         }

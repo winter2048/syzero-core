@@ -28,6 +28,7 @@ namespace SyZero
                 return new ConsulClient(config =>
                 {
                     config.Address = new Uri(consulOptions.ConsulAddress);
+                    config.Token = consulOptions.Token;
                 });
             });
             services.AddSingleton<IServiceManagement, ServiceManagement>();

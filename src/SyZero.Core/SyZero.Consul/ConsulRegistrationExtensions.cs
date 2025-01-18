@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using SyZero;
 using SyZero.Consul.Config;
+using NConsul.Interfaces;
 
 namespace Microsoft.AspNetCore.Builder
 {
@@ -18,6 +19,8 @@ namespace Microsoft.AspNetCore.Builder
             // 获取主机生命周期管理接口
             var lifetime = app.ApplicationServices.GetRequiredService<IHostApplicationLifetime>();
 
+            var consulClient = app.ApplicationServices.GetRequiredService<IConsulClient>();
+
             // 获取服务配置项
             var consulOptions = AppConfig.GetSection<ConsulServiceOptions>("Consul"); ;
 
@@ -26,12 +29,6 @@ namespace Microsoft.AspNetCore.Builder
 
             // 服务ID必须保证唯一
             consulOptions.ServiceId = $"{serverOptions.Name}{serverOptions.WanIp}{serverOptions.Port}".Replace(".", "").ToLower();
-
-            var consulClient = new ConsulClient(configuration =>
-            {
-                //服务注册的地址，集群中任意一个地址
-                configuration.Address = new Uri(consulOptions.ConsulAddress);
-            });
 
             var Check = new AgentServiceCheck
             {
