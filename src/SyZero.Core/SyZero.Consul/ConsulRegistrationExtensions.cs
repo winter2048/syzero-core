@@ -33,9 +33,9 @@ namespace Microsoft.AspNetCore.Builder
             var Check = new AgentServiceCheck
             {
                 // 注册超时
-                Timeout = TimeSpan.FromSeconds(1),
+                Timeout = TimeSpan.FromSeconds(3),
                 // 服务停止多久后注销服务
-                DeregisterCriticalServiceAfter = TimeSpan.FromSeconds(1),
+                DeregisterCriticalServiceAfter = TimeSpan.FromSeconds(30),
                 // 健康检查时间间隔
                 Interval = TimeSpan.FromSeconds(serverOptions.InspectInterval)
             };
