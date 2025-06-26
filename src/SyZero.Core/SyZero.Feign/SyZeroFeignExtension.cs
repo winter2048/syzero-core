@@ -72,39 +72,48 @@ namespace SyZero
 
                         var endPoint = $"{services.FirstOrDefault().ServiceProtocol}://{services.FirstOrDefault().ServiceAddress}:{services.FirstOrDefault().ServicePort}";
 
-                        var api = RestService.For(targetType, endPoint, new RefitSettings()
+                        try
                         {
-                            HttpMessageHandlerFactory = () =>
-                            {
-                                var responseHandler = new ResponseFeignHandler(feignService.ServiceName);
-                                var authenticationHandler = new AuthenticationFeignHandler(feignService.ServiceName, responseHandler);
-                                var requestHandler = new RequestFeignHandler(feignService.ServiceName, authenticationHandler);
+                            var api = RestService.For(targetType, endPoint, new RefitSettings()
+                                {
+                                    HttpMessageHandlerFactory = () =>
+                                    {
+                                        var responseHandler = new ResponseFeignHandler(feignService.ServiceName);
+                                        var authenticationHandler = new AuthenticationFeignHandler(feignService.ServiceName, responseHandler);
+                                        var requestHandler = new RequestFeignHandler(feignService.ServiceName, authenticationHandler);
 
-                                return requestHandler;
-                            },
-                            DeserializationExceptionFactory = (httpResponse, exception) =>
-                            {
-                                Console.WriteLine(exception.Message);
-                                return null;
-                            },
-                            ContentSerializer = new NewtonsoftJsonContentSerializer(
-                                new JsonSerializerSettings
-                                {
-                                    Converters = { new LongToStrConverter() }
+                                        return requestHandler;
+                                    },
+                                    DeserializationExceptionFactory = (httpResponse, exception) =>
+                                    {
+                                        Console.WriteLine(exception.Message);
+                                        return null;
+                                    },
+                                    ContentSerializer = new NewtonsoftJsonContentSerializer(
+                                      new JsonSerializerSettings
+                                      {
+                                          Converters = { new LongToStrConverter() }
+                                      }
+                                  ),
+                                    ExceptionFactory = async (httpResponse) => {
+                                        if (httpResponse.StatusCode == System.Net.HttpStatusCode.InternalServerError)
+                                        {
+                                            var jsonString = await httpResponse.Content.ReadAsStringAsync();
+                                            var data = jsonSerialize.JSONToObject<SyMessageBoxModel>(jsonString);
+                                            return new SyMessageException(data);
+                                        }
+                                        return null;
+                                    }
                                 }
-                            ),
-                            ExceptionFactory = async (httpResponse) => {
-                                if (httpResponse.StatusCode == System.Net.HttpStatusCode.InternalServerError)
-                                {
-                                    var jsonString = await httpResponse.Content.ReadAsStringAsync();
-                                    var data = jsonSerialize.JSONToObject<SyMessageBoxModel>(jsonString);
-                                    return new SyMessageException(data);
-                                }
-                                return null;
-                            }
-                    }
-                        );
-                        return api;
+                            );
+
+                            return api;
+                        }
+                        catch (Exception ex)
+                        {
+                            Console.WriteLine($"Feign error: EndPoint({endPoint}) {ex.Message}");
+                        }
+                        return null;
                     });
                 }
                 else

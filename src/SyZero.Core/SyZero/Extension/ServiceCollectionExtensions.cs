@@ -98,21 +98,25 @@ namespace SyZero
         {
             foreach (var assembly in assemblys)
             {
-                assembly.GetTypesAssignableTo(compareType).ForEach((type) =>
+                assembly.GetTypesAssignableTo(compareType).ForEach((typeInfo) =>
                 {
-                    foreach (var implementedInterface in type.ImplementedInterfaces)
+                    if (!typeInfo.IsGenericType)
                     {
-                        switch (lifetime)
+                        var implementationType = typeInfo.AsType();
+                        foreach (var implementedInterface in typeInfo.ImplementedInterfaces)
                         {
-                            case ServiceLifetime.Scoped:
-                                services.AddScoped(implementedInterface, type);
-                                break;
-                            case ServiceLifetime.Singleton:
-                                services.AddSingleton(implementedInterface, type);
-                                break;
-                            case ServiceLifetime.Transient:
-                                services.AddTransient(implementedInterface, type);
-                                break;
+                            switch (lifetime)
+                            {
+                                case ServiceLifetime.Scoped:
+                                    services.AddScoped(implementedInterface, implementationType);
+                                    break;
+                                case ServiceLifetime.Singleton:
+                                    services.AddSingleton(implementedInterface, implementationType);
+                                    break;
+                                case ServiceLifetime.Transient:
+                                    services.AddTransient(implementedInterface, implementationType);
+                                    break;
+                            }
                         }
                     }
                 });
