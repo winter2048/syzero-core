@@ -34,7 +34,7 @@ namespace SyZero.Application.Service
         where TUpdateInput : IEntityDto
     {
         [Get("{id}")]
-        Task<TEntityDto> Get(long input);
+        Task<TEntityDto> Get(long id);
 
         [Get]
         Task<PageResultDto<TEntityDto>> List(TGetAllInput input);
