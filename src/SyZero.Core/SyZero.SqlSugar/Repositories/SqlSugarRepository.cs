@@ -11,7 +11,7 @@ using SyZero.Util;
 
 namespace SyZero.SqlSugar.Repositories
 {
-    public abstract class SqlSugarRepository<TEntity> : IRepository<TEntity>
+    public class SqlSugarRepository<TEntity> : IRepository<TEntity>
       where TEntity : class, IEntity, new()
     {
         protected ISyZeroDbContext _dbContext;
