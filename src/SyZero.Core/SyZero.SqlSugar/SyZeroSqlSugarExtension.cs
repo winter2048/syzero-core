@@ -93,7 +93,7 @@ namespace SyZero
             //注册上下文
             services.AddScoped<ISyZeroDbContext, TContext>();
             //注册仓储泛型
-            //services.AddScoped(typeof(IRepository<>), typeof(SqlSugarRepository<>));
+            services.AddScoped(typeof(IRepository<>), typeof(SqlSugarRepository<>));
             services.AddClassesAsImplementedInterface(typeof(IRepository<>));
             ////注册持久化
             services.AddScoped<IUnitOfWork, UnitOfWork>();
