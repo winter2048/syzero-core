@@ -22,7 +22,7 @@ namespace Microsoft.AspNetCore.Builder
             var consulClient = app.ApplicationServices.GetRequiredService<IConsulClient>();
 
             // 获取服务配置项
-            var consulOptions = AppConfig.GetSection<ConsulServiceOptions>("Consul"); ;
+            var consulOptions = AppConfig.GetSection<ConsulServiceOptions>("Consul");
 
             // 获取App配置项
             var serverOptions = AppConfig.ServerOptions;
@@ -35,7 +35,7 @@ namespace Microsoft.AspNetCore.Builder
                 // 注册超时
                 Timeout = TimeSpan.FromSeconds(3),
                 // 服务停止多久后注销服务
-                DeregisterCriticalServiceAfter = TimeSpan.FromSeconds(30),
+                DeregisterCriticalServiceAfter = TimeSpan.FromSeconds(10),
                 // 健康检查时间间隔
                 Interval = TimeSpan.FromSeconds(serverOptions.InspectInterval)
             };
