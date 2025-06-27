@@ -1151,7 +1151,7 @@
             <typeparam name="T">接口类型</typeparam>
             <returns></returns>
         </member>
-        <member name="M:SyZero.Util.SyZeroUtil.GetSingletonService``1">
+        <member name="M:SyZero.Util.SyZeroUtil.GetRequiredService``1">
             <summary>
             获取单例
             </summary>

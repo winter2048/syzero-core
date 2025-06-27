@@ -1,19 +1,19 @@
-﻿using SqlSugar;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using SyZero.SqlSugar.DbContext;
-using SyZero.Util;
-using SyZero.Domain.Entities;
-using Microsoft.AspNetCore.Builder;
-using SyZero.SqlSugar.Repositories;
-using SyZero.Domain.Repository;
-using SyZero.SqlSugar;
-using System;
-using System.Reflection;
-using Microsoft.Extensions.DependencyInjection;
-using SyZero.Extension;
+﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
+using Microsoft.Extensions.Hosting;
+using SqlSugar;
+using System;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Reflection;
+using SyZero.Domain.Entities;
+using SyZero.Domain.Repository;
+using SyZero.Extension;
+using SyZero.SqlSugar;
+using SyZero.SqlSugar.DbContext;
+using SyZero.SqlSugar.Repositories;
+using SyZero.Util;
 
 namespace SyZero
 {
@@ -119,10 +119,10 @@ namespace SyZero
         /// </summary>
         /// <param name="app"></param>
         /// <returns></returns>
-        public static IApplicationBuilder InitTables(this IApplicationBuilder app)
+        public static IHost InitTables(this IHost app)
         {
             System.Console.WriteLine("检查数据库,初始化表...");
-            app.ApplicationServices.GetService<ISyZeroDbContext>()
+            app.Services.GetService<ISyZeroDbContext>()
             .CodeFirst.SetStringDefaultLength(2000)
             .InitTables(ReflectionHelper.GetTypes()
             .Where(m => typeof(IEntity).IsAssignableFrom(m) && m != typeof(IEntity) && m != typeof(Entity))

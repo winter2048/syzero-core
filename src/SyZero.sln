@@ -35,6 +35,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SyZero.Swagger", "SyZero.Co
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SyZero.Nacos", "SyZero.Core\SyZero.Nacos\SyZero.Nacos.csproj", "{518B403F-CE96-4DF2-B0A3-F91B786C9D83}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SyZero.OpenTelemetry", "SyZero.Core\SyZero.OpenTelemetry\SyZero.OpenTelemetry.csproj", "{626C52D9-775D-8A7B-E8DF-236B18858F56}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -163,6 +165,14 @@ Global
 		{518B403F-CE96-4DF2-B0A3-F91B786C9D83}.Release|Any CPU.Build.0 = Release|Any CPU
 		{518B403F-CE96-4DF2-B0A3-F91B786C9D83}.Release|x64.ActiveCfg = Release|Any CPU
 		{518B403F-CE96-4DF2-B0A3-F91B786C9D83}.Release|x64.Build.0 = Release|Any CPU
+		{626C52D9-775D-8A7B-E8DF-236B18858F56}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{626C52D9-775D-8A7B-E8DF-236B18858F56}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{626C52D9-775D-8A7B-E8DF-236B18858F56}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{626C52D9-775D-8A7B-E8DF-236B18858F56}.Debug|x64.Build.0 = Debug|Any CPU
+		{626C52D9-775D-8A7B-E8DF-236B18858F56}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{626C52D9-775D-8A7B-E8DF-236B18858F56}.Release|Any CPU.Build.0 = Release|Any CPU
+		{626C52D9-775D-8A7B-E8DF-236B18858F56}.Release|x64.ActiveCfg = Release|Any CPU
+		{626C52D9-775D-8A7B-E8DF-236B18858F56}.Release|x64.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -183,6 +193,7 @@ Global
 		{7F2AA8CF-464D-429A-9AB9-CD5E7E5EB0CA} = {8EEDACC2-BBB6-4002-8CC4-06E922F29ECD}
 		{A889ED04-67EE-41C6-9622-CAA1D854381D} = {8EEDACC2-BBB6-4002-8CC4-06E922F29ECD}
 		{518B403F-CE96-4DF2-B0A3-F91B786C9D83} = {8EEDACC2-BBB6-4002-8CC4-06E922F29ECD}
+		{626C52D9-775D-8A7B-E8DF-236B18858F56} = {8EEDACC2-BBB6-4002-8CC4-06E922F29ECD}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {7668E53B-AA87-498A-A3C0-6B7888DDCEFB}

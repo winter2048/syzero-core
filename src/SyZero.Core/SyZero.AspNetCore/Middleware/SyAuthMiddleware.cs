@@ -35,6 +35,7 @@ namespace SyZero.AspNetCore.Middleware
                 if (claimsPrincipal != null)
                 {
                     context.User = claimsPrincipal;
+                    SyZeroUtil.GetScopeService<ISySession>().Parse(claimsPrincipal);
                 }
             }
             await next.Invoke(context);

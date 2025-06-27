@@ -1,5 +1,5 @@
-﻿using Microsoft.AspNetCore.Builder;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using System.Linq;
 using System.Reflection;
 using SyZero.Dependency;
@@ -11,12 +11,19 @@ namespace SyZero
 {
     public static class SyZeroExtension
     {
-        public static IApplicationBuilder UseSyZero(this IApplicationBuilder app)
+        public static IHost UseSyZero(this IHost app)
         {
             #region Autofac依赖注入服务
-            SyZeroUtil.ServiceProvider = app.ApplicationServices;
+            SyZeroUtil.ServiceProvider = app.Services;
             #endregion
             return app;
+        }
+
+        public static IHostApplicationBuilder AddSyZero(this IHostApplicationBuilder builder)
+        {
+            AppConfig.Configuration = builder.Configuration;
+            builder.Services.AddSyZero();
+            return builder;
         }
 
         /// <summary>

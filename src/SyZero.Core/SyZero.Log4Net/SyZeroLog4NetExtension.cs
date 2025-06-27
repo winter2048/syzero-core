@@ -1,11 +1,12 @@
-﻿using log4net.Appender;
-using log4net;
+﻿using log4net;
+using log4net.Appender;
 using log4net.Config;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using System;
 using System.IO;
-using SyZero.Logger;
 using System.Linq;
+using SyZero.Log4Net;
 
 namespace SyZero
 {
@@ -18,7 +19,7 @@ namespace SyZero
         /// <param name="builder"></param>
         /// <param name="configuration"></param>
         /// <returns></returns>
-        public static IServiceCollection AddSyZeroLog4Net(this IServiceCollection services, string configFile = "log4net.config")
+        public static ILoggingBuilder AddSyZeroLog4Net(this ILoggingBuilder builder, string configFile = "log4net.config")
         {
             XmlConfigurator.Configure(new FileInfo(configFile));
 
@@ -29,10 +30,8 @@ namespace SyZero
                 appender.ImmediateFlush = true; // 确保即时写入
             }
 #endif
-
-            services.AddScoped(typeof(ILogger<>), typeof(Log4Net.Logger<>));
-            services.AddSingleton<ILogger, Log4Net.Logger<ILogger>>();
-            return services;
+            builder.AddProvider(new Log4NetLoggerProvider("MyAppLogger"));
+            return builder;
         }
     }
 }

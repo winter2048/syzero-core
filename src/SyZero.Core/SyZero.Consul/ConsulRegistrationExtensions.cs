@@ -13,13 +13,13 @@ namespace Microsoft.AspNetCore.Builder
     // consul服务注册扩展类
     public static class ConsulRegistrationExtensions
     {
-        public static IApplicationBuilder UseConsul(this IApplicationBuilder app)
+        public static IHost UseConsul(this IHost app)
         {
             Console.WriteLine("注入consul...");
             // 获取主机生命周期管理接口
-            var lifetime = app.ApplicationServices.GetRequiredService<IHostApplicationLifetime>();
+            var lifetime = app.Services.GetRequiredService<IHostApplicationLifetime>();
 
-            var consulClient = app.ApplicationServices.GetRequiredService<IConsulClient>();
+            var consulClient = app.Services.GetRequiredService<IConsulClient>();
 
             // 获取服务配置项
             var consulOptions = AppConfig.GetSection<ConsulServiceOptions>("Consul");

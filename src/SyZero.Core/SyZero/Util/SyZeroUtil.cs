@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.DependencyInjection;
 using System;
 
 namespace SyZero.Util
@@ -22,14 +21,7 @@ namespace SyZero.Util
         public static T GetService<T>() where T : class
         {
             T service;
-            try
-            {
-                service = ServiceProvider.GetService<T>();
-            }
-            catch (Exception)
-            {
-                service = (T)GetService<IHttpContextAccessor>().HttpContext.RequestServices.GetService(typeof(T));
-            }
+            service = ServiceProvider.GetService<T>();
             return service;
         }
 
@@ -38,9 +30,9 @@ namespace SyZero.Util
         /// </summary>
         /// <typeparam name="T">接口类型</typeparam>
         /// <returns></returns>
-        public static T GetSingletonService<T>() where T : class
+        public static T GetRequiredService<T>() where T : class
         {
-            return ServiceProvider.GetService<T>();
+            return ServiceProvider.GetRequiredService<T>();
         }
 
         /// <summary>
@@ -50,7 +42,7 @@ namespace SyZero.Util
         /// <returns></returns>
         public static T GetScopeService<T>() where T : class
         {
-            return (T)GetService<IHttpContextAccessor>().HttpContext.RequestServices.GetService(typeof(T));
+            return ServiceProvider.GetService<T>();
         }
     }
 }

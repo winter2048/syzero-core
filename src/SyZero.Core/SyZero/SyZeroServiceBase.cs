@@ -1,5 +1,5 @@
-﻿using SyZero.Domain.Repository;
-using SyZero.Logger;
+﻿using Microsoft.Extensions.Logging;
+using SyZero.Domain.Repository;
 using SyZero.ObjectMapper;
 using SyZero.Util;
 
@@ -18,7 +18,7 @@ namespace SyZero
         /// <summary>
         /// 日志
         /// </summary>
-        public ILogger Logger => SyZeroUtil.GetService<ILogger>();
+        public ILogger<SyZeroServiceBase> Logger => SyZeroUtil.GetService<ILogger<SyZeroServiceBase>>();
 
         /// <summary>
         /// 实体映射

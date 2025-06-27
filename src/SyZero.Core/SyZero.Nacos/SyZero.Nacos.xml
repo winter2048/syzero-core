@@ -4,11 +4,6 @@
         <name>SyZero.Nacos</name>
     </assembly>
     <members>
-        <member name="T:SyZero.Nacos.Config.NacosServiceOptions">
-            <summary>
-             Nacos配置模型类
-            </summary>
-        </member>
         <member name="T:SyZero.SyZeroNacosExtension">
             <summary>
             Nacos配置扩展

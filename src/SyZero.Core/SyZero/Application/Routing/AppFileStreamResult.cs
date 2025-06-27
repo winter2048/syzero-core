@@ -1,7 +1,7 @@
-﻿using Microsoft.AspNetCore.Http;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.IO.Pipelines;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -42,7 +42,7 @@ namespace SyZero.Application.Routing
 
         public async Task CopyToAsync(Stream target, CancellationToken cancellationToken = default)
         {
-            await _stream.CopyToAsync(target, cancellationToken);
+            await _stream.CopyToAsync(target);
             _stream.Position = 0; // 复位流的位置（可选）
         }
     }
