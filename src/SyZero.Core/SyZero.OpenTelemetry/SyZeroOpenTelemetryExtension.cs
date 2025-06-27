@@ -28,6 +28,10 @@ namespace SyZero
                       {
                           return context.RequestUri.AbsolutePath.ToString().StartsWith("/api/");
                       };
+                      opt.FilterHttpRequestMessage = context =>
+                      {
+                          return context.RequestUri.AbsolutePath.ToString().StartsWith("/api/");
+                      };
                   }))
               .WithMetrics(b => b.SetResourceBuilder(resource)
                   .AddMeter("*")
