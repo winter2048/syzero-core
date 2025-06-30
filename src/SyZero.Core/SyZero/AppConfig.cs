@@ -2,7 +2,6 @@
 using System;
 using System.IO;
 using System.Linq;
-using System.Linq.Dynamic.Core;
 using System.Net.NetworkInformation;
 using System.Runtime.InteropServices;
 using SyZero.Configurations;
