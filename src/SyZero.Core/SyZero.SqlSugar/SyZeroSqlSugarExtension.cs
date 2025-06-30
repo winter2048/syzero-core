@@ -36,10 +36,10 @@ namespace SyZero
                     DbType = (DbType)AppConfig.ConnectionOptions.Type,
                     IsAutoCloseConnection = true,
                     InitKeyType = InitKeyType.Attribute,
-                    SlaveConnectionConfigs = AppConfig.ConnectionOptions.Slave.Select(p => new SlaveConnectionConfig()
+                    SlaveConnectionConfigs = AppConfig.ConnectionOptions.Slave.Select(slave => new SlaveConnectionConfig()
                     {
-                        HitRate = p.HitRate,
-                        ConnectionString = p.ConnectionString
+                        HitRate = slave.HitRate,
+                        ConnectionString = slave.ConnectionString
                     }).ToList(),
                     ConfigureExternalServices = new ConfigureExternalServices()
                     {

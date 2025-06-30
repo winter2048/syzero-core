@@ -68,9 +68,9 @@ namespace SyZero
                             throw new Exception($"DLL:{targetType.Assembly.GetName().Name}未注册!");
                         }
 
-                        var services = serviceManagement.GetService(feignService.ServiceName).Result;
+                        var service = serviceManagement.GetService(feignService.ServiceName).Result;
 
-                        var endPoint = $"{services.FirstOrDefault().ServiceProtocol}://{services.FirstOrDefault().ServiceAddress}:{services.FirstOrDefault().ServicePort}";
+                        var endPoint = $"{service.FirstOrDefault().ServiceProtocol}://{service.FirstOrDefault().ServiceAddress}:{service.FirstOrDefault().ServicePort}";
 
                         try
                         {

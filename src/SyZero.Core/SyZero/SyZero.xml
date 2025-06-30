@@ -772,12 +772,12 @@
         </member>
         <member name="M:SyZero.ReflectionHelper.GetAssemblies">
             <summary>
-                获取所有的程序集
+                »ñÈ¡ËùÓÐµÄ³ÌÐò¼¯
             </summary>
         </member>
         <member name="M:SyZero.ReflectionHelper.GetTypes">
             <summary>
-              获取所有的程序集
+              »ñÈ¡ËùÓÐµÄ³ÌÐò¼¯
             </summary>
         </member>
         <member name="M:SyZero.ReflectionHelper.GetSingleAttributeOrNull``1(System.Reflection.MemberInfo,System.Boolean)">

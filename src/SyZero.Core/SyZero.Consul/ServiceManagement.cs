@@ -48,7 +48,7 @@ namespace SyZero.Consul
                     ServiceName = service.ServiceName,
                     ServiceAddress = service.ServiceAddress,
                     ServicePort = service.ServicePort,
-                    ServiceProtocol = Enum.Parse<ProtocolType>(service.ServiceMeta.FirstOrDefault(meta => meta.Key == "Protocol").Value)
+                    ServiceProtocol = (ProtocolType)Enum.Parse(typeof(ProtocolType), service.ServiceMeta.FirstOrDefault(meta => meta.Key == "Protocol").Value)
                 }).ToList();
                 _cache.Set($"Consul:{serviceName}", serviceInfos, 30);
                 return serviceInfos;
