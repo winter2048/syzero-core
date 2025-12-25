@@ -47,7 +47,6 @@ namespace SyZero
             System.Console.WriteLine("启动中......");
 
             //注入SySession
-            services.AddSingleton<IJsonSerialize, JsonSerializeBase>();
             services.AddScoped<ISySession, SySession>();
 
             //// 获取所有实现了IScopedDependency接口的类型
@@ -73,9 +72,9 @@ namespace SyZero
             //{
             //    services.AddScoped(type.GetInterfaces().Last(), type);
             //}
-            services.AddClassesAsImplementedInterface(typeof(IScopedDependency));
-            services.AddClassesAsImplementedInterface(typeof(ISingletonDependency));
-            services.AddClassesAsImplementedInterface(typeof(ITransientDependency));
+            services.AddClassesAsImplementedInterface(typeof(IScopedDependency), ServiceLifetime.Scoped);
+            services.AddClassesAsImplementedInterface(typeof(ISingletonDependency), ServiceLifetime.Singleton);
+            services.AddClassesAsImplementedInterface(typeof(ITransientDependency), ServiceLifetime.Transient);
 
             // 获取所有继承SyZeroServiceBase类的类型
             var syZeroServiceBaseTypes = ReflectionHelper.GetTypes()

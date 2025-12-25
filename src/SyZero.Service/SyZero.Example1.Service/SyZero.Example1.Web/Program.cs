@@ -26,7 +26,7 @@ namespace SyZero.Example1.Web
             builder.AddSyZero();
 
             //builder.Configuration.AddNacos(cancellationTokenSource.Token); //Nacos动态配置
-            builder.Configuration.AddConsul(cancellationTokenSource.Token);
+            //builder.Configuration.AddConsul(cancellationTokenSource.Token); //Consul动态配置
 
             builder.WebHost.UseUrls($"{AppConfig.ServerOptions.Protocol}://*:{AppConfig.ServerOptions.Port}");
 
@@ -56,19 +56,17 @@ namespace SyZero.Example1.Web
             //Swagger
             builder.Services.AddSwagger();
             //使用OpenTelemetry遥测
-            builder.Services.AddSyZeroOpenTelemetry();
+            //builder.Services.AddSyZeroOpenTelemetry();
             //使用AutoMapper
             builder.Services.AddSyZeroAutoMapper();
             //使用SqlSugar仓储
             builder.Services.AddSyZeroSqlSugar<Example1DbContext>();
             //注入控制器
             builder.Services.AddSyZeroController();
-            //注入Redis
-            builder.Services.AddSyZeroRedis();
             //注入公共层
             builder.Services.AddSyZeroCommon();
             //注入Consul
-            builder.Services.AddConsul();
+            //builder.Services.AddConsul();
             //注入Feign
             builder.Services.AddSyZeroFeign();
 
@@ -97,7 +95,8 @@ namespace SyZero.Example1.Web
                 c.RoutePrefix = "api/swagger";
 
             });
-            app.UseConsul();
+            //app.UseConsul();
+            app.InitTables();
             app.Run();
         }
     }

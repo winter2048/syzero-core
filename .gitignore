@@ -28,5 +28,6 @@ nuget/*.nupkg
 .config/
 
 **/app/*.dll
+**/*.db
 
 ReleaseNote.md

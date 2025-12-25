@@ -17,6 +17,11 @@ namespace SyZero.Example2.Application.Examples
             _exampleRepository = exampleRepository;
         }
 
+        protected override void CheckPermission(string permissionName)
+        {
+            // Skip permission check
+        }
+
         public async Task<ExampleDto> GetExample(long id)
         {
             var example = await _exampleRepository.GetModelAsync(p => p.Id == id);

@@ -5,7 +5,7 @@ using SyZero.Dependency;
 
 namespace SyZero.Cache
 {
-    public interface ICache : ITransientDependency
+    public interface ICache
     {
         /// <summary>
         /// 是否存在

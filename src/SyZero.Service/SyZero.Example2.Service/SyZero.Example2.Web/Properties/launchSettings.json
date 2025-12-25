@@ -19,7 +19,7 @@
     "SyZero.Example2.Web": {
       "commandName": "Project",
       "launchBrowser": true,
-      "launchUrl": "weatherforecast",
+      "launchUrl": "api/swagger",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Dev"
       },
