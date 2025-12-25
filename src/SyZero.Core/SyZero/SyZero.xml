@@ -4,7 +4,7 @@
         <name>SyZero</name>
     </assembly>
     <members>
-        <member name="P:SyZero.Application.Attributes.DynamicWebApiAttribute.Module">
+        <member name="P:SyZero.Application.Attributes.DynamicApiAttribute.Module">
             <summary>
             Equivalent to AreaName
             </summary>
