@@ -37,22 +37,22 @@ namespace SyZero.SqlSugar
 
         public async Task BeginTransactionAsync()
         {
-            await Task.Run(this.dataContext.Ado.BeginTran);
+            await this.dataContext.Ado.BeginTranAsync();
         }
 
         public async Task CommitTransactionAsync()
         {
-            await Task.Run(this.dataContext.Ado.CommitTran);
+            await this.dataContext.Ado.CommitTranAsync();
         }
 
         public async Task RollbackTransactionAsync()
         {
-            await Task.Run(this.dataContext.Ado.RollbackTran);
+            await this.dataContext.Ado.RollbackTranAsync();
         }
 
         public async Task DisposeTransactionAsync()
         {
-            await Task.Run(this.dataContext.Ado.Dispose);
+            await Task.Run(() => this.dataContext.Dispose());
         }
 
 

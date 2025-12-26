@@ -102,13 +102,11 @@ namespace SyZero
         }
 
         /// <summary>
-        /// 注册SqlSugar
+        /// 注册SqlSugar（使用默认的SyZeroDbContext）
         /// </summary>
-        /// <typeparam name="TContext"></typeparam>
-        /// <param name="builder"></param>
-        /// <param name="configuration"></param>
-        /// <returns></returns>
-        public static IServiceCollection AddSyZeroSqlSuga(this IServiceCollection services)
+        /// <param name="services">服务集合</param>
+        /// <returns>服务集合</returns>
+        public static IServiceCollection AddSyZeroSqlSugar(this IServiceCollection services)
         {
             services.AddSyZeroSqlSugar<SyZeroDbContext>();
             return services;
