@@ -1,17 +1,4 @@
-﻿// *****************************************************************************************************************
-// Project          : Navyblue
-// File             : ConsulConfigurationBuilderExtensions.cs
-// Created          : 2019-05-23  19:30
-//
-// Last Modified By : (jstsmaxx@163.com)
-// Last Modified On : 2019-05-24  11:42
-// *****************************************************************************************************************
-// <copyright file="ConsulConfigurationBuilderExtensions.cs" company="Shanghai Future Mdt InfoTech Ltd.">
-//     Copyright ©  2012-2019 Mdt InfoTech Ltd. All rights reserved.
-// </copyright>
-// *****************************************************************************************************************
-
-using Microsoft.Extensions.Configuration;
+﻿using Microsoft.Extensions.Configuration;
 using NConsul;
 using System;
 using System.Threading;
@@ -23,9 +10,18 @@ using SyZero.Service;
 namespace Microsoft.Extensions.Configuration
 {
     /// <summary>
+    /// Consul 配置构建器扩展方法
     /// </summary>
     public static class ConsulConfigurationBuilderExtensions
     {
+        /// <summary>
+        /// 添加 Consul 配置源
+        /// </summary>
+        /// <param name="builder">配置构建器</param>
+        /// <param name="serviceKey">服务键名</param>
+        /// <param name="cancellationToken">取消令牌</param>
+        /// <param name="options">配置源选项</param>
+        /// <returns>配置构建器</returns>
         public static IConfigurationBuilder AddConsul(this IConfigurationBuilder builder, string serviceKey, CancellationToken cancellationToken, Action<IConsulConfigurationSource> options)
         {
             ConsulConfigurationSource consulConfigSource = new ConsulConfigurationSource(serviceKey, cancellationToken);
@@ -33,10 +29,20 @@ namespace Microsoft.Extensions.Configuration
             return builder.Add(consulConfigSource);
         }
 
-        public static IConfigurationBuilder AddConsul(this IConfigurationBuilder builder, CancellationToken cancellationToken)
+        /// <summary>
+        /// 添加 Consul 配置源（从配置读取）
+        /// </summary>
+        /// <param name="builder">配置构建器</param>
+        /// <param name="cancellationToken">取消令牌</param>
+        /// <param name="configuration">配置，为 null 时使用 AppConfig.Configuration</param>
+        /// <param name="sectionName">配置节名称，默认为 "Consul"</param>
+        /// <returns>配置构建器</returns>
+        public static IConfigurationBuilder AddConsul(this IConfigurationBuilder builder, CancellationToken cancellationToken, IConfiguration configuration = null, string sectionName = ConsulServiceOptions.SectionName)
         {
-            // 获取服务配置项
-            var consulOptions = AppConfig.GetSection<ConsulServiceOptions>("Consul");
+            var config = configuration ?? AppConfig.Configuration;
+            var consulOptions = new ConsulServiceOptions();
+            config.GetSection(sectionName).Bind(consulOptions);
+            
             return builder.AddConsul(AppConfig.ServerOptions.Name, cancellationToken, source =>
             {
                 source.ConsulClientConfiguration = cco => {

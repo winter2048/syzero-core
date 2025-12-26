@@ -162,6 +162,66 @@ builder.Services.AddDynamicWebApi(options =>
 });
 ```
 
+### 配置文件配置
+
+除了代码配置，也可以通过 `appsettings.json` 配置文件进行配置：
+
+**appsettings.json**
+
+```json
+{
+  "DynamicWebApi": {
+    "DefaultHttpVerb": "POST",
+    "DefaultApiPrefix": "api",
+    "DefaultAreaName": "v1",
+    "EnableLowerCaseRoutes": true,
+    "RemoveControllerPostfixes": ["AppService", "ApplicationService", "Service"],
+    "RemoveActionPostfixes": ["Async"],
+    "HttpVerbMappings": {
+      "Get": "GET",
+      "Query": "GET",
+      "Find": "GET",
+      "Create": "POST",
+      "Add": "POST",
+      "Update": "PUT",
+      "Delete": "DELETE",
+      "Save": "POST",
+      "Batch": "POST"
+    }
+  }
+}
+```
+
+**Program.cs**
+
+```csharp
+var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddControllers();
+
+// 方式一：从 IConfiguration 读取配置
+builder.Services.AddDynamicWebApi(builder.Configuration);
+
+// 方式二：从 IConfiguration 读取配置，并支持额外代码配置（代码配置会覆盖配置文件）
+builder.Services.AddDynamicWebApi(builder.Configuration, options =>
+{
+    // 额外的代码配置
+    options.AddHttpVerbMapping("Export", "GET");
+});
+
+// 方式三：指定自定义配置节名称
+builder.Services.AddDynamicWebApi(builder.Configuration, "MyCustomSection");
+
+// 方式四：从 AppConfig 读取配置（默认从 appsettings.json 的 "DynamicWebApi" 节点读取）
+builder.Services.AddDynamicWebApi();
+
+var app = builder.Build();
+
+app.MapControllers();
+
+app.Run();
+```
+
 ---
 
 ## 🏷️ 特性标记
@@ -284,7 +344,7 @@ SyZero.DynamicWebApi/
 ├── AssemblyDynamicWebApiOptions.cs # 程序集配置
 ├── DynamicWebApiControllerFeatureProvider.cs # 控制器特性提供程序
 ├── DynamicWebApiConvention.cs     # MVC 约定
-├── DynamicWebApiOptions.cs        # 配置选项
+├── DynamicWebApiOptions.cs        # 配置选项（支持代码配置和配置文件绑定）
 └── DynamicWebApiServiceExtensions.cs # 服务扩展方法
 ```
 

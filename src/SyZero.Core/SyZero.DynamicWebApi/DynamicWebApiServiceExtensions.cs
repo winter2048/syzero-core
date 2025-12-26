@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ApplicationParts;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 
@@ -53,24 +54,33 @@ namespace SyZero.DynamicWebApi
         }
 
         /// <summary>
-        /// 添加 Dynamic WebApi 到依赖注入容器（使用默认配置）
+        /// 添加 Dynamic WebApi 到依赖注入容器（从配置读取）
         /// </summary>
         /// <param name="services">服务集合</param>
+        /// <param name="configuration">配置，为 null 时使用 AppConfig.GetSection</param>
+        /// <param name="sectionName">配置节名称，默认为 "DynamicWebApi"</param>
         /// <returns>服务集合</returns>
-        public static IServiceCollection AddDynamicWebApi(this IServiceCollection services)
+        public static IServiceCollection AddDynamicWebApi(this IServiceCollection services, IConfiguration configuration = null, string sectionName = DynamicWebApiOptions.SectionName)
         {
-            return AddDynamicWebApi(services, new DynamicWebApiOptions());
+            var config = configuration ?? AppConfig.Configuration;
+            var options = new DynamicWebApiOptions();
+            config.GetSection(sectionName).Bind(options);
+            return AddDynamicWebApi(services, options);
         }
 
         /// <summary>
-        /// 添加 Dynamic WebApi 到依赖注入容器（使用配置委托）
+        /// 添加 Dynamic WebApi 到依赖注入容器（从配置读取，并支持额外配置）
         /// </summary>
         /// <param name="services">服务集合</param>
-        /// <param name="optionsAction">配置委托</param>
+        /// <param name="optionsAction">额外配置委托（在配置文件配置之后执行）</param>
+        /// <param name="configuration">配置，为 null 时使用 AppConfig.Configuration</param>
+        /// <param name="sectionName">配置节名称，默认为 "DynamicWebApi"</param>
         /// <returns>服务集合</returns>
-        public static IServiceCollection AddDynamicWebApi(this IServiceCollection services, Action<DynamicWebApiOptions> optionsAction)
+        public static IServiceCollection AddDynamicWebApi(this IServiceCollection services, Action<DynamicWebApiOptions> optionsAction, IConfiguration configuration = null, string sectionName = DynamicWebApiOptions.SectionName)
         {
+            var config = configuration ?? AppConfig.Configuration;
             var options = new DynamicWebApiOptions();
+            config.GetSection(sectionName).Bind(options);
             optionsAction?.Invoke(options);
             return AddDynamicWebApi(services, options);
         }

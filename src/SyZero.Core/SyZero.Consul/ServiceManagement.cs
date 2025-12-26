@@ -42,13 +42,22 @@ namespace SyZero.Consul
                 {
                     throw new Exception($"SyZero.Consul:未找到{serviceName}服务!");
                 }
-                var serviceInfos = services.Response.Select(service => new ServiceInfo()
+                var serviceInfos = services.Response.Select(service => 
                 {
-                    ServiceID = service.ServiceID,
-                    ServiceName = service.ServiceName,
-                    ServiceAddress = service.ServiceAddress,
-                    ServicePort = service.ServicePort,
-                    ServiceProtocol = (ProtocolType)Enum.Parse(typeof(ProtocolType), service.ServiceMeta.FirstOrDefault(meta => meta.Key == "Protocol").Value)
+                    var protocolMeta = service.ServiceMeta?.FirstOrDefault(meta => meta.Key == "Protocol");
+                    var protocol = ProtocolType.HTTP;
+                    if (protocolMeta.HasValue && !string.IsNullOrEmpty(protocolMeta.Value.Value))
+                    {
+                        Enum.TryParse(protocolMeta.Value.Value, out protocol);
+                    }
+                    return new ServiceInfo()
+                    {
+                        ServiceID = service.ServiceID,
+                        ServiceName = service.ServiceName,
+                        ServiceAddress = service.ServiceAddress,
+                        ServicePort = service.ServicePort,
+                        ServiceProtocol = protocol
+                    };
                 }).ToList();
                 _cache.Set($"Consul:{serviceName}", serviceInfos, 30);
                 return serviceInfos;

@@ -142,6 +142,54 @@ builder.Services.AddDynamicGrpc(options =>
 });
 ```
 
+### 配置文件配置
+
+除了代码配置，也可以通过 `appsettings.json` 配置文件进行配置：
+
+**appsettings.json**
+
+```json
+{
+  "DynamicGrpc": {
+    "DefaultServicePrefix": "",
+    "DefaultAreaName": "v1",
+    "RemoveServicePostfixes": ["AppService", "ApplicationService", "Service", "GrpcService"],
+    "RemoveMethodPostfixes": ["Async"],
+    "MaxReceiveMessageSize": 10485760,
+    "MaxSendMessageSize": 10485760,
+    "EnableDetailedErrors": false
+  }
+}
+```
+
+**Program.cs**
+
+```csharp
+var builder = WebApplication.CreateBuilder(args);
+
+// 方式一：从 IConfiguration 读取配置
+builder.Services.AddDynamicGrpc(builder.Configuration);
+
+// 方式二：从 IConfiguration 读取配置，并支持额外代码配置（代码配置会覆盖配置文件）
+builder.Services.AddDynamicGrpc(builder.Configuration, options =>
+{
+    // 开发环境启用详细错误
+    options.EnableDetailedErrors = builder.Environment.IsDevelopment();
+});
+
+// 方式三：指定自定义配置节名称
+builder.Services.AddDynamicGrpc(builder.Configuration, "MyGrpcConfig");
+
+// 方式四：从 AppConfig 读取配置（默认从 appsettings.json 的 "DynamicGrpc" 节点读取）
+builder.Services.AddDynamicGrpc();
+
+var app = builder.Build();
+
+app.MapDynamicGrpcServices();
+
+app.Run();
+```
+
 ---
 
 ## 🏷️ 特性标记

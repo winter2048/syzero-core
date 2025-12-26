@@ -10,6 +10,11 @@ namespace SyZero.DynamicGrpc
     public class DynamicGrpcOptions
     {
         /// <summary>
+        /// 配置节名称
+        /// </summary>
+        public const string SectionName = "DynamicGrpc";
+
+        /// <summary>
         /// 初始化默认配置
         /// </summary>
         public DynamicGrpcOptions()

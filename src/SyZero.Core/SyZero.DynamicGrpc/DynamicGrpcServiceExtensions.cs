@@ -4,6 +4,7 @@ using System.Linq;
 using System.Reflection;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Routing;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using ProtoBuf.Grpc.Server;
 using SyZero.Application.Attributes;
@@ -67,24 +68,33 @@ namespace SyZero.DynamicGrpc
         }
 
         /// <summary>
-        /// 添加 Dynamic gRPC 服务到依赖注入容器（使用默认配置）
+        /// 添加 Dynamic gRPC 服务到依赖注入容器（从配置读取）
         /// </summary>
         /// <param name="services">服务集合</param>
+        /// <param name="configuration">配置，为 null 时使用 AppConfig.GetSection</param>
+        /// <param name="sectionName">配置节名称，默认为 "DynamicGrpc"</param>
         /// <returns>服务集合</returns>
-        public static IServiceCollection AddDynamicGrpc(this IServiceCollection services)
+        public static IServiceCollection AddDynamicGrpc(this IServiceCollection services, IConfiguration configuration = null, string sectionName = DynamicGrpcOptions.SectionName)
         {
-            return AddDynamicGrpc(services, new DynamicGrpcOptions());
+            var config = configuration ?? AppConfig.Configuration;
+            var options = new DynamicGrpcOptions();
+            config.GetSection(sectionName).Bind(options);
+            return AddDynamicGrpc(services, options);
         }
 
         /// <summary>
-        /// 添加 Dynamic gRPC 服务到依赖注入容器（使用配置委托）
+        /// 添加 Dynamic gRPC 服务到依赖注入容器（从配置读取，并支持额外配置）
         /// </summary>
         /// <param name="services">服务集合</param>
-        /// <param name="optionsAction">配置委托</param>
+        /// <param name="optionsAction">额外配置委托（在配置文件配置之后执行）</param>
+        /// <param name="configuration">配置，为 null 时使用 AppConfig.Configuration</param>
+        /// <param name="sectionName">配置节名称，默认为 "DynamicGrpc"</param>
         /// <returns>服务集合</returns>
-        public static IServiceCollection AddDynamicGrpc(this IServiceCollection services, Action<DynamicGrpcOptions> optionsAction)
+        public static IServiceCollection AddDynamicGrpc(this IServiceCollection services, Action<DynamicGrpcOptions> optionsAction, IConfiguration configuration = null, string sectionName = DynamicGrpcOptions.SectionName)
         {
+            var config = configuration ?? AppConfig.Configuration;
             var options = new DynamicGrpcOptions();
+            config.GetSection(sectionName).Bind(options);
             optionsAction?.Invoke(options);
             return AddDynamicGrpc(services, options);
         }

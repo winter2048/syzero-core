@@ -11,6 +11,11 @@ namespace SyZero.DynamicWebApi
     public class DynamicWebApiOptions
     {
         /// <summary>
+        /// 配置节名称
+        /// </summary>
+        public const string SectionName = "DynamicWebApi";
+
+        /// <summary>
         /// 初始化默认配置
         /// </summary>
         public DynamicWebApiOptions()
