@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
+    <TargetFramework>netstandard2.1</TargetFramework>
     <PackageId>SyZero.SqlSugar</PackageId>
     <Authors>winter2048</Authors>
     <Company>SYZERO</Company>
@@ -23,7 +23,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="SqlSugarCore" Version="5.0.3.1" />
+    <PackageReference Include="SqlSugarCore" Version="5.1.4.211" />
   </ItemGroup>
 
   <ItemGroup>

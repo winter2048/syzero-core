@@ -652,6 +652,31 @@
             <param name="cancellationToken">异步取消凭据</param>
             <returns></returns>
         </member>
+        <member name="T:SyZero.Domain.Repository.ITransactionScope">
+            <summary>
+            事务作用域接口
+            </summary>
+        </member>
+        <member name="M:SyZero.Domain.Repository.ITransactionScope.Commit">
+            <summary>
+            提交事务
+            </summary>
+        </member>
+        <member name="M:SyZero.Domain.Repository.ITransactionScope.CommitAsync">
+            <summary>
+            提交事务（异步）
+            </summary>
+        </member>
+        <member name="M:SyZero.Domain.Repository.ITransactionScope.Rollback">
+            <summary>
+            回滚事务
+            </summary>
+        </member>
+        <member name="M:SyZero.Domain.Repository.ITransactionScope.RollbackAsync">
+            <summary>
+            回滚事务（异步）
+            </summary>
+        </member>
         <member name="M:SyZero.Domain.Repository.IUnitOfWork.BeginTransaction">
             <summary>
             开启事务
@@ -674,23 +699,38 @@
         </member>
         <member name="M:SyZero.Domain.Repository.IUnitOfWork.BeginTransactionAsync">
             <summary>
-            开启事务异步
+            开启事务（异步），返回事务作用域
             </summary>
+            <returns>事务作用域，可用于提交或回滚</returns>
         </member>
-        <member name="M:SyZero.Domain.Repository.IUnitOfWork.CommitTransactionAsync">
+        <member name="M:SyZero.Domain.Repository.IUnitOfWork.ExecuteInTransaction(System.Action)">
             <summary>
-            提交事务异步
+            在事务中执行操作
             </summary>
+            <param name="action">要执行的操作</param>
         </member>
-        <member name="M:SyZero.Domain.Repository.IUnitOfWork.RollbackTransactionAsync">
+        <member name="M:SyZero.Domain.Repository.IUnitOfWork.ExecuteInTransaction``1(System.Func{``0})">
             <summary>
-            回滚事务异步
+            在事务中执行操作并返回结果
             </summary>
+            <typeparam name="T">返回类型</typeparam>
+            <param name="func">要执行的操作</param>
+            <returns>操作结果</returns>
         </member>
-        <member name="M:SyZero.Domain.Repository.IUnitOfWork.DisposeTransactionAsync">
+        <member name="M:SyZero.Domain.Repository.IUnitOfWork.ExecuteInTransactionAsync(System.Func{System.Threading.Tasks.Task})">
             <summary>
-            释放事务异步
+            在事务中执行异步操作
             </summary>
+            <param name="func">要执行的异步操作</param>
+            <returns></returns>
+        </member>
+        <member name="M:SyZero.Domain.Repository.IUnitOfWork.ExecuteInTransactionAsync``1(System.Func{System.Threading.Tasks.Task{``0}})">
+            <summary>
+            在事务中执行异步操作并返回结果
+            </summary>
+            <typeparam name="T">返回类型</typeparam>
+            <param name="func">要执行的异步操作</param>
+            <returns>操作结果</returns>
         </member>
         <member name="T:SyZero.Domain.Service.DomainService">
             <summary>
@@ -1206,12 +1246,676 @@
             <param name="jsonText">Json字符串</param>
             <returns></returns>
         </member>
+        <member name="T:SyZero.Service.DBServiceManagement">
+            <summary>
+            数据库服务管理实现
+            适用于需要持久化服务注册信息到数据库的场景
+            </summary>
+        </member>
+        <member name="P:SyZero.Service.DBServiceManagement.IsLeader">
+            <summary>
+            当前实例是否为 Leader
+            </summary>
+        </member>
+        <member name="P:SyZero.Service.DBServiceManagement.InstanceId">
+            <summary>
+            当前实例ID
+            </summary>
+        </member>
+        <member name="M:SyZero.Service.DBServiceManagement.TryAcquireLeadershipAsync">
+            <summary>
+            尝试获取 Leader 权限
+            </summary>
+        </member>
+        <member name="M:SyZero.Service.DBServiceManagement.ReleaseLeadershipAsync">
+            <summary>
+            释放 Leader 权限
+            </summary>
+        </member>
+        <member name="M:SyZero.Service.DBServiceManagement.HeartbeatAsync(System.String)">
+            <summary>
+            更新心跳
+            </summary>
+        </member>
+        <member name="M:SyZero.Service.DBServiceManagement.PerformHealthCheckAsync">
+            <summary>
+            执行健康检查
+            </summary>
+        </member>
+        <member name="M:SyZero.Service.DBServiceManagement.CheckServiceHealthAsync(SyZero.Service.ServiceRegistryEntity)">
+            <summary>
+            检查单个服务实例的健康状态
+            </summary>
+        </member>
+        <member name="T:SyZero.Service.ServiceRegistryEntity">
+            <summary>
+            服务注册实体
+            </summary>
+        </member>
+        <member name="T:SyZero.Service.IServiceRegistryRepository">
+            <summary>
+            服务注册仓储接口
+            </summary>
+        </member>
+        <member name="T:SyZero.Service.ILeaderElectionRepository">
+            <summary>
+            Leader 选举仓储接口
+            </summary>
+        </member>
+        <member name="M:SyZero.Service.ILeaderElectionRepository.GetLeaderLockAsync(System.String)">
+            <summary>
+            获取当前 Leader 锁信息
+            </summary>
+            <param name="leaderKey">锁的键</param>
+            <returns>锁信息，如果不存在返回 null</returns>
+        </member>
+        <member name="M:SyZero.Service.ILeaderElectionRepository.TryAcquireLeaderLockAsync(System.String,System.String,System.Int32)">
+            <summary>
+            尝试获取 Leader 锁
+            </summary>
+            <param name="leaderKey">锁的键</param>
+            <param name="instanceId">实例ID</param>
+            <param name="expireSeconds">过期时间（秒）</param>
+            <returns>是否成功获取</returns>
+        </member>
+        <member name="M:SyZero.Service.ILeaderElectionRepository.RenewLeaderLockAsync(System.String,System.String,System.Int32)">
+            <summary>
+            续期 Leader 锁
+            </summary>
+            <param name="leaderKey">锁的键</param>
+            <param name="instanceId">实例ID</param>
+            <param name="expireSeconds">过期时间（秒）</param>
+        </member>
+        <member name="M:SyZero.Service.ILeaderElectionRepository.ReleaseLeaderLockAsync(System.String,System.String)">
+            <summary>
+            释放 Leader 锁
+            </summary>
+            <param name="leaderKey">锁的键</param>
+            <param name="instanceId">实例ID</param>
+        </member>
+        <member name="T:SyZero.Service.LeaderLockEntity">
+            <summary>
+            Leader 锁实体
+            </summary>
+        </member>
+        <member name="P:SyZero.Service.LeaderLockEntity.Id">
+            <summary>
+            主键
+            </summary>
+        </member>
+        <member name="P:SyZero.Service.LeaderLockEntity.LeaderKey">
+            <summary>
+            锁的键
+            </summary>
+        </member>
+        <member name="P:SyZero.Service.LeaderLockEntity.InstanceId">
+            <summary>
+            持有锁的实例ID
+            </summary>
+        </member>
+        <member name="P:SyZero.Service.LeaderLockEntity.AcquireTime">
+            <summary>
+            获取锁的时间
+            </summary>
+        </member>
+        <member name="P:SyZero.Service.LeaderLockEntity.RenewTime">
+            <summary>
+            最后续期时间
+            </summary>
+        </member>
+        <member name="P:SyZero.Service.LeaderLockEntity.ExpireTime">
+            <summary>
+            锁过期时间
+            </summary>
+        </member>
+        <member name="T:SyZero.Service.DBServiceManagementOptions">
+            <summary>
+            数据库服务管理配置选项
+            </summary>
+        </member>
+        <member name="F:SyZero.Service.DBServiceManagementOptions.SectionName">
+            <summary>
+            配置节名称
+            </summary>
+        </member>
+        <member name="P:SyZero.Service.DBServiceManagementOptions.TableName">
+            <summary>
+            数据库表名
+            <para>默认值: "sys_service_registry"</para>
+            </summary>
+        </member>
+        <member name="P:SyZero.Service.DBServiceManagementOptions.CacheExpirationSeconds">
+            <summary>
+            缓存过期时间（秒）
+            <para>默认值: 30</para>
+            </summary>
+        </member>
+        <member name="P:SyZero.Service.DBServiceManagementOptions.EnableHealthCheck">
+            <summary>
+            是否启用健康检查
+            <para>默认值: true</para>
+            </summary>
+        </member>
+        <member name="P:SyZero.Service.DBServiceManagementOptions.HealthCheckIntervalSeconds">
+            <summary>
+            健康检查间隔（秒）
+            <para>默认值: 30</para>
+            </summary>
+        </member>
+        <member name="P:SyZero.Service.DBServiceManagementOptions.HealthCheckTimeoutSeconds">
+            <summary>
+            健康检查超时时间（秒）
+            <para>默认值: 5</para>
+            </summary>
+        </member>
+        <member name="P:SyZero.Service.DBServiceManagementOptions.ServiceExpireSeconds">
+            <summary>
+            服务实例过期时间（秒），超过此时间未心跳的实例将被标记为不健康
+            <para>默认值: 30</para>
+            </summary>
+        </member>
+        <member name="P:SyZero.Service.DBServiceManagementOptions.AutoCleanExpiredServices">
+            <summary>
+            是否自动清理过期服务
+            <para>默认值: true</para>
+            </summary>
+        </member>
+        <member name="P:SyZero.Service.DBServiceManagementOptions.AutoCleanIntervalSeconds">
+            <summary>
+            自动清理间隔（秒）
+            <para>默认值: 300（5分钟）</para>
+            </summary>
+        </member>
+        <member name="P:SyZero.Service.DBServiceManagementOptions.ServiceCleanSeconds">
+            <summary>
+            服务实例清理时间（秒），超过此时间未心跳的实例将被自动移除
+            <para>默认值: 600（10分钟），应大于 ServiceExpireSeconds</para>
+            </summary>
+        </member>
+        <member name="P:SyZero.Service.DBServiceManagementOptions.EnableLeaderElection">
+            <summary>
+            是否启用 Leader 选举（多实例时只有 Leader 执行健康检查和清理）
+            <para>默认值: true</para>
+            </summary>
+        </member>
+        <member name="P:SyZero.Service.DBServiceManagementOptions.LeaderLockExpireSeconds">
+            <summary>
+            Leader 锁过期时间（秒）
+            <para>默认值: 30</para>
+            </summary>
+        </member>
+        <member name="P:SyZero.Service.DBServiceManagementOptions.LeaderLockRenewIntervalSeconds">
+            <summary>
+            Leader 锁续期间隔（秒）
+            <para>默认值: 10，应小于 LeaderLockExpireSeconds</para>
+            </summary>
+        </member>
+        <member name="M:SyZero.Service.DBServiceManagementOptions.Validate">
+            <summary>
+            验证配置
+            </summary>
+        </member>
         <member name="M:SyZero.Service.IServiceManagement.GetService(System.String)">
             <summary>
             根据服务名称获取服务实例
             </summary>
-            <param name="serviceName"></param>
+            <param name="serviceName">服务名称</param>
+            <returns>服务实例列表</returns>
+        </member>
+        <member name="M:SyZero.Service.IServiceManagement.GetHealthyServices(System.String)">
+            <summary>
+            获取健康的服务实例
+            </summary>
+            <param name="serviceName">服务名称</param>
+            <returns>健康的服务实例列表</returns>
+        </member>
+        <member name="M:SyZero.Service.IServiceManagement.GetServiceInstance(System.String)">
+            <summary>
+            获取单个服务实例（支持负载均衡策略）
+            </summary>
+            <param name="serviceName">服务名称</param>
+            <returns>服务实例</returns>
+        </member>
+        <member name="M:SyZero.Service.IServiceManagement.GetAllServices">
+            <summary>
+            获取所有已注册的服务名称
+            </summary>
+            <returns>服务名称列表</returns>
+        </member>
+        <member name="M:SyZero.Service.IServiceManagement.RegisterService(SyZero.Service.ServiceInfo)">
+            <summary>
+            注册服务实例
+            </summary>
+            <param name="serviceInfo">服务信息</param>
             <returns></returns>
+        </member>
+        <member name="M:SyZero.Service.IServiceManagement.DeregisterService(System.String)">
+            <summary>
+            注销服务实例
+            </summary>
+            <param name="serviceId">服务ID</param>
+            <returns></returns>
+        </member>
+        <member name="M:SyZero.Service.IServiceManagement.IsServiceHealthy(System.String)">
+            <summary>
+            检查服务是否健康
+            </summary>
+            <param name="serviceName">服务名称</param>
+            <returns>是否健康</returns>
+        </member>
+        <member name="M:SyZero.Service.IServiceManagement.Subscribe(System.String,System.Action{System.Collections.Generic.List{SyZero.Service.ServiceInfo}})">
+            <summary>
+            订阅服务变更通知
+            </summary>
+            <param name="serviceName">服务名称</param>
+            <param name="callback">变更回调</param>
+            <returns></returns>
+        </member>
+        <member name="M:SyZero.Service.IServiceManagement.Unsubscribe(System.String)">
+            <summary>
+            取消订阅服务变更通知
+            </summary>
+            <param name="serviceName">服务名称</param>
+            <returns></returns>
+        </member>
+        <member name="T:SyZero.Service.LocalServiceManagement">
+            <summary>
+            本地服务管理实现（基于内存和本地文件）
+            适用于开发测试环境或单机部署场景
+            </summary>
+        </member>
+        <member name="P:SyZero.Service.LocalServiceManagement.IsLeader">
+            <summary>
+            当前实例是否为 Leader
+            </summary>
+        </member>
+        <member name="P:SyZero.Service.LocalServiceManagement.InstanceId">
+            <summary>
+            当前实例ID
+            </summary>
+        </member>
+        <member name="M:SyZero.Service.LocalServiceManagement.#ctor(SyZero.Service.LocalServiceManagementOptions)">
+            <summary>
+            构造函数
+            </summary>
+            <param name="options">配置选项</param>
+        </member>
+        <member name="M:SyZero.Service.LocalServiceManagement.TryAcquireLeadership">
+            <summary>
+            尝试获取 Leader 权限
+            </summary>
+        </member>
+        <member name="M:SyZero.Service.LocalServiceManagement.SaveLeaderLock(SyZero.Service.LocalServiceManagement.LeaderLockInfo)">
+            <summary>
+            保存 Leader 锁信息
+            </summary>
+        </member>
+        <member name="M:SyZero.Service.LocalServiceManagement.ReleaseLeadership">
+            <summary>
+            释放 Leader 权限
+            </summary>
+        </member>
+        <member name="M:SyZero.Service.LocalServiceManagement.SetServiceHealth(System.String,System.Boolean)">
+            <summary>
+            设置服务实例的健康状态
+            </summary>
+            <param name="serviceId">服务ID</param>
+            <param name="isHealthy">是否健康</param>
+        </member>
+        <member name="M:SyZero.Service.LocalServiceManagement.PerformHealthCheckAsync">
+            <summary>
+            执行健康检查
+            </summary>
+        </member>
+        <member name="M:SyZero.Service.LocalServiceManagement.CheckServiceHealthAsync(SyZero.Service.ServiceInfo)">
+            <summary>
+            检查单个服务实例的健康状态
+            </summary>
+        </member>
+        <member name="M:SyZero.Service.LocalServiceManagement.HeartbeatAsync(System.String)">
+            <summary>
+            更新服务心跳
+            </summary>
+            <param name="serviceId">服务ID</param>
+        </member>
+        <member name="M:SyZero.Service.LocalServiceManagement.CleanExpiredServicesAsync">
+            <summary>
+            清理过期服务
+            </summary>
+        </member>
+        <member name="M:SyZero.Service.LocalServiceManagement.Clear">
+            <summary>
+            清除所有服务数据
+            </summary>
+        </member>
+        <member name="M:SyZero.Service.LocalServiceManagement.GetDataFilePath">
+            <summary>
+            获取数据文件路径
+            </summary>
+        </member>
+        <member name="M:SyZero.Service.LocalServiceManagement.Dispose">
+            <summary>
+            释放资源
+            </summary>
+        </member>
+        <member name="T:SyZero.Service.LocalServiceManagement.LocalServiceData">
+            <summary>
+            本地服务数据结构（用于序列化）
+            </summary>
+        </member>
+        <member name="T:SyZero.Service.LocalServiceManagement.LeaderLockInfo">
+            <summary>
+            Leader 锁信息
+            </summary>
+        </member>
+        <member name="P:SyZero.Service.LocalServiceManagement.LeaderLockInfo.InstanceId">
+            <summary>
+            持有锁的实例ID
+            </summary>
+        </member>
+        <member name="P:SyZero.Service.LocalServiceManagement.LeaderLockInfo.AcquireTime">
+            <summary>
+            获取锁的时间
+            </summary>
+        </member>
+        <member name="P:SyZero.Service.LocalServiceManagement.LeaderLockInfo.RenewTime">
+            <summary>
+            最后续期时间
+            </summary>
+        </member>
+        <member name="P:SyZero.Service.LocalServiceManagement.LeaderLockInfo.ExpireTime">
+            <summary>
+            锁过期时间
+            </summary>
+        </member>
+        <member name="T:SyZero.Service.LocalServiceManagementOptions">
+            <summary>
+            本地服务管理配置选项
+            </summary>
+        </member>
+        <member name="F:SyZero.Service.LocalServiceManagementOptions.SectionName">
+            <summary>
+            配置节名称
+            </summary>
+        </member>
+        <member name="P:SyZero.Service.LocalServiceManagementOptions.EnableFilePersistence">
+            <summary>
+            是否启用文件持久化
+            <para>默认值: true</para>
+            </summary>
+        </member>
+        <member name="P:SyZero.Service.LocalServiceManagementOptions.DataFilePath">
+            <summary>
+            数据文件路径
+            <para>默认值: %TEMP%/syzero_services.json</para>
+            </summary>
+        </member>
+        <member name="P:SyZero.Service.LocalServiceManagementOptions.EnableFileWatcher">
+            <summary>
+            是否启用文件监听（多进程同步）
+            <para>默认值: true</para>
+            </summary>
+        </member>
+        <member name="P:SyZero.Service.LocalServiceManagementOptions.CacheExpirationSeconds">
+            <summary>
+            缓存过期时间（秒）
+            <para>默认值: 30</para>
+            </summary>
+        </member>
+        <member name="P:SyZero.Service.LocalServiceManagementOptions.EnableHealthCheck">
+            <summary>
+            是否启用健康检查
+            <para>默认值: true</para>
+            </summary>
+        </member>
+        <member name="P:SyZero.Service.LocalServiceManagementOptions.HealthCheckIntervalSeconds">
+            <summary>
+            健康检查间隔（秒）
+            <para>默认值: 10</para>
+            </summary>
+        </member>
+        <member name="P:SyZero.Service.LocalServiceManagementOptions.HealthCheckTimeoutSeconds">
+            <summary>
+            健康检查超时时间（秒）
+            <para>默认值: 5</para>
+            </summary>
+        </member>
+        <member name="P:SyZero.Service.LocalServiceManagementOptions.ServiceExpireSeconds">
+            <summary>
+            服务实例过期时间（秒），超过此时间未心跳的实例将被标记为不健康
+            <para>默认值: 30</para>
+            </summary>
+        </member>
+        <member name="P:SyZero.Service.LocalServiceManagementOptions.AutoCleanExpiredServices">
+            <summary>
+            是否自动清理过期服务
+            <para>默认值: true</para>
+            </summary>
+        </member>
+        <member name="P:SyZero.Service.LocalServiceManagementOptions.AutoCleanIntervalSeconds">
+            <summary>
+            自动清理间隔（秒）
+            <para>默认值: 300（5分钟）</para>
+            </summary>
+        </member>
+        <member name="P:SyZero.Service.LocalServiceManagementOptions.ServiceCleanSeconds">
+            <summary>
+            服务实例清理时间（秒），超过此时间未心跳的实例将被自动移除
+            <para>默认值: 600（10分钟），应大于 ServiceExpireSeconds</para>
+            </summary>
+        </member>
+        <member name="P:SyZero.Service.LocalServiceManagementOptions.EnableLeaderElection">
+            <summary>
+            是否启用 Leader 选举（多实例时只有 Leader 执行健康检查和清理）
+            <para>默认值: true</para>
+            </summary>
+        </member>
+        <member name="P:SyZero.Service.LocalServiceManagementOptions.LeaderLockExpireSeconds">
+            <summary>
+            Leader 锁过期时间（秒）
+            <para>默认值: 30</para>
+            </summary>
+        </member>
+        <member name="P:SyZero.Service.LocalServiceManagementOptions.LeaderLockRenewIntervalSeconds">
+            <summary>
+            Leader 锁续期间隔（秒）
+            <para>默认值: 10，应小于 LeaderLockExpireSeconds</para>
+            </summary>
+        </member>
+        <member name="M:SyZero.Service.LocalServiceManagementOptions.GetDataFilePath">
+            <summary>
+            获取实际的数据文件路径
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:SyZero.Service.LocalServiceManagementOptions.Validate">
+            <summary>
+            验证配置
+            </summary>
+        </member>
+        <member name="P:SyZero.Service.ServiceInfo.ServiceID">
+            <summary>
+            服务ID
+            </summary>
+        </member>
+        <member name="P:SyZero.Service.ServiceInfo.ServiceName">
+            <summary>
+            服务名称
+            </summary>
+        </member>
+        <member name="P:SyZero.Service.ServiceInfo.ServiceAddress">
+            <summary>
+            服务地址
+            </summary>
+        </member>
+        <member name="P:SyZero.Service.ServiceInfo.ServicePort">
+            <summary>
+            服务端口
+            </summary>
+        </member>
+        <member name="P:SyZero.Service.ServiceInfo.ServiceProtocol">
+            <summary>
+            服务协议
+            </summary>
+        </member>
+        <member name="P:SyZero.Service.ServiceInfo.Version">
+            <summary>
+            服务版本
+            </summary>
+        </member>
+        <member name="P:SyZero.Service.ServiceInfo.Group">
+            <summary>
+            服务分组/命名空间
+            </summary>
+        </member>
+        <member name="P:SyZero.Service.ServiceInfo.Tags">
+            <summary>
+            服务标签（用于分类和过滤）
+            </summary>
+        </member>
+        <member name="P:SyZero.Service.ServiceInfo.Metadata">
+            <summary>
+            服务元数据（扩展信息）
+            </summary>
+        </member>
+        <member name="P:SyZero.Service.ServiceInfo.IsHealthy">
+            <summary>
+            是否健康
+            </summary>
+        </member>
+        <member name="P:SyZero.Service.ServiceInfo.Enabled">
+            <summary>
+            是否启用
+            </summary>
+        </member>
+        <member name="P:SyZero.Service.ServiceInfo.Weight">
+            <summary>
+            权重（用于加权负载均衡）
+            </summary>
+        </member>
+        <member name="P:SyZero.Service.ServiceInfo.RegisterTime">
+            <summary>
+            注册时间
+            </summary>
+        </member>
+        <member name="P:SyZero.Service.ServiceInfo.LastHeartbeat">
+            <summary>
+            最后心跳时间
+            </summary>
+        </member>
+        <member name="P:SyZero.Service.ServiceInfo.HealthCheckUrl">
+            <summary>
+            健康检查地址
+            </summary>
+        </member>
+        <member name="P:SyZero.Service.ServiceInfo.HealthCheckIntervalSeconds">
+            <summary>
+            健康检查间隔（秒）
+            </summary>
+        </member>
+        <member name="P:SyZero.Service.ServiceInfo.HealthCheckTimeoutSeconds">
+            <summary>
+            健康检查超时时间（秒）
+            </summary>
+        </member>
+        <member name="P:SyZero.Service.ServiceInfo.Region">
+            <summary>
+            服务实例所在区域/数据中心
+            </summary>
+        </member>
+        <member name="P:SyZero.Service.ServiceInfo.Zone">
+            <summary>
+            可用区
+            </summary>
+        </member>
+        <member name="T:SyZero.Service.ServiceManagementExtension">
+            <summary>
+            服务管理扩展方法
+            </summary>
+        </member>
+        <member name="M:SyZero.Service.ServiceManagementExtension.AddLocalServiceManagement(Microsoft.Extensions.DependencyInjection.IServiceCollection,SyZero.Service.LocalServiceManagementOptions)">
+            <summary>
+            添加本地服务管理到依赖注入容器
+            </summary>
+            <param name="services">服务集合</param>
+            <param name="options">配置选项</param>
+            <returns>服务集合</returns>
+        </member>
+        <member name="M:SyZero.Service.ServiceManagementExtension.AddLocalServiceManagement(Microsoft.Extensions.DependencyInjection.IServiceCollection,Microsoft.Extensions.Configuration.IConfiguration,System.String)">
+            <summary>
+            添加本地服务管理到依赖注入容器（从配置读取）
+            </summary>
+            <param name="services">服务集合</param>
+            <param name="configuration">配置，为 null 时使用 AppConfig.Configuration</param>
+            <param name="sectionName">配置节名称，默认为 "LocalServiceManagement"</param>
+            <returns>服务集合</returns>
+        </member>
+        <member name="M:SyZero.Service.ServiceManagementExtension.AddLocalServiceManagement(Microsoft.Extensions.DependencyInjection.IServiceCollection,System.Action{SyZero.Service.LocalServiceManagementOptions},Microsoft.Extensions.Configuration.IConfiguration,System.String)">
+            <summary>
+            添加本地服务管理到依赖注入容器（从配置读取，并支持额外配置）
+            </summary>
+            <param name="services">服务集合</param>
+            <param name="optionsAction">额外配置委托（在配置文件配置之后执行）</param>
+            <param name="configuration">配置，为 null 时使用 AppConfig.Configuration</param>
+            <param name="sectionName">配置节名称，默认为 "LocalServiceManagement"</param>
+            <returns>服务集合</returns>
+        </member>
+        <member name="M:SyZero.Service.ServiceManagementExtension.AddDBServiceManagement(Microsoft.Extensions.DependencyInjection.IServiceCollection,SyZero.Service.DBServiceManagementOptions)">
+            <summary>
+            添加数据库服务管理到依赖注入容器
+            </summary>
+            <param name="services">服务集合</param>
+            <param name="options">配置选项</param>
+            <returns>服务集合</returns>
+        </member>
+        <member name="M:SyZero.Service.ServiceManagementExtension.AddDBServiceManagement(Microsoft.Extensions.DependencyInjection.IServiceCollection,Microsoft.Extensions.Configuration.IConfiguration,System.String)">
+            <summary>
+            添加数据库服务管理到依赖注入容器（从配置读取）
+            </summary>
+            <param name="services">服务集合</param>
+            <param name="configuration">配置，为 null 时使用 AppConfig.Configuration</param>
+            <param name="sectionName">配置节名称，默认为 "DBServiceManagement"</param>
+            <returns>服务集合</returns>
+        </member>
+        <member name="M:SyZero.Service.ServiceManagementExtension.AddDBServiceManagement(Microsoft.Extensions.DependencyInjection.IServiceCollection,System.Action{SyZero.Service.DBServiceManagementOptions},Microsoft.Extensions.Configuration.IConfiguration,System.String)">
+            <summary>
+            添加数据库服务管理到依赖注入容器（从配置读取，并支持额外配置）
+            </summary>
+            <param name="services">服务集合</param>
+            <param name="optionsAction">额外配置委托（在配置文件配置之后执行）</param>
+            <param name="configuration">配置，为 null 时使用 AppConfig.Configuration</param>
+            <param name="sectionName">配置节名称，默认为 "DBServiceManagement"</param>
+            <returns>服务集合</returns>
+        </member>
+        <member name="M:SyZero.Service.ServiceManagementExtension.AddDBServiceManagement``1(Microsoft.Extensions.DependencyInjection.IServiceCollection,SyZero.Service.DBServiceManagementOptions)">
+            <summary>
+            添加数据库服务管理到依赖注入容器（使用自定义仓储实现）
+            </summary>
+            <typeparam name="TRepository">仓储实现类型</typeparam>
+            <param name="services">服务集合</param>
+            <param name="options">配置选项</param>
+            <returns>服务集合</returns>
+        </member>
+        <member name="M:SyZero.Service.ServiceManagementExtension.AddDBServiceManagement``1(Microsoft.Extensions.DependencyInjection.IServiceCollection,System.Action{SyZero.Service.DBServiceManagementOptions},Microsoft.Extensions.Configuration.IConfiguration,System.String)">
+            <summary>
+            添加数据库服务管理到依赖注入容器（使用自定义仓储实现，从配置读取）
+            </summary>
+            <typeparam name="TRepository">仓储实现类型</typeparam>
+            <param name="services">服务集合</param>
+            <param name="optionsAction">额外配置委托</param>
+            <param name="configuration">配置，为 null 时使用 AppConfig.Configuration</param>
+            <param name="sectionName">配置节名称</param>
+            <returns>服务集合</returns>
+        </member>
+        <member name="M:SyZero.SyZeroExtension.RegisterServiceAsync(System.IServiceProvider)">
+            <summary>
+            注册服务到服务管理中心
+            </summary>
+        </member>
+        <member name="M:SyZero.SyZeroExtension.DeregisterServiceAsync(System.IServiceProvider)">
+            <summary>
+            注销服务
+            </summary>
         </member>
         <member name="M:SyZero.SyZeroExtension.AddSyZero(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
             <summary>

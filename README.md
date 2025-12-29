@@ -29,6 +29,8 @@ SyZero 是一个基于 .NET 的模块化微服务开发框架，提供了丰富�
 - 🌐 **微服务支持** - 内置服务注册发现、API 网关、gRPC 等
 - 📊 **可观测性** - 集成 OpenTelemetry 链路追踪
 - 🔧 **依赖注入** - 基于 Microsoft.Extensions.DependencyInjection
+- 🏥 **健康检查** - 内置服务健康检查与自动清理机制
+- 🗳️ **Leader 选举** - 支持多实例部署的 Leader 选举机制
 
 ## 📦 核心模块
 
@@ -63,6 +65,8 @@ SyZero 是一个基于 .NET 的模块化微服务开发框架，提供了丰富�
 | **SyZero.Nacos** | [![NuGet](https://img.shields.io/nuget/v/SyZero.Nacos?style=flat-square)](https://www.nuget.org/packages/SyZero.Nacos) | Nacos 服务注册与配置中心 |
 | **SyZero.ApiGateway** | [![NuGet](https://img.shields.io/nuget/v/SyZero.ApiGateway?style=flat-square)](https://www.nuget.org/packages/SyZero.ApiGateway) | API 网关支持 |
 | **SyZero.Feign** | [![NuGet](https://img.shields.io/nuget/v/SyZero.Feign?style=flat-square)](https://www.nuget.org/packages/SyZero.Feign) | 声明式 HTTP 客户端 |
+
+> 💡 **内置服务管理**：SyZero 核心模块还提供了 `LocalServiceManagement`（基于文件）和 `DBServiceManagement`（基于数据库）两种轻量级服务管理实现，适用于开发测试或简单部署场景。
 
 ### 工具与扩展
 
@@ -171,6 +175,54 @@ public class MyTransientService : ITransientDependency
 }
 ```
 
+## 🏥 服务管理
+
+SyZero 提供了统一的 `IServiceManagement` 接口，支持多种服务注册发现后端：
+
+| 实现 | 适用场景 | 特点 |
+|------|----------|------|
+| **LocalServiceManagement** | 开发测试、单机部署 | 基于本地文件，无需外部依赖 |
+| **DBServiceManagement** | 简单生产环境 | 基于数据库，支持多实例 |
+| **ConsulServiceManagement** | 生产环境 | 基于 Consul，功能完整 |
+| **NacosServiceManagement** | 生产环境 | 基于 Nacos，支持配置中心 |
+
+### 核心功能
+
+- **服务注册/注销** - 自动注册服务实例，应用关闭时自动注销
+- **健康检查** - 支持 HTTP 健康端点检查和心跳检测
+- **自动清理** - 自动清理过期未心跳的服务实例
+- **负载均衡** - 支持加权随机负载均衡
+- **Leader 选举** - 多实例部署时，仅 Leader 执行健康检查和清理
+
+### 使用示例
+
+```csharp
+// 配置服务管理（使用本地文件）
+builder.Services.AddSyZeroLocalServiceManagement(options =>
+{
+    options.EnableHealthCheck = true;
+    options.HealthCheckIntervalSeconds = 10;
+    options.AutoCleanExpiredServices = true;
+    options.EnableLeaderElection = true;  // 启用 Leader 选举
+});
+
+// 或使用 Consul
+builder.Services.AddSyZeroConsul();
+
+// 或使用 Nacos  
+builder.Services.AddSyZeroNacos();
+```
+
+### Leader 选举配置
+
+当多个服务实例同时运行时，启用 Leader 选举可避免并发写入冲突：
+
+```csharp
+options.EnableLeaderElection = true;       // 启用 Leader 选举
+options.LeaderLockExpireSeconds = 30;      // Leader 锁过期时间
+options.LeaderLockRenewIntervalSeconds = 10; // Leader 锁续期间隔
+```
+
 ## 📁 项目结构
 
 ```
@@ -210,7 +262,7 @@ syzero-core/
 - **数据库**: SQL Server / MySQL / MongoDB (可选)
 - **缓存**: Redis (可选)
 - **消息队列**: RabbitMQ (可选)
-- **服务注册**: Consul / Nacos (可选)
+- **服务注册**: Consul / Nacos / 内置 Local/DB (可选)
 
 ## 📖 文档
 

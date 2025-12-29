@@ -73,8 +73,8 @@ builder.Services.AddConsul(new ConsulServiceOptions
 
 var app = builder.Build();
 
-// 注册到 Consul
-app.UseConsul();
+// 使用 SyZero（会自动注册服务到 Consul）
+app.UseSyZero();
 
 app.Run();
 ```
@@ -247,7 +247,7 @@ builder.Services.AddConsul();
 var app = builder.Build();
 
 app.MapDynamicGrpcServices();
-app.UseConsul();
+app.UseSyZero();
 ```
 
 ---

@@ -95,7 +95,6 @@ namespace SyZero.Example1.Web
                 c.RoutePrefix = "api/swagger";
 
             });
-            //app.UseConsul();
             app.InitTables();
             app.Run();
         }

@@ -80,14 +80,46 @@ namespace SyZero
 
         public static List<TypeInfo> GetTypesAssignableTo(this Assembly assembly, Type compareType)
         {
-            var typeInfoList = assembly.DefinedTypes.Where(x => x.IsClass
-                                && !x.IsAbstract
-                                && x != compareType
-                                && x.GetInterfaces()
-                                        .Any(i => i.IsGenericType
-                                                && i.GetGenericTypeDefinition() == compareType))?.ToList();
+            var typeInfoList = new List<TypeInfo>();
+            try
+            {
+                IEnumerable<TypeInfo> definedTypes;
+                try
+                {
+                    definedTypes = assembly.DefinedTypes;
+                }
+                catch (ReflectionTypeLoadException ex)
+                {
+                    // 当某些类型无法加载时，使用能够加载的类型
+                    definedTypes = ex.Types.Where(t => t != null).Select(t => t.GetTypeInfo());
+                }
+
+                typeInfoList = definedTypes.Where(x => x != null
+                                    && x.IsClass
+                                    && !x.IsAbstract
+                                    && x != compareType
+                                    && SafeGetInterfaces(x)
+                                            .Any(i => i.IsGenericType
+                                                    && i.GetGenericTypeDefinition() == compareType))?.ToList() ?? new List<TypeInfo>();
+            }
+            catch
+            {
+                // 忽略无法加载的程序集
+            }
 
             return typeInfoList;
+        }
+
+        private static Type[] SafeGetInterfaces(TypeInfo typeInfo)
+        {
+            try
+            {
+                return typeInfo.GetInterfaces();
+            }
+            catch
+            {
+                return Array.Empty<Type>();
+            }
         }
 
         public static IServiceCollection AddClassesAsImplementedInterface(
