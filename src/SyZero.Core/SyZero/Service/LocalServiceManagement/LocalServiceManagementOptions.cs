@@ -1,7 +1,7 @@
 using System;
 using System.IO;
 
-namespace SyZero.Service
+namespace SyZero.Service.LocalServiceManagement
 {
     /// <summary>
     /// 本地服务管理配置选项

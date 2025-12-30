@@ -6,10 +6,13 @@ using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 using SyZero.Cache;
+using SyZero.Domain.Entities;
 using SyZero.Domain.Repository;
 using SyZero.Runtime.Security;
+using SyZero.Service.DBServiceManagement.Entity;
+using SyZero.Service.DBServiceManagement.Repository;
 
-namespace SyZero.Service
+namespace SyZero.Service.DBServiceManagement
 {
     /// <summary>
     /// 数据库服务管理实现
@@ -540,119 +543,5 @@ namespace SyZero.Service
         }
 
         #endregion
-    }
-
-    /// <summary>
-    /// 服务注册实体
-    /// </summary>
-    public class ServiceRegistryEntity
-    {
-        public long Id { get; set; }
-        public string ServiceID { get; set; }
-        public string ServiceName { get; set; }
-        public string ServiceAddress { get; set; }
-        public int ServicePort { get; set; }
-        public string ServiceProtocol { get; set; }
-        public string Version { get; set; }
-        public string Group { get; set; }
-        public string Tags { get; set; }
-        public string Metadata { get; set; }
-        public bool IsHealthy { get; set; }
-        public bool Enabled { get; set; }
-        public double Weight { get; set; }
-        public DateTime RegisterTime { get; set; }
-        public DateTime LastHeartbeat { get; set; }
-        public string HealthCheckUrl { get; set; }
-        public string Region { get; set; }
-        public string Zone { get; set; }
-    }
-
-    /// <summary>
-    /// 服务注册仓储接口
-    /// </summary>
-    public interface IServiceRegistryRepository
-    {
-        Task<List<ServiceRegistryEntity>> GetByServiceNameAsync(string serviceName);
-        Task<List<ServiceRegistryEntity>> GetHealthyByServiceNameAsync(string serviceName, int expireSeconds);
-        Task<ServiceRegistryEntity> GetByServiceIdAsync(string serviceId);
-        Task<List<string>> GetAllServiceNamesAsync();
-        Task RegisterAsync(ServiceRegistryEntity entity);
-        Task DeregisterAsync(string serviceId);
-        Task UpdateHeartbeatAsync(string serviceId);
-        Task UpdateHealthStatusAsync(string serviceId, bool isHealthy);
-        Task CleanExpiredServicesAsync(int expireSeconds);
-    }
-
-    /// <summary>
-    /// Leader 选举仓储接口
-    /// </summary>
-    public interface ILeaderElectionRepository
-    {
-        /// <summary>
-        /// 获取当前 Leader 锁信息
-        /// </summary>
-        /// <param name="leaderKey">锁的键</param>
-        /// <returns>锁信息，如果不存在返回 null</returns>
-        Task<LeaderLockEntity> GetLeaderLockAsync(string leaderKey);
-
-        /// <summary>
-        /// 尝试获取 Leader 锁
-        /// </summary>
-        /// <param name="leaderKey">锁的键</param>
-        /// <param name="instanceId">实例ID</param>
-        /// <param name="expireSeconds">过期时间（秒）</param>
-        /// <returns>是否成功获取</returns>
-        Task<bool> TryAcquireLeaderLockAsync(string leaderKey, string instanceId, int expireSeconds);
-
-        /// <summary>
-        /// 续期 Leader 锁
-        /// </summary>
-        /// <param name="leaderKey">锁的键</param>
-        /// <param name="instanceId">实例ID</param>
-        /// <param name="expireSeconds">过期时间（秒）</param>
-        Task RenewLeaderLockAsync(string leaderKey, string instanceId, int expireSeconds);
-
-        /// <summary>
-        /// 释放 Leader 锁
-        /// </summary>
-        /// <param name="leaderKey">锁的键</param>
-        /// <param name="instanceId">实例ID</param>
-        Task ReleaseLeaderLockAsync(string leaderKey, string instanceId);
-    }
-
-    /// <summary>
-    /// Leader 锁实体
-    /// </summary>
-    public class LeaderLockEntity
-    {
-        /// <summary>
-        /// 主键
-        /// </summary>
-        public long Id { get; set; }
-
-        /// <summary>
-        /// 锁的键
-        /// </summary>
-        public string LeaderKey { get; set; }
-
-        /// <summary>
-        /// 持有锁的实例ID
-        /// </summary>
-        public string InstanceId { get; set; }
-
-        /// <summary>
-        /// 获取锁的时间
-        /// </summary>
-        public DateTime AcquireTime { get; set; }
-
-        /// <summary>
-        /// 最后续期时间
-        /// </summary>
-        public DateTime RenewTime { get; set; }
-
-        /// <summary>
-        /// 锁过期时间
-        /// </summary>
-        public DateTime ExpireTime { get; set; }
     }
 }

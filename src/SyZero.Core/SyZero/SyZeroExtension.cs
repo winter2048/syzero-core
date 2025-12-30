@@ -186,9 +186,6 @@ namespace SyZero
                 services.AddScoped(type);
             }
 
-            // 注入本地服务管理
-            services.AddLocalServiceManagement();
-
             return services;
         }
     }
