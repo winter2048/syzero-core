@@ -75,7 +75,7 @@ namespace SyZero.Nacos
         public async Task<List<string>> GetAllServices()
         {
             var servicesInfo = await _nacosNamingService.GetServicesOfServer(1, int.MaxValue);
-            return servicesInfo.Doms?.ToList() ?? new List<string>();
+            return servicesInfo?.Data?.ToList() ?? new List<string>();
         }
 
         #endregion

@@ -4,6 +4,11 @@
         <name>SyZero.Nacos</name>
     </assembly>
     <members>
+        <member name="T:SyZero.Nacos.ServiceManagement.ServiceChangeListener">
+            <summary>
+            服务变更监听器
+            </summary>
+        </member>
         <member name="T:SyZero.SyZeroNacosExtension">
             <summary>
             Nacos配置扩展
