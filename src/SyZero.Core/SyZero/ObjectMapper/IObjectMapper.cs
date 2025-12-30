@@ -5,7 +5,7 @@ namespace SyZero.ObjectMapper
     /// <summary>
     /// 实体映射实现此接口
     /// </summary>
-    public interface IObjectMapper : ISingletonDependency
+    public interface IObjectMapper
     {
         /// <summary>
         /// Obj转Dto

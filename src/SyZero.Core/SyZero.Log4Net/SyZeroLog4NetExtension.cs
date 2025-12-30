@@ -1,14 +1,17 @@
-﻿using Autofac;
+﻿using log4net;
+using log4net.Appender;
+using log4net.Config;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using System;
-using System.Collections.Generic;
-using System.Text;
+using System.IO;
+using System.Linq;
 using SyZero.Log4Net;
 
 namespace SyZero
 {
     public static class SyZeroLog4NetExtension
     {
-
         /// <summary>
         /// 注册Log4NetModule
         /// </summary>
@@ -16,9 +19,18 @@ namespace SyZero
         /// <param name="builder"></param>
         /// <param name="configuration"></param>
         /// <returns></returns>
-        public static ContainerBuilder AddSyZeroLog4Net(this ContainerBuilder builder)
+        public static ILoggingBuilder AddSyZeroLog4Net(this ILoggingBuilder builder, string configFile = "log4net.config")
         {
-            builder.RegisterModule<Log4NetModule>();
+            XmlConfigurator.Configure(new FileInfo(configFile));
+
+#if DEBUG
+            var appender = LogManager.GetRepository().GetAppenders().OfType<RollingFileAppender>().FirstOrDefault();
+            if (appender != null)
+            {
+                appender.ImmediateFlush = true; // 确保即时写入
+            }
+#endif
+            builder.AddProvider(new Log4NetLoggerProvider("MyAppLogger"));
             return builder;
         }
     }

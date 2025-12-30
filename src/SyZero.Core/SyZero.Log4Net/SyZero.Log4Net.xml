@@ -4,7 +4,7 @@
         <name>SyZero.Log4Net</name>
     </assembly>
     <members>
-        <member name="M:SyZero.SyZeroLog4NetExtension.AddSyZeroLog4Net(Autofac.ContainerBuilder)">
+        <member name="M:SyZero.SyZeroLog4NetExtension.AddSyZeroLog4Net(Microsoft.Extensions.Logging.ILoggingBuilder,System.String)">
             <summary>
             注册Log4NetModule
             </summary>

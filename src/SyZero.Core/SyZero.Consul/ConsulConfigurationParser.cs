@@ -1,17 +1,4 @@
-﻿// *****************************************************************************************************************
-// Project          : Navyblue
-// File             : ConsulConfigurationParser.cs
-// Created          : 2019-05-23  19:30
-//
-// Last Modified By : (jstsmaxx@163.com)
-// Last Modified On : 2019-05-24  11:43
-// *****************************************************************************************************************
-// <copyright file="ConsulConfigurationParser.cs" company="Shanghai Future Mdt InfoTech Ltd.">
-//     Copyright ©  2012-2019 Mdt InfoTech Ltd. All rights reserved.
-// </copyright>
-// *****************************************************************************************************************
-
-using Microsoft.Extensions.Configuration;
+﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Primitives;
 using NConsul;
 using NConsul.Interfaces;

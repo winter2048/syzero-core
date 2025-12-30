@@ -4,7 +4,6 @@ using SyZero.Configurations;
 using SyZero.Util;
 using System.Linq;
 using System.Collections.Generic;
-using Autofac.Core;
 using Microsoft.Extensions.DependencyInjection;
 using Swashbuckle.AspNetCore.SwaggerGen;
 using System;
@@ -30,12 +29,12 @@ namespace Microsoft.Extensions.DependencyInjection
                 });
                 options.DocInclusionPredicate((docName, description) => true);
                 // Define the BearerAuth scheme that's in use
-                options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme()
+                options.AddSecurityDefinition("Authorization", new OpenApiSecurityScheme()
                 {
-                    Description = "在下框中输入请求头中需要添加Jwt授权Token：Bearer Token",
+                    Description = "在下框中输入请求头中需要添加Jwt授权Authorization:Bearer Token",
                     Name = "Authorization",
                     In = ParameterLocation.Header,
-                    Type = SecuritySchemeType.ApiKey,
+                    Type = SecuritySchemeType.Http,
                     BearerFormat = "JWT",
                     Scheme = "Bearer"
                 });
@@ -46,7 +45,7 @@ namespace Microsoft.Extensions.DependencyInjection
                         {
                             Reference = new OpenApiReference {
                                 Type = ReferenceType.SecurityScheme,
-                                Id = "Bearer"
+                                Id = "Authorization"
                             }
                         },
                         new string[] { }

@@ -1,9 +1,11 @@
-﻿using System.Threading.Tasks;
+﻿using Dynamitey.DynamicObjects;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 using SyZero.Dependency;
 
 namespace SyZero.Cache
 {
-    public interface ICache : ITransientDependency
+    public interface ICache
     {
         /// <summary>
         /// 是否存在
@@ -12,6 +14,13 @@ namespace SyZero.Cache
         /// <returns></returns>
         bool Exist(string key);
         /// <summary>
+        /// 根据前缀获取所有的key
+        /// 例如：pro_*
+        /// </summary>
+        /// <param name="key"></param>
+        /// <returns></returns>
+        string[] GetKeys(string pattern);
+        /// <summary>
         /// 获取值
         /// </summary>
         /// <typeparam name="T"></typeparam>
@@ -19,7 +28,6 @@ namespace SyZero.Cache
         /// <param name="isExisted">是否成功</param>
         /// <returns></returns>
         T Get<T>(string key);
-
         /// <summary>
         /// 移除
         /// </summary>

@@ -1,4 +1,5 @@
 ﻿using FreeRedis;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using SyZero.Cache;
 using SyZero.Serialization;
@@ -29,6 +30,11 @@ namespace SyZero.Redis
                 return default(T);
             }
             return _jsonSerialize.JSONToObject<T>(jsonStr);
+        }
+
+        public string[] GetKeys(string pattern)
+        {
+           return _cache.Keys(pattern);
         }
 
         public void Refresh(string key)

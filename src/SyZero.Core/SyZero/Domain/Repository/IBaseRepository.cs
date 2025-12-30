@@ -7,7 +7,7 @@ using SyZero.Dependency;
 
 namespace SyZero.Domain.Repository
 {
-    public interface IBaseRepository<T, in TKey> : ITransientDependency where T : class
+    public interface IBaseRepository<T, in TKey> where T : class
     {
         #region Count
 

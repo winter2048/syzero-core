@@ -6,6 +6,7 @@ using System.Security.Claims;
 using System.Text;
 using SyZero.Runtime.Security;
 using System.Linq;
+using Microsoft.IdentityModel.Logging;
 
 namespace SyZero.Web.Common.Jwt
 {

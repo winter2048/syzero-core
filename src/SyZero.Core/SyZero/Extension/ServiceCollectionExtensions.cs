@@ -1,11 +1,13 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using Dynamitey;
+using Microsoft.Extensions.DependencyInjection;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 
 namespace SyZero
 {
-    internal static class ServiceCollectionExtensions
+    public static class ServiceCollectionExtensions
     {
         public static bool IsAdded<T>(this IServiceCollection services)
         {
@@ -74,6 +76,101 @@ namespace SyZero
             var builder = serviceProviderFactory.CreateBuilder(services);
             builderAction?.Invoke(builder);
             return serviceProviderFactory.CreateServiceProvider(builder);
+        }
+
+        public static List<TypeInfo> GetTypesAssignableTo(this Assembly assembly, Type compareType)
+        {
+            var typeInfoList = new List<TypeInfo>();
+            try
+            {
+                IEnumerable<TypeInfo> definedTypes;
+                try
+                {
+                    definedTypes = assembly.DefinedTypes;
+                }
+                catch (ReflectionTypeLoadException ex)
+                {
+                    // 当某些类型无法加载时，使用能够加载的类型
+                    definedTypes = ex.Types.Where(t => t != null).Select(t => t.GetTypeInfo());
+                }
+
+                typeInfoList = definedTypes.Where(x => x != null
+                                    && x.IsClass
+                                    && !x.IsAbstract
+                                    && x != compareType
+                                    && SafeGetInterfaces(x)
+                                            .Any(i => i.IsGenericType
+                                                    && i.GetGenericTypeDefinition() == compareType))?.ToList() ?? new List<TypeInfo>();
+            }
+            catch
+            {
+                // 忽略无法加载的程序集
+            }
+
+            return typeInfoList;
+        }
+
+        private static Type[] SafeGetInterfaces(TypeInfo typeInfo)
+        {
+            try
+            {
+                return typeInfo.GetInterfaces();
+            }
+            catch
+            {
+                return Array.Empty<Type>();
+            }
+        }
+
+        public static IServiceCollection AddClassesAsImplementedInterface(
+                this IServiceCollection services,
+                IEnumerable<Assembly> assemblys,
+                Type compareType,
+                ServiceLifetime lifetime = ServiceLifetime.Scoped)
+        {
+            foreach (var assembly in assemblys)
+            {
+                assembly.GetTypesAssignableTo(compareType).ForEach((typeInfo) =>
+                {
+                    if (!typeInfo.IsGenericType)
+                    {
+                        var implementationType = typeInfo.AsType();
+                        foreach (var implementedInterface in typeInfo.ImplementedInterfaces)
+                        {
+                            switch (lifetime)
+                            {
+                                case ServiceLifetime.Scoped:
+                                    services.AddScoped(implementedInterface, implementationType);
+                                    break;
+                                case ServiceLifetime.Singleton:
+                                    services.AddSingleton(implementedInterface, implementationType);
+                                    break;
+                                case ServiceLifetime.Transient:
+                                    services.AddTransient(implementedInterface, implementationType);
+                                    break;
+                            }
+                        }
+                    }
+                });
+            }
+            return services;
+        }
+
+        public static IServiceCollection AddClassesAsImplementedInterface(
+        this IServiceCollection services,
+        Assembly assembly,
+        Type compareType,
+        ServiceLifetime lifetime = ServiceLifetime.Scoped)
+        {
+            return services.AddClassesAsImplementedInterface(new List<Assembly>() { assembly }, compareType, lifetime);
+        }
+
+        public static IServiceCollection AddClassesAsImplementedInterface(
+            this IServiceCollection services,
+            Type compareType,
+            ServiceLifetime lifetime = ServiceLifetime.Scoped)
+        {
+            return services.AddClassesAsImplementedInterface(ReflectionHelper.GetAssemblies(), compareType, lifetime);
         }
     }
 }

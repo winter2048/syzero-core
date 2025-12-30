@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Net.Http;
 using System.Text;
 using SyZero.Application.Routing;
 
@@ -15,7 +16,7 @@ namespace SyZero.Client
         /// </summary>
         public bool IsForm { get; set; }
         public string Body { get; set; }
-
+        public List<KeyValuePair<string, string>> QueryValue { set; get; } = new List<KeyValuePair<string, string>>();
         public List<KeyValuePair<string, string>> FormValue { set; get; } = new List<KeyValuePair<string, string>>();
         public IDictionary<string, string> Headers { get; set; } = new Dictionary<string, string>();
 

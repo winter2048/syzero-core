@@ -7,8 +7,6 @@ using SyZero.Domain.Repository;
 
 namespace SyZero.Application.Service
 {
-
-
     public abstract class AsyncCrudAppService<TEntity, TEntityDto>
         : AsyncCrudAppService<TEntity, TEntityDto, PageAndSortQueryDto>
         where TEntity : class, IEntity
@@ -22,7 +20,7 @@ namespace SyZero.Application.Service
     }
 
     public abstract class AsyncCrudAppService<TEntity, TEntityDto, TGetAllInput>
-        : AsyncCrudAppService<TEntity, TEntityDto, TGetAllInput, TEntityDto, TEntityDto>
+        : AsyncCrudAppService<TEntity, TEntityDto, TGetAllInput, TEntityDto>
         where TEntity : class, IEntity
         where TEntityDto : IEntityDto
     {
@@ -34,7 +32,7 @@ namespace SyZero.Application.Service
     }
 
     public abstract class AsyncCrudAppService<TEntity, TEntityDto, TGetAllInput, TCreateInput>
-        : AsyncCrudAppService<TEntity, TEntityDto, TGetAllInput, TCreateInput, TCreateInput>
+    : AsyncCrudAppService<TEntity, TEntityDto, TGetAllInput, TCreateInput, TEntityDto>
         where TEntity : class, IEntity
         where TEntityDto : IEntityDto
         where TCreateInput : IEntityDto
@@ -47,55 +45,26 @@ namespace SyZero.Application.Service
     }
 
     public abstract class AsyncCrudAppService<TEntity, TEntityDto, TGetAllInput, TCreateInput, TUpdateInput>
-        : AsyncCrudAppService<TEntity, TEntityDto, TGetAllInput, TCreateInput, TUpdateInput, EntityDto>
-        where TEntity : class, IEntity
-        where TEntityDto : IEntityDto
-        where TUpdateInput : IEntityDto
-    {
-        protected AsyncCrudAppService(IRepository<TEntity> repository)
-            : base(repository)
-        {
-
-        }
-    }
-
-    public abstract class AsyncCrudAppService<TEntity, TEntityDto, TGetAllInput, TCreateInput, TUpdateInput, TGetInput>
-    : AsyncCrudAppService<TEntity, TEntityDto, TGetAllInput, TCreateInput, TUpdateInput, TGetInput, EntityDto>
-        where TEntity : class, IEntity
-        where TEntityDto : IEntityDto
-        where TUpdateInput : IEntityDto
-        where TGetInput : IEntityDto
-    {
-        protected AsyncCrudAppService(IRepository<TEntity> repository)
-            : base(repository)
-        {
-
-        }
-    }
-
-    public abstract class AsyncCrudAppService<TEntity, TEntityDto, TGetAllInput, TCreateInput, TUpdateInput, TGetInput, TDeleteInput>
        : CrudAppServiceBase<TEntity, TEntityDto, TGetAllInput, TCreateInput, TUpdateInput>,
-        IAsyncCrudAppService<TEntityDto, TGetAllInput, TCreateInput, TUpdateInput, TGetInput, TDeleteInput>
+        IAsyncCrudAppService<TEntityDto, TGetAllInput, TCreateInput, TUpdateInput>
            where TEntity : class, IEntity
            where TEntityDto : IEntityDto
            where TUpdateInput : IEntityDto
-           where TGetInput : IEntityDto
-           where TDeleteInput : IEntityDto
     {
         protected AsyncCrudAppService(IRepository<TEntity> repository)
             : base(repository)
         {
 
         }
-        public virtual async Task<TEntityDto> Get(TGetInput input)
+        public virtual async Task<TEntityDto> Get(long id)
         {
             CheckGetPermission();
 
-            var entity = await GetEntityByIdAsync(input.Id);
+            var entity = await GetEntityByIdAsync(id);
             return MapToEntityDto(entity);
         }
 
-        public virtual async Task<PageResultDto<TEntityDto>> GetAll(TGetAllInput input)
+        public virtual async Task<PageResultDto<TEntityDto>> List(TGetAllInput input)
         {
             CheckGetAllPermission();
 
@@ -125,21 +94,23 @@ namespace SyZero.Application.Service
             return MapToEntityDto(entity);
         }
 
-        public virtual async Task<TEntityDto> Update(TUpdateInput input)
+        public virtual async Task<TEntityDto> Update(long id, TUpdateInput input)
         {
             CheckUpdatePermission();
 
-            var entity = await GetEntityByIdAsync(input.Id);
+            var entity = await GetEntityByIdAsync(id);
 
             MapToEntity(input, entity);
+
+            await Repository.UpdateAsync(entity);
 
             return MapToEntityDto(entity);
         }
 
-        public virtual async Task<bool> Delete(TDeleteInput input)
+        public virtual async Task<bool> Delete(long id)
         {
             CheckDeletePermission();
-            await Repository.DeleteAsync(input.Id);
+            await Repository.DeleteAsync(id);
             return true;
         }
 

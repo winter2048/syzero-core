@@ -4,22 +4,12 @@
         <name>SyZero.Nacos</name>
     </assembly>
     <members>
-        <member name="T:SyZero.Nacos.Config.NacosServiceOptions">
+        <member name="T:SyZero.Nacos.ServiceManagement.ServiceChangeListener">
             <summary>
-             Nacos配置模型类
+            服务变更监听器
             </summary>
         </member>
-        <member name="P:SyZero.Nacos.Config.NacosServiceOptions.NacosAddresses">
-            <summary>
-            服务注册地址（Nacos的地址）
-            </summary>
-        </member>
-        <member name="P:SyZero.Nacos.Config.NacosServiceOptions.Optional">
-            <summary>
-            健康检查地址
-            </summary>
-        </member>
-        <member name="T:SyZero.Nacos.NacosConfigurationBuilderExtensions">
+        <member name="T:SyZero.SyZeroNacosExtension">
             <summary>
             Nacos配置扩展
             </summary>

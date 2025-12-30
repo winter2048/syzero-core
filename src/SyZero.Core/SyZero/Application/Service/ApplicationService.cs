@@ -1,12 +1,13 @@
 ﻿using SyZero.Dependency;
 using SyZero.Runtime.Security;
 using SyZero.Runtime.Session;
+using SyZero.Util;
 
 namespace SyZero.Application.Service
 {
-    public class ApplicationService : SyZeroServiceBase, IApplicationService, ITransientDependency
+    public class ApplicationService : SyZeroServiceBase, IApplicationService
     {
-        public ISySession SySession { get; set; }
+        public ISySession SySession => SyZeroUtil.GetScopeService<ISySession>();
 
         protected virtual void CheckPermission(string permissionName)
         {

@@ -1,6 +1,7 @@
-﻿using SyZero.Domain.Repository;
-using SyZero.Logger;
+﻿using Microsoft.Extensions.Logging;
+using SyZero.Domain.Repository;
 using SyZero.ObjectMapper;
+using SyZero.Util;
 
 namespace SyZero
 {
@@ -12,16 +13,16 @@ namespace SyZero
         /// <summary>
         /// 持久化
         /// </summary>
-        public IUnitOfWork UnitOfWork { get; set; }
+        public IUnitOfWork UnitOfWork => SyZeroUtil.GetScopeService<IUnitOfWork>();
 
         /// <summary>
         /// 日志
         /// </summary>
-        public ILogger Logger { get; set; }
+        public ILogger<SyZeroServiceBase> Logger => SyZeroUtil.GetService<ILogger<SyZeroServiceBase>>();
 
         /// <summary>
         /// 实体映射
         /// </summary>
-        public IObjectMapper ObjectMapper { get; set; }
+        public IObjectMapper ObjectMapper => SyZeroUtil.GetService<IObjectMapper>();
     }
 }

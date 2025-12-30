@@ -1,76 +1,88 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ApplicationParts;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System;
-using SyZero.DynamicWebApi.Helpers;
 
 namespace SyZero.DynamicWebApi
 {
     /// <summary>
-    /// Add Dynamic WebApi
+    /// Dynamic WebApi 服务扩展方法
     /// </summary>
-    public static class DynamicWebApiServiceExtensions
+    public static class DynamicApiServiceExtensions
     {
         /// <summary>
-        /// Add Dynamic WebApi to Container
+        /// 添加 Dynamic WebApi 到依赖注入容器
         /// </summary>
-        /// <param name="services"></param>
-        /// <param name="options">configuration</param>
-        /// <returns></returns>
+        /// <param name="services">服务集合</param>
+        /// <param name="options">配置选项</param>
+        /// <returns>服务集合</returns>
+        /// <exception cref="ArgumentNullException">options 为 null 时抛出</exception>
+        /// <exception cref="InvalidOperationException">在 AddMvc 之前调用时抛出</exception>
         public static IServiceCollection AddDynamicWebApi(this IServiceCollection services, DynamicWebApiOptions options)
         {
             if (options == null)
             {
-                throw new ArgumentException(nameof(options));
+                throw new ArgumentNullException(nameof(options));
             }
 
-            options.Valid();
-
-            AppConsts.DefaultAreaName = options.DefaultAreaName;
-            AppConsts.DefaultHttpVerb = options.DefaultHttpVerb;
-            AppConsts.DefaultApiPreFix = options.DefaultApiPrefix;
-            AppConsts.ControllerPostfixes = options.RemoveControllerPostfixes;
-            AppConsts.ActionPostfixes = options.RemoveActionPostfixes;
-            AppConsts.FormBodyBindingIgnoredTypes = options.FormBodyBindingIgnoredTypes;
-            AppConsts.GetRestFulActionName = options.GetRestFulActionName;
-            AppConsts.AssemblyDynamicWebApiOptions = options.AssemblyDynamicWebApiOptions;
+            options.Validate();
 
             var partManager = services.GetSingletonInstanceOrNull<ApplicationPartManager>();
 
             if (partManager == null)
             {
-                throw new InvalidOperationException("\"AddDynamicWebApi\" must be after \"AddMvc\".");
-            }
-       
-            foreach (var item in ReflectionHelper.GetAssemblies())
-            {
-                partManager.ApplicationParts.Add(new AssemblyPart(item));
+                throw new InvalidOperationException("\"AddDynamicWebApi\" 必须在 \"AddMvc\" 之后调用。");
             }
 
+            // 注册程序集
+            foreach (var assembly in ReflectionHelper.GetAssemblies())
+            {
+                partManager.ApplicationParts.Add(new AssemblyPart(assembly));
+            }
+
+            // 注册控制器特性提供程序
             partManager.FeatureProviders.Add(new DynamicWebApiControllerFeatureProvider());
 
-            services.Configure<MvcOptions>(o =>
+            // 注册 MVC 约定
+            services.Configure<MvcOptions>(mvcOptions =>
             {
-                // Register Controller Routing Information Converter
-                o.Conventions.Add(new DynamicWebApiConvention());
+                mvcOptions.Conventions.Add(new DynamicWebApiConvention(options));
             });
 
             return services;
         }
 
-        public static IServiceCollection AddDynamicWebApi(this IServiceCollection services)
+        /// <summary>
+        /// 添加 Dynamic WebApi 到依赖注入容器（从配置读取）
+        /// </summary>
+        /// <param name="services">服务集合</param>
+        /// <param name="configuration">配置，为 null 时使用 AppConfig.GetSection</param>
+        /// <param name="sectionName">配置节名称，默认为 "DynamicWebApi"</param>
+        /// <returns>服务集合</returns>
+        public static IServiceCollection AddDynamicWebApi(this IServiceCollection services, IConfiguration configuration = null, string sectionName = DynamicWebApiOptions.SectionName)
         {
-            return AddDynamicWebApi(services, new DynamicWebApiOptions());
+            var config = configuration ?? AppConfig.Configuration;
+            var options = new DynamicWebApiOptions();
+            config.GetSection(sectionName).Bind(options);
+            return AddDynamicWebApi(services, options);
         }
 
-        public static IServiceCollection AddDynamicWebApi(this IServiceCollection services, Action<DynamicWebApiOptions> optionsAction)
+        /// <summary>
+        /// 添加 Dynamic WebApi 到依赖注入容器（从配置读取，并支持额外配置）
+        /// </summary>
+        /// <param name="services">服务集合</param>
+        /// <param name="optionsAction">额外配置委托（在配置文件配置之后执行）</param>
+        /// <param name="configuration">配置，为 null 时使用 AppConfig.Configuration</param>
+        /// <param name="sectionName">配置节名称，默认为 "DynamicWebApi"</param>
+        /// <returns>服务集合</returns>
+        public static IServiceCollection AddDynamicWebApi(this IServiceCollection services, Action<DynamicWebApiOptions> optionsAction, IConfiguration configuration = null, string sectionName = DynamicWebApiOptions.SectionName)
         {
-            var dynamicWebApiOptions = new DynamicWebApiOptions();
-
-            optionsAction?.Invoke(dynamicWebApiOptions);
-
-            return AddDynamicWebApi(services, dynamicWebApiOptions);
+            var config = configuration ?? AppConfig.Configuration;
+            var options = new DynamicWebApiOptions();
+            config.GetSection(sectionName).Bind(options);
+            optionsAction?.Invoke(options);
+            return AddDynamicWebApi(services, options);
         }
-
     }
 }

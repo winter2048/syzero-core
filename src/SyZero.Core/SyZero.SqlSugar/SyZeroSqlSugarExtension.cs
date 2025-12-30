@@ -1,17 +1,19 @@
-﻿using Autofac;
+﻿using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
+using Microsoft.Extensions.Hosting;
 using SqlSugar;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using SyZero.SqlSugar.DbContext;
-using SyZero.Util;
-using SyZero.Domain.Entities;
-using Microsoft.AspNetCore.Builder;
-using SyZero.SqlSugar.Repositories;
-using SyZero.Domain.Repository;
-using SyZero.SqlSugar;
 using System;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
 using System.Reflection;
+using SyZero.Domain.Entities;
+using SyZero.Domain.Repository;
+using SyZero.Extension;
+using SyZero.SqlSugar;
+using SyZero.SqlSugar.DbContext;
+using SyZero.SqlSugar.Repositories;
+using SyZero.Util;
 
 namespace SyZero
 {
@@ -23,10 +25,10 @@ namespace SyZero
         /// <typeparam name="TContext"></typeparam>
         /// <param name="builder"></param>
         /// <returns></returns>
-        public static ContainerBuilder AddSyZeroSqlSugar<TContext>(this ContainerBuilder builder)
+        public static IServiceCollection AddSyZeroSqlSugar<TContext>(this IServiceCollection services)
             where TContext : SyZeroDbContext
         {
-            builder.Register(p =>
+            services.AddSingleton<ConnectionConfig>(p =>
             {
                 ConnectionConfig connection = new ConnectionConfig()
                 {
@@ -34,10 +36,10 @@ namespace SyZero
                     DbType = (DbType)AppConfig.ConnectionOptions.Type,
                     IsAutoCloseConnection = true,
                     InitKeyType = InitKeyType.Attribute,
-                    SlaveConnectionConfigs = AppConfig.ConnectionOptions.Slave.Select(p => new SlaveConnectionConfig()
+                    SlaveConnectionConfigs = AppConfig.ConnectionOptions.Slave.Select(slave => new SlaveConnectionConfig()
                     {
-                        HitRate = p.HitRate,
-                        ConnectionString = p.ConnectionString
+                        HitRate = slave.HitRate,
+                        ConnectionString = slave.ConnectionString
                     }).ToList(),
                     ConfigureExternalServices = new ConfigureExternalServices()
                     {
@@ -86,34 +88,28 @@ namespace SyZero
                         }
                     }
                 };
-
                 return connection;
-            }).As<ConnectionConfig>().SingleInstance().PropertiesAutowired();
-
-            // 注册 DbContext
-            builder.RegisterType<TContext>()
-                .As<ISyZeroDbContext>()
-                .InstancePerLifetimeScope().PropertiesAutowired();
-
+            });
+            //注册上下文
+            services.AddScoped<ISyZeroDbContext, TContext>();
             //注册仓储泛型
-            builder.RegisterGeneric(typeof(SqlSugarRepository<>)).As(typeof(IRepository<>)).InstancePerLifetimeScope().PropertiesAutowired();
+            services.AddClassesAsImplementedInterface(typeof(IRepository<>));
+            services.AddScoped(typeof(IRepository<>), typeof(SqlSugarRepository<>));
             ////注册持久化
-            builder.RegisterType<UnitOfWork>().As<IUnitOfWork>().InstancePerLifetimeScope().PropertiesAutowired();
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
 
-            return builder;
+            return services;
         }
 
         /// <summary>
-        /// 注册SqlSugar
+        /// 注册SqlSugar（使用默认的SyZeroDbContext）
         /// </summary>
-        /// <typeparam name="TContext"></typeparam>
-        /// <param name="builder"></param>
-        /// <param name="configuration"></param>
-        /// <returns></returns>
-        public static ContainerBuilder AddSyZeroSqlSuga(this ContainerBuilder builder)
+        /// <param name="services">服务集合</param>
+        /// <returns>服务集合</returns>
+        public static IServiceCollection AddSyZeroSqlSugar(this IServiceCollection services)
         {
-            builder.AddSyZeroSqlSugar<SyZeroDbContext>();
-            return builder;
+            services.AddSyZeroSqlSugar<SyZeroDbContext>();
+            return services;
         }
 
         /// <summary>
@@ -121,11 +117,11 @@ namespace SyZero
         /// </summary>
         /// <param name="app"></param>
         /// <returns></returns>
-        public static IApplicationBuilder InitTables(this IApplicationBuilder app)
+        public static IHost InitTables(this IHost app)
         {
             System.Console.WriteLine("检查数据库,初始化表...");
-            AutofacUtil.GetService<ISyZeroDbContext>()
-            .CodeFirst.SetStringDefaultLength(200)
+            app.Services.GetService<ISyZeroDbContext>()
+            .CodeFirst.SetStringDefaultLength(2000)
             .InitTables(ReflectionHelper.GetTypes()
             .Where(m => typeof(IEntity).IsAssignableFrom(m) && m != typeof(IEntity) && m != typeof(Entity))
             .ToArray());

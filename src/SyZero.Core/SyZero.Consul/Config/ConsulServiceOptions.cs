@@ -6,6 +6,11 @@
     public class ConsulServiceOptions
     {
         /// <summary>
+        /// 配置节名称
+        /// </summary>
+        public const string SectionName = "Consul";
+
+        /// <summary>
         /// 服务注册地址（Consul的地址）
         /// </summary>
         public string ConsulAddress { get; set; }
@@ -19,6 +24,11 @@
         /// 健康检查地址
         /// </summary>
         public string HealthCheck { get; set; }
+
+        /// <summary>
+        /// Acl Token
+        /// </summary>
+        public string Token { get; set; }
 
     }
 }

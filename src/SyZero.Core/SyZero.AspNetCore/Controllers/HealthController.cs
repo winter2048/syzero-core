@@ -22,7 +22,7 @@ namespace SyZero.AspNetCore.Controllers
         [HttpGet]
         public IActionResult Index()
         {
-            Console.WriteLine($"Consul健康检查: " + DateTime.Now.ToString());
+          //  Console.WriteLine($"Consul健康检查: " + DateTime.Now.ToString());
             return Ok();
         }
 

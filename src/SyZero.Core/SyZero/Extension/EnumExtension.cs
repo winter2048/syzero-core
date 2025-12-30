@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Reflection;
@@ -51,5 +52,33 @@ namespace SyZero
                 return da.Description;
             }
         }
+
+        public static Dictionary<string, string> ToDictionary<T>() where T : Enum
+        {
+            return Enum.GetValues(typeof(T))
+                       .Cast<T>()
+                       .ToDictionary(
+                           value => value.ToString(),
+                           value => value.ToDescription()
+                       );
+        }
+
+        public static T GetEnumFromDescription<T>(this string description)
+        {
+            foreach (var field in typeof(T).GetFields())
+            {
+                var attributes = field.GetCustomAttributes(typeof(DescriptionAttribute), false);
+                if (attributes.Length > 0)
+                {
+                    var desc = ((DescriptionAttribute)attributes[0]).Description;
+                    if (desc.Equals(description, StringComparison.OrdinalIgnoreCase))
+                    {
+                        return (T)field.GetValue(null);
+                    }
+                }
+            }
+            return default(T); // 如果没有找到匹配的描述，则返回 null
+        }
+
     }
 }

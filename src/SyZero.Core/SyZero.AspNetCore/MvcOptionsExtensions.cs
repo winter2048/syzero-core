@@ -36,10 +36,10 @@ namespace Microsoft.AspNetCore.Builder
             {
                 app.Use(async (context, next) =>
                 {
-                    var sySeesion = AutofacUtil.GetService<ISySession>();
+                    var sySeesion = SyZeroUtil.GetScopeService<ISySession>();
                     if (sySeesion.UserId != null)
                     {
-                        var cache = AutofacUtil.GetService<ICache>();
+                        var cache = SyZeroUtil.GetService<ICache>();
                         if (!cache.Exist(cacheKeyFun(sySeesion)))
                         {
                             Thread.CurrentPrincipal = null;

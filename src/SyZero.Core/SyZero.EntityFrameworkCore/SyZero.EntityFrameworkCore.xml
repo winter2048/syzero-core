@@ -11,7 +11,7 @@
             <typeparam name="TDbContext"></typeparam>
             <typeparam name="TEntity"></typeparam>
         </member>
-        <member name="M:SyZero.EntityFrameworkCore.SyZeroEntityFrameworkExtension.AddSyZeroEntityFramework``1(Autofac.ContainerBuilder)">
+        <member name="M:SyZero.EntityFrameworkCore.SyZeroEntityFrameworkExtension.AddSyZeroEntityFramework``1(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
             <summary>
             注册EntityFramework
             </summary>
@@ -19,6 +19,11 @@
             <param name="builder"></param>
             <param name="configuration"></param>
             <returns></returns>
+        </member>
+        <member name="T:SyZero.EntityFrameworkCore.EfCoreTransactionScope">
+            <summary>
+            EF Core 事务作用域
+            </summary>
         </member>
     </members>
 </doc>
