@@ -1,10 +1,75 @@
-﻿using System.Threading;
+﻿using System;
 using System.Threading.Tasks;
 using SyZero.Domain.Repository;
 using SyZero.SqlSugar.DbContext;
 
 namespace SyZero.SqlSugar
 {
+    /// <summary>
+    /// SqlSugar 事务作用域
+    /// </summary>
+    public class SqlSugarTransactionScope : ITransactionScope
+    {
+        private readonly ISyZeroDbContext _dataContext;
+        private bool _committed;
+        private bool _disposed;
+
+        public SqlSugarTransactionScope(ISyZeroDbContext dataContext)
+        {
+            _dataContext = dataContext;
+        }
+
+        public void Commit()
+        {
+            if (_disposed) throw new ObjectDisposedException(nameof(SqlSugarTransactionScope));
+            if (_committed) return;
+            _dataContext.CommitTran();
+            _committed = true;
+        }
+
+        public async Task CommitAsync()
+        {
+            if (_disposed) throw new ObjectDisposedException(nameof(SqlSugarTransactionScope));
+            if (_committed) return;
+            await _dataContext.Ado.CommitTranAsync();
+            _committed = true;
+        }
+
+        public void Rollback()
+        {
+            if (_disposed) return;
+            if (_committed) return;
+            _dataContext.RollbackTran();
+        }
+
+        public async Task RollbackAsync()
+        {
+            if (_disposed) return;
+            if (_committed) return;
+            await _dataContext.Ado.RollbackTranAsync();
+        }
+
+        public void Dispose()
+        {
+            if (_disposed) return;
+            if (!_committed)
+            {
+                try { _dataContext.RollbackTran(); } catch { }
+            }
+            _disposed = true;
+        }
+
+        public async ValueTask DisposeAsync()
+        {
+            if (_disposed) return;
+            if (!_committed)
+            {
+                try { await _dataContext.Ado.RollbackTranAsync(); } catch { }
+            }
+            _disposed = true;
+        }
+    }
+
     public class UnitOfWork : IUnitOfWork
     {
         private ISyZeroDbContext dataContext;
@@ -35,26 +100,56 @@ namespace SyZero.SqlSugar
             this.dataContext.Dispose();
         }
 
-        public async Task BeginTransactionAsync()
+        public async Task<ITransactionScope> BeginTransactionAsync()
         {
-            await Task.Run(this.dataContext.Ado.BeginTran);
+            await this.dataContext.Ado.BeginTranAsync();
+            return new SqlSugarTransactionScope(this.dataContext);
         }
 
-        public async Task CommitTransactionAsync()
+        public void ExecuteInTransaction(Action action)
         {
-            await Task.Run(this.dataContext.Ado.CommitTran);
+            try
+            {
+                BeginTransaction();
+                action();
+                CommitTransaction();
+            }
+            catch
+            {
+                RollbackTransaction();
+                throw;
+            }
         }
 
-        public async Task RollbackTransactionAsync()
+        public T ExecuteInTransaction<T>(Func<T> func)
         {
-            await Task.Run(this.dataContext.Ado.RollbackTran);
+            try
+            {
+                BeginTransaction();
+                var result = func();
+                CommitTransaction();
+                return result;
+            }
+            catch
+            {
+                RollbackTransaction();
+                throw;
+            }
         }
 
-        public async Task DisposeTransactionAsync()
+        public async Task ExecuteInTransactionAsync(Func<Task> func)
         {
-            await Task.Run(this.dataContext.Ado.Dispose);
+            await using var scope = await BeginTransactionAsync();
+            await func();
+            await scope.CommitAsync();
         }
 
-
+        public async Task<T> ExecuteInTransactionAsync<T>(Func<Task<T>> func)
+        {
+            await using var scope = await BeginTransactionAsync();
+            var result = await func();
+            await scope.CommitAsync();
+            return result;
+        }
     }
 }

@@ -1,0 +1,44 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <PackageId>SyZero.DynamicGrpc</PackageId>
+    <Authors>winter2048</Authors>
+    <Company>SYZERO</Company>
+    <Description>SyZero-DynamicGrpc</Description>
+    <PackageIcon>logo.png</PackageIcon>
+    <PackageIconUrl />
+    <NeutralLanguage></NeutralLanguage>
+    <PackageProjectUrl>https://syzero.com</PackageProjectUrl>
+    <PackageLicenseFile>LICENSE</PackageLicenseFile>
+    <RepositoryUrl>https://github.com/winter2048/syzero-core</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
+    <PackageLicenseExpression></PackageLicenseExpression>
+    <SignAssembly>false</SignAssembly>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <FrameworkReference Include="Microsoft.AspNetCore.App" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Grpc.AspNetCore" Version="2.67.0" />
+    <PackageReference Include="protobuf-net.Grpc.AspNetCore" Version="1.2.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\SyZero\SyZero.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\..\..\doc\icon\logo.png">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
+    <None Include="..\..\..\LICENSE">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
+  </ItemGroup>
+</Project>

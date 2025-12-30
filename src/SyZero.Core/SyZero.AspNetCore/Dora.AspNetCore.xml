@@ -45,7 +45,7 @@
             权限中间件
             </summary>
         </member>
-        <member name="M:SyZero.SyZeroAspNetExtension.AddSyZeroController(Autofac.ContainerBuilder)">
+        <member name="M:SyZero.SyZeroAspNetExtension.AddSyZeroController(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
             <summary>
             注册SyZeroControllerModule
             </summary>

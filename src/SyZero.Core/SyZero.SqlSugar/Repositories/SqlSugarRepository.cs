@@ -21,7 +21,7 @@ namespace SyZero.SqlSugar.Repositories
         {
             if (dbContext == null)
             {
-                dbContext = AutofacUtil.GetService<ISyZeroDbContext>();
+                dbContext = SyZeroUtil.GetService<ISyZeroDbContext>();
             }
             _dbContext = dbContext;
             _dbSet = _dbContext.GetSimpleClient<TEntity>();

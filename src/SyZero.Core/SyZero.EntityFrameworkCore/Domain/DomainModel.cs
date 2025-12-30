@@ -18,7 +18,7 @@ namespace SyZero.EntityFrameworkCore.Domain
 
         public DomainModel()
         {
-            _dbContext = AutofacUtil.GetScopeService<TDbContext>();
+            _dbContext = SyZeroUtil.GetScopeService<TDbContext>();
             _dbSet = _dbContext.Set<TEntity>();
         }
 

@@ -19,7 +19,7 @@ namespace SyZero.Web.Common
         /// <returns>返回Jobject通用对象</returns>
         public static JObject Execute(RestRequest request)
         {
-            var client = AutofacUtil.GetService<RestClient>();
+            var client = SyZeroUtil.GetService<RestClient>();
             var response = client.Execute(request);
             if (response.ErrorException != null)
             {
@@ -41,7 +41,7 @@ namespace SyZero.Web.Common
         /// <returns>返回Jobject通用对象</returns>
         public static async Task<JObject> ExecuteAsync(RestRequest request)
         {
-            var client = AutofacUtil.GetService<RestClient>();
+            var client = SyZeroUtil.GetService<RestClient>();
             var response = await client.ExecuteAsync(request);
             if (response.ErrorException != null)
             {
@@ -64,7 +64,7 @@ namespace SyZero.Web.Common
         /// <returns></returns>
         public static T Execute<T>(RestRequest request) where T : class, new()
         {
-            var client = AutofacUtil.GetService<RestClient>();
+            var client = SyZeroUtil.GetService<RestClient>();
             var response = client.Execute(request);
             if (response.ErrorException != null)
             {
@@ -83,7 +83,7 @@ namespace SyZero.Web.Common
         /// <returns></returns>
         public static async Task<T> ExecuteAsync<T>(RestRequest request) where T : class, new()
         {
-            var client = AutofacUtil.GetService<RestClient>();
+            var client = SyZeroUtil.GetService<RestClient>();
             var response = await client.ExecuteAsync(request);
             if (response.ErrorException != null)
             {
@@ -95,7 +95,7 @@ namespace SyZero.Web.Common
 
         public static string ExecuteToString(RestRequest request)
         {
-            var client = AutofacUtil.GetService<RestClient>();
+            var client = SyZeroUtil.GetService<RestClient>();
             var response = client.Execute(request);
             if (response.ErrorException != null)
             {
@@ -113,7 +113,7 @@ namespace SyZero.Web.Common
         /// <param name="postData"></param>
         public static string PostJson(string url,object body)
         {
-            var client = AutofacUtil.GetService<RestClient>();
+            var client = SyZeroUtil.GetService<RestClient>();
             var request = new RestRequest(url, Method.Post);
             request.RequestFormat = DataFormat.Json;
             request.AddHeader("Content-Type", "application/json");
@@ -129,60 +129,37 @@ namespace SyZero.Web.Common
         /// <returns></returns>
         public static HttpResultMessage<T> PostJson<T>(string url, object body, string token = "")
         {
-            var client = AutofacUtil.GetService<RestClient>();
+            var client = SyZeroUtil.GetService<RestClient>();
             var request = new RestRequest(url, Method.Post);
             request.RequestFormat = DataFormat.Json;
             request.AddHeader("Content-Type", "application/json");
             request.AddHeader("Authorization", token);
-            request.AddBody(body); // uses JsonSerializer
-
+            request.AddBody(body);
 
             RestResponse response = client.Execute(request);
-            var content = response.Content; // raw content as string
-            //if (!string.IsNullOrWhiteSpace(content))
-            //{
-            //    content = content.Replace("]\"", "]").Replace("\"[", "[");
-            //    content = content.Replace("}\"", "}").Replace("\"{", "{").Replace("\\\"", "\"");
-            //}
             var result = new HttpResultMessage<T>();
-            var resultStr = JsonConvert.DeserializeObject<HttpResultMessage<object>>(content);
-            //Console.WriteLine($"PostJson baseUrl{baseUrl} resource{resource} postData{JsonConvert.SerializeObject(postData)} content:{content}");
-            result.IsSucceed = resultStr.IsSucceed;
-            if (resultStr.IsSucceed)
+            result.IsSucceed = response.IsSuccessful;
+            if (result.IsSucceed)
             {
-                var remoteInvokeResult = resultStr.Entity;
-                if (remoteInvokeResult != null)
+                var content = response.Content;
+                if (!string.IsNullOrEmpty(content))
                 {
-                    if (remoteInvokeResult.GetType().IsValueType)
+                    if (typeof(T) == typeof(string))
                     {
-                        //if(typeof(T) == typeof(int))
-                        //{ }
-                        //result.Entity = (T)remoteInvokeResult;
-                        result.Entity = (T)Convert.ChangeType(remoteInvokeResult, typeof(T));
-                    }
-                    else if (typeof(T) == typeof(string))
-                    {
-                        result.Entity = (T)remoteInvokeResult;
+                        result.Entity = (T)Convert.ChangeType(content, typeof(T)); ;
                     }
                     else
                     {
-                        result.Entity = JsonConvert.DeserializeObject<T>(remoteInvokeResult.ToString());
+                        result.Entity = JsonConvert.DeserializeObject<T>(content.ToString());
                     }
-                    //result.Entity = JsonConvert.DeserializeObject<T>(resultStr.Entity);
-                }
-                else
-                {
-                    resultStr.IsSucceed = false;
-                    resultStr.Message = "状态值为空！";
                 }
             }
-            //Console.WriteLine(result.Message);
             return result;
         }
 
         public static HttpResultMessage PostJsonAsUrl(string url, object body)
         {
-            var client = AutofacUtil.GetService<RestClient>();
+            var client = SyZeroUtil.GetService<RestClient>();
             var request = new RestRequest(url, Method.Post);
             request.RequestFormat = DataFormat.Json;
             request.AddHeader("Content-Type", "application/json");
@@ -204,7 +181,7 @@ namespace SyZero.Web.Common
         {
             try
             {
-                var client = AutofacUtil.GetService<RestClient>();
+                var client = SyZeroUtil.GetService<RestClient>();
                 var request = new RestRequest(url, method);
                 request.RequestFormat = DataFormat.Json;
                 request.AddHeader("Content-Type", "application/json");
@@ -263,7 +240,7 @@ namespace SyZero.Web.Common
         {
             try
             {
-                var client = AutofacUtil.GetService<RestClient>();
+                var client = SyZeroUtil.GetService<RestClient>();
                 var request = new RestRequest(url, Method.Post);
                 request.RequestFormat = DataFormat.Json;
                 request.AddHeader("Content-Type", "application/json");
@@ -299,7 +276,7 @@ namespace SyZero.Web.Common
         {
             try
             {
-                var client = AutofacUtil.GetService<RestClient>();
+                var client = SyZeroUtil.GetService<RestClient>();
                 var request = new RestRequest(url, Method.Get);
                 request.RequestFormat = DataFormat.Json;
                 request.AddHeader("Content-Type", "application/json");

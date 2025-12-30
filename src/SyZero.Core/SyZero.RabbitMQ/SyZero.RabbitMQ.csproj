@@ -1,5 +1,4 @@
 <Project Sdk="Microsoft.NET.Sdk">
-
   <PropertyGroup>
     <TargetFramework>netstandard2.1</TargetFramework>
     <PackageId>SyZero.RabbitMQ</PackageId>
@@ -18,10 +17,15 @@
     <SignAssembly>false</SignAssembly>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DocumentationFile>SyZero.RabbitMQ.xml</DocumentationFile>
+  </PropertyGroup>
+
   <ItemGroup>
-    <ProjectReference Include="..\SyZero\SyZero.csproj" />
+    <PackageReference Include="RabbitMQ.Client" Version="6.8.1" />
+    <PackageReference Include="Polly" Version="8.5.0" />
   </ItemGroup>
-  
+
   <ItemGroup>
     <None Include="..\..\..\doc\icon\logo.png">
       <Pack>True</Pack>
@@ -32,4 +36,9 @@
       <PackagePath></PackagePath>
     </None>
   </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\SyZero\SyZero.csproj" />
+  </ItemGroup>
+
 </Project>

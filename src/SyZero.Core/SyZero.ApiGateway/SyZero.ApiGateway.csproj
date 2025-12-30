@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net6.0</TargetFramework>
+    <TargetFramework>net9.0</TargetFramework>
     <PackageId>SyZero.ApiGateway</PackageId>
     <Authors>winter2048</Authors>
     <Company>SYZERO</Company>
@@ -23,10 +23,11 @@
 
 
   <ItemGroup>
-    <PackageReference Include="Ocelot" Version="18.0.0" />
-    <PackageReference Include="Ocelot.Cache.CacheManager" Version="18.0.0" />
-    <PackageReference Include="Ocelot.Provider.Consul" Version="18.0.0" />
-    <PackageReference Include="Ocelot.Provider.Polly" Version="18.0.0" />
+    <PackageReference Include="MMLib.SwaggerForOcelot" Version="8.3.2" />
+    <PackageReference Include="Ocelot" Version="23.4.2" />
+    <PackageReference Include="Ocelot.Cache.CacheManager" Version="23.4.2" />
+    <PackageReference Include="Ocelot.Provider.Consul" Version="23.4.2" />
+    <PackageReference Include="Ocelot.Provider.Polly" Version="23.4.2" />
   </ItemGroup>
 
   <ItemGroup>

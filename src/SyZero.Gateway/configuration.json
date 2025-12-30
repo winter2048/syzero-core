@@ -1,0 +1,115 @@
+﻿//*****************************单地址多实例负载均衡+Consul********************************
+{
+  "Routes": [
+    {
+      "UpstreamPathTemplate": "/api/SyZero.AI/{url}", //网关地址--url变量
+      "UpstreamHttpMethod": [ "Get", "Post", "Put", "Delete", "Patch" ],
+      "UseServiceDiscovery": true,
+      "DownstreamPathTemplate": "/api/SyZero.AI/{url}", //服务地址--url变量
+      "DownstreamScheme": "http",
+      "ServiceName": "SyZero.AI", //consul服务名称
+      "LoadBalancerOptions": {
+        "Type": "RoundRobin" //轮询      LeastConnection-最少连接数的服务器   NoLoadBalance不负载均衡
+      },
+      "SwaggerKey": "SyZero.AI"
+    },
+    {
+      "UpstreamPathTemplate": "/api/SyZero.Authorization/{url}",
+      "UpstreamHttpMethod": [ "Get", "Post", "Put", "Delete", "Patch" ],
+      "UseServiceDiscovery": true,
+      "DownstreamPathTemplate": "/api/SyZero.Authorization/{url}",
+      "DownstreamScheme": "http",
+      "ServiceName": "SyZero.Authorization",
+      "LoadBalancerOptions": {
+        "Type": "RoundRobin"
+      },
+      "SwaggerKey": "SyZero.Authorization"
+    },
+    {
+      "UpstreamPathTemplate": "/api/SyZero.FileStore/{url}",
+      "UpstreamHttpMethod": [ "Get", "Post", "Put", "Delete", "Patch" ],
+      "UseServiceDiscovery": true,
+      "DownstreamPathTemplate": "/api/SyZero.FileStore/{url}",
+      "DownstreamScheme": "http",
+      "ServiceName": "SyZero.FileStore",
+      "LoadBalancerOptions": {
+        "Type": "RoundRobin"
+      },
+      "SwaggerKey": "SyZero.FileStore"
+    },
+    {
+      "UpstreamPathTemplate": "/api/SyZero.Blog/{url}",
+      "UpstreamHttpMethod": [ "Get", "Post", "Put", "Delete", "Patch" ],
+      "UseServiceDiscovery": true,
+      "DownstreamPathTemplate": "/api/SyZero.Blog/{url}",
+      "DownstreamScheme": "http",
+      "ServiceName": "SyZero.Blog",
+      "LoadBalancerOptions": {
+        "Type": "RoundRobin"
+      },
+      "SwaggerKey": "SyZero.Blog"
+    },
+    {
+      "UpstreamPathTemplate": "/{url}",
+      "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE", "OPTIONS" ],
+      "UseServiceDiscovery": true,
+      "DownstreamPathTemplate": "/{url}",
+      "DownstreamScheme": "ws",
+      "ServiceName": "SyZero.AI"
+    }
+  ],
+  "SwaggerEndPoints": [
+    {
+      "Key": "SyZero.AI",
+      "Config": [
+        {
+          "Name": "SyZero.AI API",
+          "Version": "v1",
+          "Service": {
+            "Name": "SyZero.AI",
+            "Path": "/swagger/v1/swagger.json"
+          }
+        }
+      ]
+    },
+    {
+      "Key": "SyZero.Authorization",
+      "Config": [
+        {
+          "Name": "SyZero.Authorization API",
+          "Version": "v1",
+          "Service": {
+            "Name": "SyZero.Authorization",
+            "Path": "/swagger/v1/swagger.json"
+          }
+        }
+      ]
+    },
+    {
+      "Key": "SyZero.FileStore",
+      "Config": [
+        {
+          "Name": "SyZero.FileStore API",
+          "Version": "v1",
+          "Service": {
+            "Name": "SyZero.FileStore",
+            "Path": "/swagger/v1/swagger.json"
+          }
+        }
+      ]
+    },
+    {
+      "Key": "SyZero.Blog",
+      "Config": [
+        {
+          "Name": "SyZero.Blog API",
+          "Version": "v1",
+          "Service": {
+            "Name": "SyZero.Blog",
+            "Path": "/swagger/v1/swagger.json"
+          }
+        }
+      ]
+    }
+  ]
+}

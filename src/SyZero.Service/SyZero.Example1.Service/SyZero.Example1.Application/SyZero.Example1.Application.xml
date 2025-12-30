@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>SyZero.Example1.Application</name>
+    </assembly>
+    <members>
+        <member name="M:SyZero.Example1.Application.Examples.Example1AppService.GetServiceInfo">
+            <summary>
+            获取当前服务信息
+            </summary>
+        </member>
+        <member name="M:SyZero.Example1.Application.Examples.Example1AppService.CallExample2Service">
+            <summary>
+            调用 Example2 服务获取信息
+            </summary>
+        </member>
+        <member name="M:SyZero.Example1.Application.Examples.Example1AppService.GetExample2Data(System.Int64)">
+            <summary>
+            从 Example2 服务获取示例数据
+            </summary>
+        </member>
+    </members>
+</doc>

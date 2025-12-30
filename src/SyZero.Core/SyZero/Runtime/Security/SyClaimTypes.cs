@@ -20,6 +20,12 @@ namespace SyZero.Runtime.Security
         public static string UserName { get; set; } = "userName";
 
         /// <summary>
+        /// NickName
+        /// Default: <see cref="NickName"/>
+        /// </summary>
+        public static string NickName { get; set; } = "nickName";
+
+        /// <summary>
         /// UserId.
         /// Default: <see cref="ClaimTypes.NameIdentifier"/>
         /// </summary>

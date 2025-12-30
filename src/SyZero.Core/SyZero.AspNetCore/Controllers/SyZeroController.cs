@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using SyZero.Cache;
-using SyZero.Logger;
 using SyZero.ObjectMapper;
 using SyZero.Runtime.Session;
 

@@ -1,0 +1,163 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>SyZero.Example1.IApplication</name>
+    </assembly>
+    <members>
+        <member name="P:SyZero.Example1.IApplication.Examples.Dto.CreateExample1Dto.Name">
+            <summary>
+            名称
+            </summary>
+        </member>
+        <member name="P:SyZero.Example1.IApplication.Examples.Dto.CreateExample1Dto.Description">
+            <summary>
+            描述
+            </summary>
+        </member>
+        <member name="P:SyZero.Example1.IApplication.Examples.Dto.CreateExample1Dto.Status">
+            <summary>
+            状态 0:禁用 1:启用
+            </summary>
+        </member>
+        <member name="P:SyZero.Example1.IApplication.Examples.Dto.CreateExample1Dto.Sort">
+            <summary>
+            排序
+            </summary>
+        </member>
+        <member name="P:SyZero.Example1.IApplication.Examples.Dto.Example1Dto.Name">
+            <summary>
+            名称
+            </summary>
+        </member>
+        <member name="P:SyZero.Example1.IApplication.Examples.Dto.Example1Dto.Description">
+            <summary>
+            描述
+            </summary>
+        </member>
+        <member name="P:SyZero.Example1.IApplication.Examples.Dto.Example1Dto.Status">
+            <summary>
+            状态 0:禁用 1:启用
+            </summary>
+        </member>
+        <member name="P:SyZero.Example1.IApplication.Examples.Dto.Example1Dto.Sort">
+            <summary>
+            排序
+            </summary>
+        </member>
+        <member name="P:SyZero.Example1.IApplication.Examples.Dto.Example1Dto.CreateTime">
+            <summary>
+            创建时间
+            </summary>
+        </member>
+        <member name="P:SyZero.Example1.IApplication.Examples.Dto.Example1Dto.UpdateTime">
+            <summary>
+            更新时间
+            </summary>
+        </member>
+        <member name="M:SyZero.Example1.IApplication.Examples.IExample1AppService.GetExample(System.Int64)">
+            <summary>
+            根据ID获取示例
+            </summary>
+            <param name="id">示例ID</param>
+            <returns></returns>
+        </member>
+        <member name="M:SyZero.Example1.IApplication.Examples.IExample1AppService.GetByName(System.String)">
+            <summary>
+            根据名称获取示例
+            </summary>
+            <param name="name">名称</param>
+            <returns></returns>
+        </member>
+        <member name="M:SyZero.Example1.IApplication.Examples.IExample1AppService.GetServiceInfo">
+            <summary>
+            获取当前服务信息
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:SyZero.Example1.IApplication.Examples.IExample1AppService.CallExample2Service">
+            <summary>
+            调用 Example2 服务获取信息
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:SyZero.Example1.IApplication.Examples.IExample1AppService.GetExample2Data(System.Int64)">
+            <summary>
+            从 Example2 服务获取示例数据
+            </summary>
+            <param name="id">示例 ID</param>
+            <returns></returns>
+        </member>
+        <member name="T:SyZero.Example1.IApplication.Examples.ServiceInfoDto">
+            <summary>
+            服务信息 DTO
+            </summary>
+        </member>
+        <member name="T:SyZero.Example1.IApplication.Examples.RemoteServiceResultDto">
+            <summary>
+            远程服务调用结果
+            </summary>
+        </member>
+        <member name="T:SyZero.Example1.IApplication.Examples.RemoteExampleResultDto">
+            <summary>
+            远程示例数据结果
+            </summary>
+        </member>
+        <member name="T:Refit.Implementation.Generated">
+            <inheritdoc />
+        </member>
+        <member name="T:Refit.Implementation.Generated.SyZeroExample1IApplicationExamplesIExample1AppService">
+            <inheritdoc />
+        </member>
+        <member name="P:Refit.Implementation.Generated.SyZeroExample1IApplicationExamplesIExample1AppService.Client">
+            <inheritdoc />
+        </member>
+        <member name="M:Refit.Implementation.Generated.SyZeroExample1IApplicationExamplesIExample1AppService.#ctor(System.Net.Http.HttpClient,Refit.IRequestBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:Refit.Implementation.Generated.SyZeroExample1IApplicationExamplesIExample1AppService.GetExample(System.Int64)">
+            <inheritdoc />
+        </member>
+        <member name="M:Refit.Implementation.Generated.SyZeroExample1IApplicationExamplesIExample1AppService.GetByName(System.String)">
+            <inheritdoc />
+        </member>
+        <member name="M:Refit.Implementation.Generated.SyZeroExample1IApplicationExamplesIExample1AppService.GetServiceInfo">
+            <inheritdoc />
+        </member>
+        <member name="M:Refit.Implementation.Generated.SyZeroExample1IApplicationExamplesIExample1AppService.CallExample2Service">
+            <inheritdoc />
+        </member>
+        <member name="M:Refit.Implementation.Generated.SyZeroExample1IApplicationExamplesIExample1AppService.GetExample2Data(System.Int64)">
+            <inheritdoc />
+        </member>
+        <member name="M:Refit.Implementation.Generated.SyZeroExample1IApplicationExamplesIExample1AppService.SyZero#Example1#IApplication#Examples#IExample1AppService#GetExample(System.Int64)">
+            <inheritdoc />
+        </member>
+        <member name="M:Refit.Implementation.Generated.SyZeroExample1IApplicationExamplesIExample1AppService.SyZero#Example1#IApplication#Examples#IExample1AppService#GetByName(System.String)">
+            <inheritdoc />
+        </member>
+        <member name="M:Refit.Implementation.Generated.SyZeroExample1IApplicationExamplesIExample1AppService.SyZero#Example1#IApplication#Examples#IExample1AppService#GetServiceInfo">
+            <inheritdoc />
+        </member>
+        <member name="M:Refit.Implementation.Generated.SyZeroExample1IApplicationExamplesIExample1AppService.SyZero#Example1#IApplication#Examples#IExample1AppService#CallExample2Service">
+            <inheritdoc />
+        </member>
+        <member name="M:Refit.Implementation.Generated.SyZeroExample1IApplicationExamplesIExample1AppService.SyZero#Example1#IApplication#Examples#IExample1AppService#GetExample2Data(System.Int64)">
+            <inheritdoc />
+        </member>
+        <member name="M:Refit.Implementation.Generated.SyZeroExample1IApplicationExamplesIExample1AppService.SyZero#Application#Service#IAsyncCrudAppService{SyZero#Example1#IApplication#Examples#Dto#Example1Dto,SyZero#Application#Service#Dto#PageAndSortQueryDto,SyZero#Example1#IApplication#Examples#Dto#CreateExample1Dto,SyZero#Example1#IApplication#Examples#Dto#Example1Dto}#Get(System.Int64)">
+            <inheritdoc />
+        </member>
+        <member name="M:Refit.Implementation.Generated.SyZeroExample1IApplicationExamplesIExample1AppService.SyZero#Application#Service#IAsyncCrudAppService{SyZero#Example1#IApplication#Examples#Dto#Example1Dto,SyZero#Application#Service#Dto#PageAndSortQueryDto,SyZero#Example1#IApplication#Examples#Dto#CreateExample1Dto,SyZero#Example1#IApplication#Examples#Dto#Example1Dto}#List(SyZero.Application.Service.Dto.PageAndSortQueryDto)">
+            <inheritdoc />
+        </member>
+        <member name="M:Refit.Implementation.Generated.SyZeroExample1IApplicationExamplesIExample1AppService.SyZero#Application#Service#IAsyncCrudAppService{SyZero#Example1#IApplication#Examples#Dto#Example1Dto,SyZero#Application#Service#Dto#PageAndSortQueryDto,SyZero#Example1#IApplication#Examples#Dto#CreateExample1Dto,SyZero#Example1#IApplication#Examples#Dto#Example1Dto}#Create(SyZero.Example1.IApplication.Examples.Dto.CreateExample1Dto)">
+            <inheritdoc />
+        </member>
+        <member name="M:Refit.Implementation.Generated.SyZeroExample1IApplicationExamplesIExample1AppService.SyZero#Application#Service#IAsyncCrudAppService{SyZero#Example1#IApplication#Examples#Dto#Example1Dto,SyZero#Application#Service#Dto#PageAndSortQueryDto,SyZero#Example1#IApplication#Examples#Dto#CreateExample1Dto,SyZero#Example1#IApplication#Examples#Dto#Example1Dto}#Update(System.Int64,SyZero.Example1.IApplication.Examples.Dto.Example1Dto)">
+            <inheritdoc />
+        </member>
+        <member name="M:Refit.Implementation.Generated.SyZeroExample1IApplicationExamplesIExample1AppService.SyZero#Application#Service#IAsyncCrudAppService{SyZero#Example1#IApplication#Examples#Dto#Example1Dto,SyZero#Application#Service#Dto#PageAndSortQueryDto,SyZero#Example1#IApplication#Examples#Dto#CreateExample1Dto,SyZero#Example1#IApplication#Examples#Dto#Example1Dto}#Delete(System.Int64)">
+            <inheritdoc />
+        </member>
+    </members>
+</doc>

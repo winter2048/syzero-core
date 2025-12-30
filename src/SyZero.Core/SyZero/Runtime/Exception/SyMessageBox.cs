@@ -61,5 +61,25 @@ namespace SyZero
         {
             this.Model = new SyMessageBoxModel(message, syMessageBoxStatus);
         }
+
+        /// <summary>
+        /// 自定义返回
+        /// </summary>
+        /// <param name="Messager"></param>
+        public SyMessageException(string message, int code)
+            : base(message)
+        {
+            this.Model = new SyMessageBoxModel(message, code);
+        }
+
+        /// <summary>
+        /// 自定义返回
+        /// </summary>
+        /// <param name="Messager"></param>
+        public SyMessageException(SyMessageBoxModel model)
+            : base(model.msg.ToString())
+        {
+            this.Model = model;
+        }
     }
 }

@@ -4,12 +4,7 @@
         <name>SyZero.AutoMapper</name>
     </assembly>
     <members>
-        <member name="T:SyZero.AutoMapper.AutoMapperModule">
-            <summary>
-            实体映射注入
-            </summary>
-        </member>
-        <member name="M:SyZero.SyZeroAutoMapperExtension.AddSyZeroAutoMapper(Autofac.ContainerBuilder)">
+        <member name="M:SyZero.SyZeroAutoMapperExtension.AddSyZeroAutoMapper(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
             <summary>
             AutoMapperModule
             </summary>
