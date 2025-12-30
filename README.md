@@ -21,16 +21,14 @@
 
 SyZero 是一个基于 .NET 的模块化微服务开发框架，提供了丰富的组件和工具，帮助开发者快速构建高性能、可扩展的分布式应用程序。
 
-## 🚀 特性
+## 🚀 核心特性
 
 - 🎯 **模块化设计** - 按需引用，灵活组合
-- 🔌 **即插即用** - 简洁的扩展方法，快速集成
-- 📦 **丰富的组件** - 涵盖 ORM、缓存、消息队列、服务注册等
-- 🌐 **微服务支持** - 内置服务注册发现、API 网关、gRPC 等
-- 📊 **可观测性** - 集成 OpenTelemetry 链路追踪
-- 🔧 **依赖注入** - 基于 Microsoft.Extensions.DependencyInjection
-- 🏥 **健康检查** - 内置服务健康检查与自动清理机制
-- 🗳️ **Leader 选举** - 支持多实例部署的 Leader 选举机制
+- 🌐 **服务治理** - Consul / Nacos 服务注册发现、负载均衡、健康检查
+- 💾 **数据访问** - 支持 EF Core / SqlSugar / MongoDB，内置仓储模式
+- ⚡ **高性能** - Redis 缓存、RabbitMQ 消息队列、OpenTelemetry 追踪
+- 📝 **动态 API** - 自动生成 RESTful API / gRPC 服务和 Swagger 文档
+- 🏗️ **DDD 支持** - 领域驱动设计模式与依赖注入
 
 ## 📦 核心模块
 
@@ -55,7 +53,15 @@ SyZero 是一个基于 .NET 的模块化微服务开发框架，提供了丰富�
 | 模块 | NuGet 包 | 说明 |
 |------|----------|------|
 | **SyZero.Redis** | [![NuGet](https://img.shields.io/nuget/v/SyZero.Redis?style=flat-square)](https://www.nuget.org/packages/SyZero.Redis) | Redis 缓存支持 |
-| **SyZero.RabbitMQ** | [![NuGet](https://img.shields.io/nuget/v/SyZero.RabbitMQ?style=flat-square)](https://www.nuget.org/packages/SyZero.RabbitMQ) | RabbitMQ 消息队列 |
+| **SyZero.RabbitMQ** | [![NuGet](https://img.shields.io/nuget/v/SyZero.RabbitMQ?style=flat-square)](https://www.nuget.org/packages/SyZero.RabbitMQ) | RabbitMQ 消息队列与事件总线 |
+
+> 💡 **内置事件总线**：SyZero 核心模块还提供了 `LocalEventBus`（基于内存）和 `DBEventBus`（基于数据库）两种轻量级事件总线实现，适用于单体应用或简单分布式场景。
+
+| 实现 | 适用场景 | 特点 |
+|------|----------|------|
+| **LocalEventBus** | 单体应用、进程内通信 | 基于内存，高性能，无需外部依赖 |
+| **DBEventBus** | 单体应用、持久化需求 | 基于数据库，支持事件持久化和重试 |
+| **RabbitMQEventBus** | 分布式系统、微服务 | 基于 RabbitMQ，支持跨服务通信和可靠投递 |
 
 ### 服务治理
 
@@ -97,29 +103,33 @@ dotnet add package SyZero.Swagger
 
 ### 基础使用
 
+#### 1. 创建最小化 Web API
+
 ```csharp
 using SyZero;
 using SyZero.DynamicWebApi;
+using SyZero.Swagger;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// 使用 SyZero
+// 添加 SyZero 核心服务
 builder.AddSyZero();
 
-// 动态 WebApi
+// 添加控制器和动态 WebApi
+builder.Services.AddControllers();
 builder.Services.AddDynamicWebApi(new DynamicWebApiOptions()
 {
     DefaultApiPrefix = "/api",
     DefaultAreaName = "MyService"
 });
 
-// Swagger 文档
+// 添加 Swagger 文档
 builder.Services.AddSwagger();
 
-// SqlSugar ORM
-builder.Services.AddSyZeroSqlSugar<MyDbContext>();
+// 添加 SqlSugar ORM (可选)
+builder.Services.AddSyZeroSqlSugar();
 
-// AutoMapper
+// 添加 AutoMapper (可选)
 builder.Services.AddSyZeroAutoMapper();
 
 var app = builder.Build();
@@ -128,12 +138,67 @@ app.UseSyZero();
 app.UseSwagger();
 app.UseSwaggerUI();
 app.MapControllers();
+
+app.Run();
+```
+
+#### 2. 创建业务服务
+
+```csharp
+public interface IUserService : IApplicationService
+{
+    Task<UserDto> GetUserAsync(int id);
+    Task<bool> CreateUserAsync(CreateUserDto input);
+}
+
+public class UserService : SyZeroServiceBase, IUserService, IScopedDependency
+{
+    private readonly IRepository<User> _userRepository;
+    
+    public UserService(IRepository<User> userRepository)
+    {
+        _userRepository = userRepository;
+    }
+    
+    public async Task<UserDto> GetUserAsync(int id)
+    {
+        var user = await _userRepository.GetAsync(id);
+        return ObjectMapper.Map<UserDto>(user);
+    }
+    
+    public async Task<bool> CreateUserAsync(CreateUserDto input)
+    {
+        var user = ObjectMapper.Map<User>(input);
+        await _userRepository.InsertAsync(user);
+        return true;
+    }
+}
+```
+
+#### 3. 启用服务注册与发现
+
+```csharp
+var builder = WebApplication.CreateBuilder(args);
+
+builder.AddSyZero();
+
+// 使用 Consul
+builder.Services.AddSyZeroConsul();
+
+// 或使用 Nacos
+// builder.Services.AddSyZeroNacos();
+
+// 或使用 Redis 服务管理
+// builder.Services.AddRedisServiceManagement();
+
+var app = builder.Build();
+app.UseSyZero();
 app.Run();
 ```
 
 ### 配置文件示例
 
-`appsettings.json`:
+#### appsettings.json
 
 ```json
 {
@@ -147,32 +212,70 @@ app.Run();
   "ConnectionString": {
     "DbType": "MySql",
     "ConnectionString": "Server=localhost;Database=mydb;User=root;Password=123456;"
+  },
+  "Redis": {
+    "Configuration": "localhost:6379",
+    "InstanceName": "MyService:"
+  },
+  "RabbitMQ": {
+    "HostName": "localhost",
+    "Port": 5672,
+    "UserName": "guest",
+    "Password": "guest"
+  },
+  "Consul": {
+    "Address": "http://localhost:8500"
+  },
+  "Nacos": {
+    "ServerAddresses": ["http://localhost:8848"],
+    "Namespace": "public"
   }
 }
 ```
 
 ### 依赖注入
 
-SyZero 支持通过接口自动注入：
+SyZero 提供自动依赖注入，只需实现相应的接口：
 
 ```csharp
-// Scoped 生命周期
-public class MyService : IScopedDependency
+// Scoped 生命周期 - 每次请求创建一个实例
+public class UserService : IUserService, IScopedDependency
 {
-    // ...
+    private readonly IRepository<User> _userRepository;
+    
+    public UserService(IRepository<User> userRepository)
+    {
+        _userRepository = userRepository;
+    }
 }
 
-// Singleton 生命周期
-public class MySingletonService : ISingletonDependency
+// Singleton 生命周期 - 全局单例
+public class ConfigService : IConfigService, ISingletonDependency
 {
-    // ...
+    private readonly IConfiguration _configuration;
+    
+    public ConfigService(IConfiguration configuration)
+    {
+        _configuration = configuration;
+    }
 }
 
-// Transient 生命周期
-public class MyTransientService : ITransientDependency
+// Transient 生命周期 - 每次使用创建新实例
+public class EmailService : IEmailService, ITransientDependency
 {
-    // ...
+    public async Task SendEmailAsync(string to, string subject, string body)
+    {
+        // 发送邮件逻辑
+    }
 }
+```
+
+**手动注入：**
+
+```csharp
+builder.Services.AddScoped<IMyService, MyService>();
+builder.Services.AddSingleton<IMySingletonService, MySingletonService>();
+builder.Services.AddTransient<IMyTransientService, MyTransientService>();
 ```
 
 ## 🏥 服务管理
@@ -232,6 +335,117 @@ options.LeaderLockExpireSeconds = 30;      // Leader 锁过期时间
 options.LeaderLockRenewIntervalSeconds = 10; // Leader 锁续期间隔
 ```
 
+## 事件总线
+
+SyZero 提供了统一的 `IEventBus` 接口，支持多种事件总线实现：
+
+### 核心功能
+
+- **事件发布/订阅** - 支持强类型和动态事件
+- **批量发布** - 支持批量发布事件提高性能
+- **事件持久化** - DBEventBus 支持事件持久化和重试
+- **跨服务通信** - RabbitMQEventBus 支持分布式事件传递
+- **解耦架构** - 发布者与订阅者完全解耦
+
+### 使用示例
+
+#### 1. 配置事件总线
+
+```csharp
+var builder = WebApplication.CreateBuilder(args);
+
+// 使用本地内存事件总线（单体应用）
+builder.Services.AddLocalEventBus();
+
+// 或使用数据库事件总线（需要持久化）
+// builder.Services.AddDBEventBus();
+
+// 或使用 RabbitMQ 事件总线（分布式系统）
+// builder.Services.AddRabbitMQEventBus();
+
+var app = builder.Build();
+app.Run();
+```
+
+#### 2. 定义事件
+
+```csharp
+using SyZero.EventBus;
+
+public class OrderCreatedEvent : EventBase
+{
+    public int OrderId { get; set; }
+    public string CustomerName { get; set; }
+    public decimal Amount { get; set; }
+}
+```
+
+#### 3. 定义事件处理器
+
+```csharp
+using SyZero.EventBus;
+
+public class OrderCreatedEventHandler : IEventHandler<OrderCreatedEvent>
+{
+    private readonly ILogger<OrderCreatedEventHandler> _logger;
+    
+    public OrderCreatedEventHandler(ILogger<OrderCreatedEventHandler> logger)
+    {
+        _logger = logger;
+    }
+    
+    public async Task HandleAsync(OrderCreatedEvent @event)
+    {
+        _logger.LogInformation($"订单创建：{@event.OrderId}, 客户：{@event.CustomerName}");
+        // 处理订单创建逻辑（如发送邮件、更新库存等）
+        await Task.CompletedTask;
+    }
+}
+```
+
+#### 4. 发布和订阅事件
+
+```csharp
+public class OrderService : IScopedDependency
+{
+    private readonly IEventBus _eventBus;
+    
+    public OrderService(IEventBus eventBus)
+    {
+        _eventBus = eventBus;
+        
+        // 订阅事件
+        _eventBus.Subscribe<OrderCreatedEvent, OrderCreatedEventHandler>();
+    }
+    
+    public async Task CreateOrderAsync(CreateOrderDto input)
+    {
+        // 创建订单业务逻辑
+        var orderId = SaveOrder(input);
+        
+        // 发布事件
+        await _eventBus.PublishAsync(new OrderCreatedEvent
+        {
+            OrderId = orderId,
+            CustomerName = input.CustomerName,
+            Amount = input.Amount
+        });
+    }
+}
+```
+
+#### 5. 批量发布事件
+
+```csharp
+var events = new List<OrderCreatedEvent>
+{
+    new OrderCreatedEvent { OrderId = 1, CustomerName = "张三", Amount = 100 },
+    new OrderCreatedEvent { OrderId = 2, CustomerName = "李四", Amount = 200 }
+};
+
+await _eventBus.PublishBatchAsync(events);
+```
+
 ## 📁 项目结构
 
 ```
@@ -264,14 +478,15 @@ syzero-core/
 └── README.md
 ```
 
-## 🔧 开发环境
+## 🔧 技术栈
 
-- **.NET SDK**: 9.0+
+- **.NET**: .NET 9.0+ / .NET Standard 2.1+
 - **IDE**: Visual Studio 2022 / VS Code / Rider
-- **数据库**: SQL Server / MySQL / MongoDB (可选)
-- **缓存**: Redis (可选)
+- **数据库**: SQL Server / MySQL / MongoDB / PostgreSQL (可选)
+- **缓存**: Redis / 内存缓存 (可选)
 - **消息队列**: RabbitMQ (可选)
-- **服务注册**: Consul / Nacos / 内置 Local/DB (可选)
+- **服务注册**: Consul / Nacos / Local / DB / Redis (可选)
+- **链路追踪**: OpenTelemetry (可选)
 
 ## 📖 文档
 
