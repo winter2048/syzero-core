@@ -10,9 +10,9 @@
 
 <p align="center">
   <a href="https://github.com/winter2048/syzero-core"><img src="https://img.shields.io/github/stars/winter2048/syzero-core?style=flat-square" alt="GitHub Stars"/></a>
-  <a href="https://github.com/winter2048/syzero-core/blob/main/LICENSE"><img src="https://img.shields.io/badge/license-Apache%202.0-blue?style=flat-square" alt="License"/></a>
+  <a href="https://github.com/winter2048/syzero-core/blob/main/LICENSE"><img src="https://img.shields.io/badge/license-MIT-blue?style=flat-square" alt="License"/></a>
   <a href="https://www.nuget.org/packages/SyZero"><img src="https://img.shields.io/nuget/v/SyZero?style=flat-square" alt="NuGet"/></a>
-  <a href="https://syzero.com"><img src="https://img.shields.io/badge/docs-syzero.com-green?style=flat-square" alt="Documentation"/></a>
+  <a href="https://docs.syzero.com"><img src="https://img.shields.io/badge/docs-docs.syzero.com-green?style=flat-square" alt="Documentation"/></a>
 </p>
 
 ---
@@ -56,12 +56,6 @@ SyZero 是一个基于 .NET 的模块化微服务开发框架，提供了丰富�
 | **SyZero.RabbitMQ** | [![NuGet](https://img.shields.io/nuget/v/SyZero.RabbitMQ?style=flat-square)](https://www.nuget.org/packages/SyZero.RabbitMQ) | RabbitMQ 消息队列与事件总线 |
 
 > 💡 **内置事件总线**：SyZero 核心模块还提供了 `LocalEventBus`（基于内存）和 `DBEventBus`（基于数据库）两种轻量级事件总线实现，适用于单体应用或简单分布式场景。
-
-| 实现 | 适用场景 | 特点 |
-|------|----------|------|
-| **LocalEventBus** | 单体应用、进程内通信 | 基于内存，高性能，无需外部依赖 |
-| **DBEventBus** | 单体应用、持久化需求 | 基于数据库，支持事件持久化和重试 |
-| **RabbitMQEventBus** | 分布式系统、微服务 | 基于 RabbitMQ，支持跨服务通信和可靠投递 |
 
 ### 服务治理
 
@@ -339,6 +333,12 @@ options.LeaderLockRenewIntervalSeconds = 10; // Leader 锁续期间隔
 
 SyZero 提供了统一的 `IEventBus` 接口，支持多种事件总线实现：
 
+| 实现 | 适用场景 | 特点 |
+|------|----------|------|
+| **LocalEventBus** | 单体应用、进程内通信 | 基于内存，高性能，无需外部依赖 |
+| **DBEventBus** | 单体应用、持久化需求 | 基于数据库，支持事件持久化和重试 |
+| **RabbitMQEventBus** | 分布式系统、微服务 | 基于 RabbitMQ，支持跨服务通信和可靠投递 |
+
 ### 核心功能
 
 - **事件发布/订阅** - 支持强类型和动态事件
@@ -490,7 +490,7 @@ syzero-core/
 
 ## 📖 文档
 
-访问 [syzero.com](https://syzero.com) 获取完整文档。
+访问 [syzero.com](https://docs.syzero.com) 获取完整文档。
 
 ## 📋 更新历史
 
