@@ -1,6 +1,6 @@
 using System;
 
-namespace SyZero.Service
+namespace SyZero.Service.DBServiceManagement
 {
     /// <summary>
     /// 数据库服务管理配置选项

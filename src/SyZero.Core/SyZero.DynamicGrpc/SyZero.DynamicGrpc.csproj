@@ -5,7 +5,7 @@
     <PackageId>SyZero.DynamicGrpc</PackageId>
     <Authors>winter2048</Authors>
     <Company>SYZERO</Company>
-    <Description>SyZero-DynamicGrpc - 动态 gRPC 服务生成框架</Description>
+    <Description>SyZero-DynamicGrpc</Description>
     <PackageIcon>logo.png</PackageIcon>
     <PackageIconUrl />
     <NeutralLanguage></NeutralLanguage>

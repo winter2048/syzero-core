@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 using SyZero.Dependency;
 using SyZero.Runtime.Security;
 
-namespace SyZero.Service
+namespace SyZero.Service.LocalServiceManagement
 {
     /// <summary>
     /// 本地服务管理实现（基于内存和本地文件）
