@@ -20,5 +20,10 @@
             <param name="configuration"></param>
             <returns></returns>
         </member>
+        <member name="T:SyZero.EntityFrameworkCore.EfCoreTransactionScope">
+            <summary>
+            EF Core 事务作用域
+            </summary>
+        </member>
     </members>
 </doc>

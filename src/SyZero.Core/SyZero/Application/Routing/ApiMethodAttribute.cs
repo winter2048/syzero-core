@@ -72,4 +72,51 @@ namespace SyZero.Application.Routing
         {
         }
     }
+
+    /// <summary>
+    /// 标记参数为查询字符串参数
+    /// </summary>
+    [AttributeUsage(AttributeTargets.Parameter)]
+    public class QueryAttribute : Refit.QueryAttribute
+    {
+        public QueryAttribute() : base()
+        {
+        }
+
+        public QueryAttribute(string name) : base()
+        {
+            Name = name;
+        }
+
+        /// <summary>
+        /// 参数名称（可选，默认使用参数变量名）
+        /// </summary>
+        public string Name { get; set; }
+    }
+
+    /// <summary>
+    /// 标记参数为请求体
+    /// </summary>
+    [AttributeUsage(AttributeTargets.Parameter)]
+    public class BodyAttribute : Refit.BodyAttribute
+    {
+        public BodyAttribute() : base()
+        {
+        }
+
+        public BodyAttribute(bool buffered) : base(buffered)
+        {
+        }
+    }
+
+    /// <summary>
+    /// 标记参数为请求头
+    /// </summary>
+    [AttributeUsage(AttributeTargets.Parameter | AttributeTargets.Method)]
+    public class HeaderAttribute : Refit.HeaderAttribute
+    {
+        public HeaderAttribute(string header) : base(header)
+        {
+        }
+    }
 }

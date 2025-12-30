@@ -20,7 +20,7 @@ namespace SyZero.Configurations
         /// <summary>
         /// 服务端口号
         /// </summary>
-        public string Port { get; set; }
+        public int Port { get; set; }
 
         /// <summary>
         /// 服务广域网Ip

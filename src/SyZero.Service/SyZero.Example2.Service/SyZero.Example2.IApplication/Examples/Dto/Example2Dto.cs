@@ -3,7 +3,7 @@ using SyZero.Application.Service.Dto;
 
 namespace SyZero.Example2.IApplication.Examples.Dto
 {
-    public class ExampleDto : EntityDto
+    public class Example2Dto : EntityDto
     {
         /// <summary>
         /// 名称

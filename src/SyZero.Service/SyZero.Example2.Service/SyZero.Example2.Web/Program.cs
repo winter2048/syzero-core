@@ -67,12 +67,22 @@ namespace SyZero.Example2.Web
             //builder.Services.AddSyZeroRedis();
             //注入公共层
             builder.Services.AddSyZeroCommon();
+            //注入本地服务管理（用于 Feign 服务发现）
+            builder.Services.AddLocalServiceManagement();
             //注入Consul
             //builder.Services.AddConsul();
             //注入Feign
             builder.Services.AddSyZeroFeign();
 
             var app = builder.Build();
+
+            // 请求 URL 日志中间件
+            app.Use(async (context, next) =>
+            {
+                var request = context.Request;
+                Console.WriteLine($"[{DateTime.Now:yyyy-MM-dd HH:mm:ss}] {request.Method} {request.Scheme}://{request.Host}{request.Path}{request.QueryString}");
+                await next();
+            });
 
             app.UseSyZero();
             if (app.Environment.IsDevelopment())

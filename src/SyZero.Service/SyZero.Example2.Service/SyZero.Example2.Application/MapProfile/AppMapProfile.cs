@@ -8,10 +8,10 @@ namespace SyZero.Example2.Application.MapProfile
     {
         public AppMapProfile()
         {
-            CreateMap<Example, CreateExampleDto>();
-            CreateMap<CreateExampleDto, Example>();
-            CreateMap<Example, ExampleDto>();
-            CreateMap<ExampleDto, Example>();
+            CreateMap<Example, CreateExample2Dto>();
+            CreateMap<CreateExample2Dto, Example>();
+            CreateMap<Example, Example2Dto>();
+            CreateMap<Example2Dto, Example>();
         }
     }
 }

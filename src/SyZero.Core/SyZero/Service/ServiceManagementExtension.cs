@@ -1,8 +1,9 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System;
+using SyZero.Service;
 
-namespace SyZero.Service
+namespace SyZero
 {
     /// <summary>
     /// 服务管理扩展方法

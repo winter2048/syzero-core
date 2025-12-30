@@ -1,6 +1,6 @@
 # SyZero.Feign
 
-基于 Refit 的声明式 HTTP 客户端组件，用于微服务间的远程调用。
+基于 Refit 的声明式 HTTP/gRPC 客户端组件，用于微服务间的远程调用。
 
 ## 📦 安装
 
@@ -12,9 +12,11 @@ dotnet add package SyZero.Feign
 
 - 🚀 **声明式调用** - 通过接口定义远程服务调用
 - 🔐 **自动认证** - 自动传递 JWT Token 到远程服务
-- 🔄 **服务发现** - 与服务注册中心（Consul/Nacos）集成
+- 🔄 **服务发现** - 与服务注册中心（Consul/Nacos/Local/DB/Redis）集成
 - 📦 **统一响应处理** - 自动解析标准响应格式
 - ⚡ **Fallback 支持** - 支持服务降级处理
+- 🌐 **多协议支持** - 支持 HTTP 和 gRPC 协议
+- 🔌 **可扩展架构** - 支持自定义协议扩展
 
 ---
 
@@ -75,28 +77,42 @@ public class UserAppServiceFallback : IUserAppService, IFallback
     "Service": [
       {
         "ServiceName": "UserService",
-        "DllName": "MyApp.Application.Contracts"
+        "DllName": "MyApp.Application.Contracts",
+        "Protocol": "Http",
+        "Timeout": 30,
+        "Retry": 3
       },
       {
         "ServiceName": "OrderService",
-        "DllName": "MyApp.Order.Contracts"
+        "DllName": "MyApp.Order.Contracts",
+        "Protocol": "Grpc",
+        "EnableSsl": true,
+        "MaxMessageSize": 4194304
       }
     ],
     "Global": {
+      "Protocol": "Http",
       "Strategy": "RoundRobin",
-      "Retry": 3
+      "Retry": 3,
+      "Timeout": 30,
+      "EnableSsl": false,
+      "MaxMessageSize": 0
     }
   }
 }
 ```
 
 配置说明：
-| 字段 | 说明 |
-|------|------|
-| `ServiceName` | 服务注册中心中的服务名称 |
-| `DllName` | 包含服务接口的程序集名称 |
-| `Strategy` | 负载均衡策略 |
-| `Retry` | 重试次数 |
+| 字段 | 说明 | 默认值 |
+|------|------|--------|
+| `ServiceName` | 服务注册中心中的服务名称 | 必填 |
+| `DllName` | 包含服务接口的程序集名称 | 必填 |
+| `Protocol` | 通信协议：`Http` 或 `Grpc` | `Http` |
+| `Strategy` | 负载均衡策略 | - |
+| `Retry` | 重试次数 | `0` |
+| `Timeout` | 超时时间（秒） | `30` |
+| `EnableSsl` | 是否启用 SSL/TLS | `false` |
+| `MaxMessageSize` | 最大消息大小（字节），主要用于 gRPC | `0`（使用默认值） |
 
 ### 4. 注册服务
 
@@ -199,6 +215,59 @@ public interface ISearchAppService : IApplicationService
 
 ## 🔧 高级用法
 
+### 多协议支持
+
+Feign 支持 HTTP 和 gRPC 两种协议：
+
+#### HTTP 协议（默认）
+
+基于 Refit 实现，适用于 RESTful API：
+
+```json
+{
+  "ServiceName": "UserService",
+  "DllName": "MyApp.User.Contracts",
+  "Protocol": "Http"
+}
+```
+
+#### gRPC 协议
+
+基于 `Grpc.Net.Client` 实现，适用于高性能 RPC 调用：
+
+```json
+{
+  "ServiceName": "OrderService",
+  "DllName": "MyApp.Order.Contracts",
+  "Protocol": "Grpc",
+  "EnableSsl": false,
+  "MaxMessageSize": 4194304
+}
+```
+
+**gRPC 客户端命名约定：**
+- 接口 `IXxxService` 对应客户端 `XxxService.XxxServiceClient`
+- 接口 `IXxx` 对应客户端 `Xxx.XxxClient`
+
+### 自定义协议扩展
+
+实现 `IFeignProxyFactory` 接口可以添加自定义协议：
+
+```csharp
+public class WebSocketProxyFactory : IFeignProxyFactory
+{
+    public FeignProtocol Protocol => (FeignProtocol)2; // 自定义协议枚举值
+
+    public object CreateProxy(Type targetType, string endPoint, FeignService feignService, IJsonSerialize jsonSerialize)
+    {
+        // 实现自定义协议代理创建逻辑
+    }
+}
+
+// 注册自定义协议工厂
+FeignServiceRegistrar.RegisterProxyFactory(new WebSocketProxyFactory());
+```
+
 ### 自定义 API 路由
 
 使用 `[Api]` 特性自定义控制器名称：
@@ -269,11 +338,17 @@ builder.Services.AddSyZeroFeign();
 
 ```
 SyZero.Feign/
-├── FeignOptions.cs               # Feign 配置选项
+├── FeignOptions.cs               # Feign 配置选项（包含协议枚举）
+├── FeignServiceRegistrar.cs      # 服务注册器
+├── SyZeroFeignExtension.cs       # 依赖注入扩展方法
 ├── AuthenticationFeignHandler.cs # 认证处理器（添加 JWT Token）
 ├── RequestFeignHandler.cs        # 请求处理器（构建 URL）
 ├── ResponseFeignHandler.cs       # 响应处理器（解析响应）
-└── SyZeroFeignExtension.cs       # 依赖注入扩展方法
+└── Proxy/
+    ├── IFeignProxyFactory.cs     # 代理工厂接口（扩展点）
+    ├── FeignProxyFactoryManager.cs # 工厂管理器
+    ├── HttpProxyFactory.cs       # HTTP 协议实现（基于 Refit）
+    └── GrpcProxyFactory.cs       # gRPC 协议实现（基于 Grpc.Net.Client）
 ```
 
 ---
@@ -282,9 +357,12 @@ SyZero.Feign/
 
 1. **Fallback 必须实现** - 每个远程服务接口必须有对应的 Fallback 实现类
 2. **DllName 配置** - 确保 `DllName` 与包含服务接口的程序集名称完全一致
-3. **服务发现** - 使用 Feign 前需先注册服务发现组件（Consul 或 Nacos）
+3. **服务发现** - 使用 Feign 前需先注册服务发现组件（Consul/Nacos/Local/DB/Redis）
 4. **Token 传递** - 自动传递当前会话的 JWT Token 到远程服务
 5. **接口定义** - 服务接口必须继承 `IApplicationService`
+6. **gRPC 非 SSL** - 使用非 SSL 的 gRPC 时，会自动启用 HTTP/2 非加密支持
+7. **gRPC 通道复用** - gRPC 通道会被缓存复用，提高性能
+8. **全局配置** - `Global` 中的配置会被服务级配置覆盖
 
 ---
 

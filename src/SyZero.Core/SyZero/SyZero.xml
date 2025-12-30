@@ -9,6 +9,26 @@
             Equivalent to AreaName
             </summary>
         </member>
+        <member name="T:SyZero.Application.Routing.QueryAttribute">
+            <summary>
+            标记参数为查询字符串参数
+            </summary>
+        </member>
+        <member name="P:SyZero.Application.Routing.QueryAttribute.Name">
+            <summary>
+            参数名称（可选，默认使用参数变量名）
+            </summary>
+        </member>
+        <member name="T:SyZero.Application.Routing.BodyAttribute">
+            <summary>
+            标记参数为请求体
+            </summary>
+        </member>
+        <member name="T:SyZero.Application.Routing.HeaderAttribute">
+            <summary>
+            标记参数为请求头
+            </summary>
+        </member>
         <member name="T:SyZero.Application.Service.CrudAppServiceBase`5">
             <summary>
             This is a common base class for CrudAppService and AsyncCrudAppService classes.
@@ -1828,12 +1848,12 @@
             可用区
             </summary>
         </member>
-        <member name="T:SyZero.Service.ServiceManagementExtension">
+        <member name="T:SyZero.ServiceManagementExtension">
             <summary>
             服务管理扩展方法
             </summary>
         </member>
-        <member name="M:SyZero.Service.ServiceManagementExtension.AddLocalServiceManagement(Microsoft.Extensions.DependencyInjection.IServiceCollection,SyZero.Service.LocalServiceManagementOptions)">
+        <member name="M:SyZero.ServiceManagementExtension.AddLocalServiceManagement(Microsoft.Extensions.DependencyInjection.IServiceCollection,SyZero.Service.LocalServiceManagementOptions)">
             <summary>
             添加本地服务管理到依赖注入容器
             </summary>
@@ -1841,7 +1861,7 @@
             <param name="options">配置选项</param>
             <returns>服务集合</returns>
         </member>
-        <member name="M:SyZero.Service.ServiceManagementExtension.AddLocalServiceManagement(Microsoft.Extensions.DependencyInjection.IServiceCollection,Microsoft.Extensions.Configuration.IConfiguration,System.String)">
+        <member name="M:SyZero.ServiceManagementExtension.AddLocalServiceManagement(Microsoft.Extensions.DependencyInjection.IServiceCollection,Microsoft.Extensions.Configuration.IConfiguration,System.String)">
             <summary>
             添加本地服务管理到依赖注入容器（从配置读取）
             </summary>
@@ -1850,7 +1870,7 @@
             <param name="sectionName">配置节名称，默认为 "LocalServiceManagement"</param>
             <returns>服务集合</returns>
         </member>
-        <member name="M:SyZero.Service.ServiceManagementExtension.AddLocalServiceManagement(Microsoft.Extensions.DependencyInjection.IServiceCollection,System.Action{SyZero.Service.LocalServiceManagementOptions},Microsoft.Extensions.Configuration.IConfiguration,System.String)">
+        <member name="M:SyZero.ServiceManagementExtension.AddLocalServiceManagement(Microsoft.Extensions.DependencyInjection.IServiceCollection,System.Action{SyZero.Service.LocalServiceManagementOptions},Microsoft.Extensions.Configuration.IConfiguration,System.String)">
             <summary>
             添加本地服务管理到依赖注入容器（从配置读取，并支持额外配置）
             </summary>
@@ -1860,7 +1880,7 @@
             <param name="sectionName">配置节名称，默认为 "LocalServiceManagement"</param>
             <returns>服务集合</returns>
         </member>
-        <member name="M:SyZero.Service.ServiceManagementExtension.AddDBServiceManagement(Microsoft.Extensions.DependencyInjection.IServiceCollection,SyZero.Service.DBServiceManagementOptions)">
+        <member name="M:SyZero.ServiceManagementExtension.AddDBServiceManagement(Microsoft.Extensions.DependencyInjection.IServiceCollection,SyZero.Service.DBServiceManagementOptions)">
             <summary>
             添加数据库服务管理到依赖注入容器
             </summary>
@@ -1868,7 +1888,7 @@
             <param name="options">配置选项</param>
             <returns>服务集合</returns>
         </member>
-        <member name="M:SyZero.Service.ServiceManagementExtension.AddDBServiceManagement(Microsoft.Extensions.DependencyInjection.IServiceCollection,Microsoft.Extensions.Configuration.IConfiguration,System.String)">
+        <member name="M:SyZero.ServiceManagementExtension.AddDBServiceManagement(Microsoft.Extensions.DependencyInjection.IServiceCollection,Microsoft.Extensions.Configuration.IConfiguration,System.String)">
             <summary>
             添加数据库服务管理到依赖注入容器（从配置读取）
             </summary>
@@ -1877,7 +1897,7 @@
             <param name="sectionName">配置节名称，默认为 "DBServiceManagement"</param>
             <returns>服务集合</returns>
         </member>
-        <member name="M:SyZero.Service.ServiceManagementExtension.AddDBServiceManagement(Microsoft.Extensions.DependencyInjection.IServiceCollection,System.Action{SyZero.Service.DBServiceManagementOptions},Microsoft.Extensions.Configuration.IConfiguration,System.String)">
+        <member name="M:SyZero.ServiceManagementExtension.AddDBServiceManagement(Microsoft.Extensions.DependencyInjection.IServiceCollection,System.Action{SyZero.Service.DBServiceManagementOptions},Microsoft.Extensions.Configuration.IConfiguration,System.String)">
             <summary>
             添加数据库服务管理到依赖注入容器（从配置读取，并支持额外配置）
             </summary>
@@ -1887,7 +1907,7 @@
             <param name="sectionName">配置节名称，默认为 "DBServiceManagement"</param>
             <returns>服务集合</returns>
         </member>
-        <member name="M:SyZero.Service.ServiceManagementExtension.AddDBServiceManagement``1(Microsoft.Extensions.DependencyInjection.IServiceCollection,SyZero.Service.DBServiceManagementOptions)">
+        <member name="M:SyZero.ServiceManagementExtension.AddDBServiceManagement``1(Microsoft.Extensions.DependencyInjection.IServiceCollection,SyZero.Service.DBServiceManagementOptions)">
             <summary>
             添加数据库服务管理到依赖注入容器（使用自定义仓储实现）
             </summary>
@@ -1896,7 +1916,7 @@
             <param name="options">配置选项</param>
             <returns>服务集合</returns>
         </member>
-        <member name="M:SyZero.Service.ServiceManagementExtension.AddDBServiceManagement``1(Microsoft.Extensions.DependencyInjection.IServiceCollection,System.Action{SyZero.Service.DBServiceManagementOptions},Microsoft.Extensions.Configuration.IConfiguration,System.String)">
+        <member name="M:SyZero.ServiceManagementExtension.AddDBServiceManagement``1(Microsoft.Extensions.DependencyInjection.IServiceCollection,System.Action{SyZero.Service.DBServiceManagementOptions},Microsoft.Extensions.Configuration.IConfiguration,System.String)">
             <summary>
             添加数据库服务管理到依赖注入容器（使用自定义仓储实现，从配置读取）
             </summary>

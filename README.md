@@ -66,7 +66,7 @@ SyZero 是一个基于 .NET 的模块化微服务开发框架，提供了丰富�
 | **SyZero.ApiGateway** | [![NuGet](https://img.shields.io/nuget/v/SyZero.ApiGateway?style=flat-square)](https://www.nuget.org/packages/SyZero.ApiGateway) | API 网关支持 |
 | **SyZero.Feign** | [![NuGet](https://img.shields.io/nuget/v/SyZero.Feign?style=flat-square)](https://www.nuget.org/packages/SyZero.Feign) | 声明式 HTTP 客户端 |
 
-> 💡 **内置服务管理**：SyZero 核心模块还提供了 `LocalServiceManagement`（基于文件）和 `DBServiceManagement`（基于数据库）两种轻量级服务管理实现，适用于开发测试或简单部署场景。
+> 💡 **内置服务管理**：SyZero 核心模块还提供了 `LocalServiceManagement`（基于文件）、`DBServiceManagement`（基于数据库）和 `RedisServiceManagement`（基于 Redis）三种轻量级服务管理实现，适用于开发测试或简单部署场景。
 
 ### 工具与扩展
 
@@ -183,6 +183,7 @@ SyZero 提供了统一的 `IServiceManagement` 接口，支持多种服务注册
 |------|----------|------|
 | **LocalServiceManagement** | 开发测试、单机部署 | 基于本地文件，无需外部依赖 |
 | **DBServiceManagement** | 简单生产环境 | 基于数据库，支持多实例 |
+| **RedisServiceManagement** | 分布式环境 | 基于 Redis，支持发布/订阅实时通知 |
 | **ConsulServiceManagement** | 生产环境 | 基于 Consul，功能完整 |
 | **NacosServiceManagement** | 生产环境 | 基于 Nacos，支持配置中心 |
 
@@ -204,6 +205,14 @@ builder.Services.AddSyZeroLocalServiceManagement(options =>
     options.HealthCheckIntervalSeconds = 10;
     options.AutoCleanExpiredServices = true;
     options.EnableLeaderElection = true;  // 启用 Leader 选举
+});
+
+// 或使用 Redis
+builder.Services.AddRedisServiceManagement(options =>
+{
+    options.EnableHealthCheck = true;
+    options.EnableLeaderElection = true;
+    options.EnablePubSub = true;  // 启用发布/订阅实时通知
 });
 
 // 或使用 Consul

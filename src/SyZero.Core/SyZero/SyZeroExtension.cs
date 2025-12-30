@@ -66,7 +66,7 @@ namespace SyZero
                     ServiceID = serviceId,
                     ServiceName = serverOptions.Name,
                     ServiceAddress = serverOptions.Ip,
-                    ServicePort = int.TryParse(serverOptions.Port, out var port) ? port : 0,
+                    ServicePort = serverOptions.Port,
                     ServiceProtocol = serverOptions.Protocol,
                     Version = Assembly.GetEntryAssembly()?.GetName().Version?.ToString() ?? "1.0.0",
                     IsHealthy = true,

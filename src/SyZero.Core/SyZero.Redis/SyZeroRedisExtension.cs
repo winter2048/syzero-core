@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using SyZero.Cache;
 using SyZero.Redis;
+using SyZero.Service;
 using SyZero.Util;
 
 namespace SyZero
@@ -55,6 +56,59 @@ namespace SyZero
 
             services.AddSingleton<ICache, Redis.Cache>();
             services.AddSingleton<ILockUtil, LockUtil>();
+            return services;
+        }
+
+        /// <summary>
+        /// 注册 Redis 服务管理
+        /// </summary>
+        /// <param name="services">服务集合</param>
+        /// <param name="configureOptions">配置选项</param>
+        /// <returns></returns>
+        public static IServiceCollection AddRedisServiceManagement(this IServiceCollection services, Action<RedisServiceManagementOptions> configureOptions = null)
+        {
+            // 确保 Redis 已注册
+            var redisDescriptor = services.FirstOrDefault(d => d.ServiceType == typeof(RedisClient));
+            if (redisDescriptor == null)
+            {
+                services.AddSyZeroRedis();
+            }
+
+            // 配置选项
+            var options = AppConfig.GetSection<RedisServiceManagementOptions>(RedisServiceManagementOptions.SectionName)
+                          ?? new RedisServiceManagementOptions();
+            configureOptions?.Invoke(options);
+            options.Validate();
+
+            services.AddSingleton(options);
+            services.AddSingleton<IServiceManagement, RedisServiceManagement>();
+
+            return services;
+        }
+
+        /// <summary>
+        /// 注册 Redis 服务管理（使用配置节）
+        /// </summary>
+        /// <param name="services">服务集合</param>
+        /// <param name="sectionName">配置节名称</param>
+        /// <returns></returns>
+        public static IServiceCollection AddRedisServiceManagement(this IServiceCollection services, string sectionName)
+        {
+            // 确保 Redis 已注册
+            var redisDescriptor = services.FirstOrDefault(d => d.ServiceType == typeof(RedisClient));
+            if (redisDescriptor == null)
+            {
+                services.AddSyZeroRedis();
+            }
+
+            // 从配置节读取选项
+            var options = AppConfig.GetSection<RedisServiceManagementOptions>(sectionName)
+                          ?? new RedisServiceManagementOptions();
+            options.Validate();
+
+            services.AddSingleton(options);
+            services.AddSingleton<IServiceManagement, RedisServiceManagement>();
+
             return services;
         }
     }

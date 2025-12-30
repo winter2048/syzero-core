@@ -1,127 +1,66 @@
-﻿using Castle.DynamicProxy;
-using Dynamitey;
+﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Newtonsoft.Json;
-using Refit;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.Http;
-using System.Net.Http.Json;
-using System.Reflection;
-using System.Text;
-using System.Text.Json.Serialization;
-using System.Threading;
-using System.Threading.Tasks;
-using SyZero.Application.Routing;
-using SyZero.Application.Service;
-using SyZero.Client;
 using SyZero.Feign;
-using SyZero.Runtime.Session;
-using SyZero.Serialization;
-using SyZero.Service;
-using SyZero.Util;
-using SyZero.Web.Common;
-
 
 namespace SyZero
 {
+    /// <summary>
+    /// Feign 服务扩展方法
+    /// </summary>
     public static class SyZeroFeignExtension
     {
         /// <summary>
-        /// 注册FeignModule
+        /// 添加 Feign 到依赖注入容器
         /// </summary>
-        /// <typeparam name="TContext"></typeparam>
-        /// <param name="builder"></param>
-        /// <param name="configuration"></param>
-        /// <returns></returns>
-        public static IServiceCollection AddSyZeroFeign(this IServiceCollection services)
+        /// <param name="services">服务集合</param>
+        /// <param name="options">配置选项</param>
+        /// <returns>服务集合</returns>
+        /// <exception cref="ArgumentNullException">options 为 null 时抛出</exception>
+        public static IServiceCollection AddSyZeroFeign(this IServiceCollection services, FeignOptions options)
         {
-            var definedTypes = ReflectionHelper.GetTypes();
-
-            var baseFallback = typeof(IFallback);
-            var baseType = typeof(IApplicationService);
-            var types = definedTypes.Where(type => baseType.IsAssignableFrom(type) && type != baseType);
-            var interfaceTypeInfos = types.Where(t => t.IsInterface);
-
-            var implTypeInfos = types.Where(t => t.IsClass && !t.IsAbstract && !baseFallback.IsAssignableFrom(t) && t.IsVisible);
-            var fallbackTypeInfos = types.Where(t => t.IsClass && !t.IsAbstract && baseFallback.IsAssignableFrom(t));
-
-            var test = interfaceTypeInfos.Where(p => !p.IsGenericType && !implTypeInfos.Any(t => p.IsAssignableFrom(t)) && baseType.IsAssignableFrom(p));
-
-            foreach (var targetType in test)
+            if (options == null)
             {
-                var fallbackType = fallbackTypeInfos.FirstOrDefault(t => targetType.IsAssignableFrom(t));
-                if (fallbackType != null)
-                {
-                    services.AddScoped(targetType, sp =>
-                    {
-                        FeignOptions feignOptions = AppConfig.GetSection<FeignOptions>("Feign");
-                        IJsonSerialize jsonSerialize = SyZeroUtil.GetService<IJsonSerialize>();
-                        ISySession sySession = SyZeroUtil.GetService<ISySession>();
-                        IClient client = SyZeroUtil.GetService<IClient>();
-                        IServiceManagement serviceManagement = SyZeroUtil.GetService<IServiceManagement>();
-
-                        var feignService = feignOptions.Service.FirstOrDefault(p => p.DllName == targetType.Assembly.GetName().Name);
-                        if (feignService == null)
-                        {
-                            throw new Exception($"DLL:{targetType.Assembly.GetName().Name}未注册!");
-                        }
-
-                        var service = serviceManagement.GetService(feignService.ServiceName).Result;
-
-                        var endPoint = $"{service.FirstOrDefault().ServiceProtocol}://{service.FirstOrDefault().ServiceAddress}:{service.FirstOrDefault().ServicePort}";
-
-                        try
-                        {
-                            var api = RestService.For(targetType, endPoint, new RefitSettings()
-                                {
-                                    HttpMessageHandlerFactory = () =>
-                                    {
-                                        var responseHandler = new ResponseFeignHandler(feignService.ServiceName);
-                                        var authenticationHandler = new AuthenticationFeignHandler(feignService.ServiceName, responseHandler);
-                                        var requestHandler = new RequestFeignHandler(feignService.ServiceName, authenticationHandler);
-
-                                        return requestHandler;
-                                    },
-                                    DeserializationExceptionFactory = (httpResponse, exception) =>
-                                    {
-                                        Console.WriteLine(exception.Message);
-                                        return null;
-                                    },
-                                    ContentSerializer = new NewtonsoftJsonContentSerializer(
-                                      new JsonSerializerSettings
-                                      {
-                                          Converters = { new LongToStrConverter() }
-                                      }
-                                  ),
-                                    ExceptionFactory = async (httpResponse) => {
-                                        if (httpResponse.StatusCode == System.Net.HttpStatusCode.InternalServerError)
-                                        {
-                                            var jsonString = await httpResponse.Content.ReadAsStringAsync();
-                                            var data = jsonSerialize.JSONToObject<SyMessageBoxModel>(jsonString);
-                                            return new SyMessageException(data);
-                                        }
-                                        return null;
-                                    }
-                                }
-                            );
-
-                            return api;
-                        }
-                        catch (Exception ex)
-                        {
-                            Console.WriteLine($"Feign error: EndPoint({endPoint}) {ex.Message}");
-                        }
-                        return null;
-                    });
-                }
-                else
-                {
-                    throw new Exception($"{targetType.Name}未实现Fallback！");
-                }
+                throw new ArgumentNullException(nameof(options));
             }
+
+            options.Validate();
+
+            FeignServiceRegistrar.Register(services, options);
+
             return services;
+        }
+
+        /// <summary>
+        /// 添加 Feign 到依赖注入容器（从配置读取）
+        /// </summary>
+        /// <param name="services">服务集合</param>
+        /// <param name="configuration">配置，为 null 时使用 AppConfig.Configuration</param>
+        /// <param name="sectionName">配置节名称，默认为 "Feign"</param>
+        /// <returns>服务集合</returns>
+        public static IServiceCollection AddSyZeroFeign(this IServiceCollection services, IConfiguration configuration = null, string sectionName = FeignOptions.SectionName)
+        {
+            var config = configuration ?? AppConfig.Configuration;
+            var options = new FeignOptions();
+            config.GetSection(sectionName).Bind(options);
+            return AddSyZeroFeign(services, options);
+        }
+
+        /// <summary>
+        /// 添加 Feign 到依赖注入容器（从配置读取，并支持额外配置）
+        /// </summary>
+        /// <param name="services">服务集合</param>
+        /// <param name="optionsAction">额外配置委托（在配置文件配置之后执行）</param>
+        /// <param name="configuration">配置，为 null 时使用 AppConfig.Configuration</param>
+        /// <param name="sectionName">配置节名称，默认为 "Feign"</param>
+        /// <returns>服务集合</returns>
+        public static IServiceCollection AddSyZeroFeign(this IServiceCollection services, Action<FeignOptions> optionsAction, IConfiguration configuration = null, string sectionName = FeignOptions.SectionName)
+        {
+            var config = configuration ?? AppConfig.Configuration;
+            var options = new FeignOptions();
+            config.GetSection(sectionName).Bind(options);
+            optionsAction?.Invoke(options);
+            return AddSyZeroFeign(services, options);
         }
     }
 }

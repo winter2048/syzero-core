@@ -1,8 +1,8 @@
 using SyZero.Application.Service.Dto;
 
-namespace SyZero.Example2.IApplication.Examples.Dto
+namespace SyZero.Example1.IApplication.Examples.Dto
 {
-    public class CreateExampleDto : EntityDto
+    public class CreateExample1Dto : EntityDto
     {
         /// <summary>
         /// 名称

@@ -1,8 +1,9 @@
+using System;
 using SyZero.Application.Service.Dto;
 
 namespace SyZero.Example1.IApplication.Examples.Dto
 {
-    public class CreateExampleDto : EntityDto
+    public class Example1Dto : EntityDto
     {
         /// <summary>
         /// 名称
@@ -17,11 +18,21 @@ namespace SyZero.Example1.IApplication.Examples.Dto
         /// <summary>
         /// 状态 0:禁用 1:启用
         /// </summary>
-        public int Status { get; set; } = 1;
+        public int Status { get; set; }
 
         /// <summary>
         /// 排序
         /// </summary>
-        public int Sort { get; set; } = 0;
+        public int Sort { get; set; }
+
+        /// <summary>
+        /// 创建时间
+        /// </summary>
+        public string CreateTime { get; set; }
+
+        /// <summary>
+        /// 更新时间
+        /// </summary>
+        public string UpdateTime { get; set; }
     }
 }
