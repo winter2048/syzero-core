@@ -27,10 +27,8 @@ namespace SyZero.Feign
             if (!builder.Path.StartsWith($"{RoutingHelper.ApiUrlPre}/"))
             {
                 var controllerName = "";
-                if (request.Properties.ContainsKey(HttpRequestMessageOptions.InterfaceType))
+                if (request.Options.TryGetValue(new HttpRequestOptionsKey<TypeInfo>(HttpRequestMessageOptions.InterfaceType), out var interfaceType))
                 {
-                    var interfaceType = (TypeInfo)request.Properties[HttpRequestMessageOptions.InterfaceType];
-
                     var interfaceName = RoutingHelper.GetControllerName(interfaceType.Name.Substring(1));
                     var customApiName = interfaceType.GetSingleAttributeOrDefaultByFullSearch<ApiAttribute>();
                     controllerName = customApiName?.Name ?? interfaceName;

@@ -422,15 +422,6 @@ namespace SyZero.Service.DBServiceManagement
             return !heartbeatExpired;
         }
 
-        private async Task CheckAndNotifyChangesAsync()
-        {
-            foreach (var serviceName in _subscriptions.Keys.ToList())
-            {
-                ClearServiceCache(serviceName);
-                NotifySubscribers(serviceName);
-            }
-        }
-
         private async Task CleanExpiredServicesAsync()
         {
             // 如果启用了 Leader 选举且当前不是 Leader，则跳过清理
