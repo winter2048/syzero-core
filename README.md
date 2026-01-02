@@ -9,8 +9,8 @@
 </p>
 
 <p align="center">
-  <a href="https://github.com/winter2048/syzero-core"><img src="https://img.shields.io/github/stars/winter2048/syzero-core?style=flat-square" alt="GitHub Stars"/></a>
-  <a href="https://github.com/winter2048/syzero-core/blob/main/LICENSE"><img src="https://img.shields.io/badge/license-MIT-blue?style=flat-square" alt="License"/></a>
+  <a href="https://github.com/HaitaoJin/syzero-core"><img src="https://img.shields.io/github/stars/HaitaoJin/syzero-core?style=flat-square" alt="GitHub Stars"/></a>
+  <a href="https://github.com/HaitaoJin/syzero-core/blob/main/LICENSE"><img src="https://img.shields.io/badge/license-MIT-blue?style=flat-square" alt="License"/></a>
   <a href="https://www.nuget.org/packages/SyZero"><img src="https://img.shields.io/nuget/v/SyZero?style=flat-square" alt="NuGet"/></a>
   <a href="https://docs.syzero.com"><img src="https://img.shields.io/badge/docs-docs.syzero.com-green?style=flat-square" alt="Documentation"/></a>
 </p>
@@ -512,9 +512,9 @@ syzero-core/
 
 ## 👤 作者
 
-**winter2048**
+**HaitaoJin**
 
-- GitHub: [@winter2048](https://github.com/winter2048)
+- GitHub: [@HaitaoJin](https://github.com/HaitaoJin)
 
 ## ⭐ Star History
 
@@ -522,4 +522,4 @@ syzero-core/
 
 ---
 
-<p align="center">Made with ❤️ by winter2048</p>
+<p align="center">Made with ❤️ by HaitaoJin</p>

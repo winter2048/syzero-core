@@ -79,7 +79,7 @@ jobs:
       - name: Publish the package to github
         if: github.ref_name == 'master' || github.ref_name == 'dev'
         run: |
-          dotnet nuget push *.nupkg --api-key "${{ env.GB_NUGET_TOKEN }}" --source "https://nuget.pkg.github.com/winter2048/index.json" --skip-duplicate
+          dotnet nuget push *.nupkg --api-key "${{ env.GB_NUGET_TOKEN }}" --source "https://nuget.pkg.github.com/HaitaoJin/index.json" --skip-duplicate
           Write-Host "done publishing packages"
         shell: powershell
 

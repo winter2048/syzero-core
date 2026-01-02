@@ -1,59 +1,25 @@
 # SyZero.RabbitMQ
 
-基于 RabbitMQ 的事件总线实现，为 SyZero 框架提供分布式消息传递能力。
+SyZero 框架的 RabbitMQ 事件总线模块，提供分布式消息队列支持。
 
-## 功能特性
-
-- ✅ 完整实现 `IEventBus` 接口
-- ✅ 支持事件订阅/取消订阅
-- ✅ 支持动态事件处理
-- ✅ 自动重连机制
-- ✅ 消息持久化
-- ✅ 死信队列支持
-- ✅ 批量发布事件
-- ✅ 消息重试策略
-- ✅ 连接池管理
-
-## 安装
+## 📦 安装
 
 ```bash
 dotnet add package SyZero.RabbitMQ
 ```
 
-## 快速开始
+## ✨ 特性
 
-### 1. 配置服务
+- 🚀 **事件总线** - 基于 RabbitMQ 的分布式事件总线
+- 💾 **持久化** - 消息持久化保证可靠性
+- 🔄 **自动重连** - 连接断开后自动重连
+- 📨 **发布订阅** - 支持发布/订阅模式
 
-```csharp
-using SyZero;
+---
 
-// 方式1: 代码配置
-var options = new SyZero.RabbitMQ.RabbitMQEventBusOptions
-{
-    HostName = "localhost",
-    Port = 5672,
-    UserName = "guest",
-    Password = "guest",
-    ExchangeName = "my_event_bus",
-    QueueNamePrefix = "my_app"
-};
-services.AddRabbitMQEventBus(options);
+## 🚀 快速开始
 
-// 方式2: 从配置文件读取
-services.AddRabbitMQEventBus();
-
-// 方式3: 从配置文件读取 + 额外配置
-services.AddRabbitMQEventBus(options =>
-{
-    options.RetryCount = 5;
-    options.EnableDeadLetter = true;
-});
-
-// 方式4: 指定配置节名称
-services.AddRabbitMQEventBus(configuration: Configuration, sectionName: "MyRabbitMQ");
-```
-
-### 2. appsettings.json 配置
+### 1. 配置 appsettings.json
 
 ```json
 {
@@ -63,166 +29,144 @@ services.AddRabbitMQEventBus(configuration: Configuration, sectionName: "MyRabbi
     "UserName": "guest",
     "Password": "guest",
     "VirtualHost": "/",
-    "ExchangeName": "syzero_event_bus",
-    "ExchangeType": "topic",
-    "QueueNamePrefix": "syzero",
-    "RetryCount": 3,
-    "PrefetchCount": 1,
-    "EnableDeadLetter": true
+    "ExchangeName": "my_exchange",
+    "QueueName": "my_queue"
   }
 }
 ```
 
-### 3. 定义事件
+### 2. 注册服务
 
 ```csharp
-using SyZero.EventBus;
+// Program.cs
+var builder = WebApplication.CreateBuilder(args);
+// 添加SyZero
+builder.AddSyZero();
 
-public class OrderCreatedEvent : EventBase
+// 注册服务方式1 - 使用配置文件
+builder.Services.AddRabbitMQEventBus();
+
+// 注册服务方式2 - 使用委托配置
+builder.Services.AddRabbitMQEventBus(options =>
 {
-    public string OrderId { get; set; }
-    public decimal Amount { get; set; }
-    public DateTime OrderTime { get; set; }
-}
+    options.HostName = "localhost";
+    options.Port = 5672;
+    options.UserName = "guest";
+    options.Password = "guest";
+});
+
+// 注册服务方式3 - 指定配置节
+builder.Services.AddRabbitMQEventBus(builder.Configuration, "RabbitMQ");
+
+var app = builder.Build();
+// 使用SyZero
+app.UseSyZero();
+app.Run();
 ```
 
-### 4. 定义事件处理器
+### 3. 使用示例
 
 ```csharp
-using SyZero.EventBus;
-
-public class OrderCreatedEventHandler : IEventHandler<OrderCreatedEvent>
+// 定义事件
+public class UserCreatedEvent : IEvent
 {
-    private readonly ILogger<OrderCreatedEventHandler> _logger;
-
-    public OrderCreatedEventHandler(ILogger<OrderCreatedEventHandler> logger)
-    {
-        _logger = logger;
-    }
-
-    public async Task HandleAsync(OrderCreatedEvent @event)
-    {
-        _logger.LogInformation($"处理订单创建事件: {@event.OrderId}");
-        
-        // 处理业务逻辑
-        await Task.CompletedTask;
-    }
+    public long UserId { get; set; }
+    public string UserName { get; set; }
 }
-```
 
-### 5. 订阅和发布事件
-
-```csharp
-public class OrderService
+// 发布事件
+public class UserService
 {
     private readonly IEventBus _eventBus;
 
-    public OrderService(IEventBus eventBus)
+    public UserService(IEventBus eventBus)
     {
         _eventBus = eventBus;
-        
-        // 订阅事件
-        _eventBus.Subscribe<OrderCreatedEvent, OrderCreatedEventHandler>(
-            () => new OrderCreatedEventHandler(logger));
     }
 
-    public async Task CreateOrderAsync(Order order)
+    public async Task CreateUserAsync(User user)
     {
-        // 创建订单逻辑
-        
-        // 发布事件
-        var orderEvent = new OrderCreatedEvent
+        // 创建用户后发布事件
+        await _eventBus.PublishAsync(new UserCreatedEvent
         {
-            OrderId = order.Id,
-            Amount = order.Amount,
-            OrderTime = DateTime.Now
-        };
-        
-        await _eventBus.PublishAsync(orderEvent);
+            UserId = user.Id,
+            UserName = user.Name
+        });
     }
 }
-```
 
-## 配置选项
-
-| 选项 | 说明 | 默认值 |
-|-----|------|--------|
-| HostName | RabbitMQ 主机地址 | localhost |
-| Port | 端口号 | 5672 |
-| UserName | 用户名 | guest |
-| Password | 密码 | guest |
-| VirtualHost | 虚拟主机 | / |
-| ExchangeName | 交换机名称 | syzero_event_bus |
-| ExchangeType | 交换机类型 | topic |
-| QueueNamePrefix | 队列名称前缀 | syzero |
-| RetryCount | 重试次数 | 3 |
-| RetryIntervalMilliseconds | 重试间隔(ms) | 1000 |
-| PrefetchCount | 预取数量 | 1 |
-| QueueDurable | 队列持久化 | true |
-| MessagePersistent | 消息持久化 | true |
-| EnableDeadLetter | 启用死信队列 | true |
-| MessageTTL | 消息TTL(ms) | null |
-| MaxLength | 最大消息长度 | null |
-
-## 高级用法
-
-### 动态事件处理
-
-```csharp
-public class DynamicEventHandler : IDynamicEventHandler
+// 订阅事件
+public class UserCreatedEventHandler : IEventHandler<UserCreatedEvent>
 {
-    public async Task HandleAsync(string eventName, dynamic eventData)
+    public async Task HandleAsync(UserCreatedEvent @event)
     {
-        Console.WriteLine($"处理动态事件: {eventName}");
-        Console.WriteLine($"事件数据: {eventData}");
-        await Task.CompletedTask;
+        Console.WriteLine($"用户 {@event.UserName} 创建成功");
     }
 }
-
-// 订阅动态事件
-_eventBus.SubscribeDynamic<DynamicEventHandler>("CustomEvent");
-
-// 发布动态事件
-await _eventBus.PublishAsync("CustomEvent", new { Data = "test" });
 ```
 
-### 批量发布事件
+---
+
+## 📖 配置选项
+
+| 属性 | 类型 | 默认值 | 说明 |
+|------|------|--------|------|
+| `HostName` | `string` | `"localhost"` | RabbitMQ 主机地址 |
+| `Port` | `int` | `5672` | 端口号 |
+| `UserName` | `string` | `"guest"` | 用户名 |
+| `Password` | `string` | `"guest"` | 密码 |
+| `VirtualHost` | `string` | `"/"` | 虚拟主机 |
+| `ExchangeName` | `string` | `""` | 交换机名称 |
+| `QueueName` | `string` | `""` | 队列名称 |
+| `RetryCount` | `int` | `5` | 重试次数 |
+
+---
+
+## 📖 API 说明
+
+### IEventBus 接口
+
+| 方法 | 说明 |
+|------|------|
+| `PublishAsync<TEvent>(event)` | 发布事件 |
+| `Subscribe<TEvent, THandler>()` | 订阅事件 |
+| `Unsubscribe<TEvent, THandler>()` | 取消订阅 |
+
+> 所有方法都有对应的异步版本（带 `Async` 后缀）
+
+---
+
+## 🔧 高级用法
+
+### 延迟消息
 
 ```csharp
-var events = new List<EventBase>
+await _eventBus.PublishAsync(new OrderTimeoutEvent
 {
-    new OrderCreatedEvent { OrderId = "1" },
-    new OrderCreatedEvent { OrderId = "2" },
-    new OrderCreatedEvent { OrderId = "3" }
-};
-
-await _eventBus.PublishBatchAsync(events);
+    OrderId = orderId
+}, delay: TimeSpan.FromMinutes(30));
 ```
 
-## 最佳实践
+### 死信队列
 
-1. **连接管理**：使用单例模式注册 EventBus，避免重复创建连接
-2. **消息持久化**：生产环境建议开启消息持久化
-3. **死信队列**：启用死信队列处理失败消息
-4. **预取数量**：根据消费者处理能力调整 PrefetchCount
-5. **重试策略**：合理设置重试次数和间隔
-6. **日志监控**：关注连接状态和消息处理异常
+```csharp
+builder.Services.AddRabbitMQEventBus(options =>
+{
+    options.DeadLetterExchange = "dead_letter_exchange";
+    options.DeadLetterQueue = "dead_letter_queue";
+});
+```
 
-## 注意事项
+---
 
-- RabbitMQ 服务器需要正常运行
-- 确保网络连接稳定
-- 消息序列化使用 System.Text.Json
-- 支持自动重连和故障恢复
-- 依赖 Polly 库实现重试策略
+## ⚠️ 注意事项
 
-## 依赖项
+1. **连接管理** - 应用会自动管理连接和重连
+2. **消息确认** - 默认使用手动确认模式
+3. **错误处理** - 处理失败的消息会进入死信队列
 
-- RabbitMQ.Client >= 6.8.1
-- Microsoft.Extensions.DependencyInjection.Abstractions >= 8.0.0
-- Microsoft.Extensions.Logging.Abstractions >= 8.0.0
-- Polly >= 8.0.0
+---
 
-## 许可证
+## 📄 许可证
 
-MIT License
+MIT License - 详见 [LICENSE](../../../LICENSE)

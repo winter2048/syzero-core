@@ -1,21 +1,9 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>netstandard2.1;net6.0;net8.0;net9.0</TargetFrameworks>
-    <PackageId>SyZero.Feign</PackageId>
-    <Authors>winter2048</Authors>
-    <Company>SYZERO</Company>
+    <TargetFrameworks>net9.0</TargetFrameworks>
     <Description>SyZero-Feign</Description>
-    <PackageIcon>logo.png</PackageIcon>
-    <PackageIconUrl />
-    <NeutralLanguage></NeutralLanguage>
-    <PackageProjectUrl>https://syzero.com</PackageProjectUrl>
-    <PackageLicenseFile>LICENSE</PackageLicenseFile>
-    <RepositoryUrl>https://github.com/winter2048/syzero-core</RepositoryUrl>
-    <RepositoryType>git</RepositoryType>
-    <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
-    <PackageLicenseExpression></PackageLicenseExpression>
-    <SignAssembly>false</SignAssembly>
+    <IsPackable>true</IsPackable>
   </PropertyGroup>
 
   <ItemGroup>
@@ -24,18 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="..\..\..\doc\icon\logo.png">
-      <Pack>True</Pack>
-      <PackagePath></PackagePath>
-    </None>
-    <None Include="..\..\..\LICENSE">
-      <Pack>True</Pack>
-      <PackagePath></PackagePath>
-    </None>
-  </ItemGroup>
-
-  <ItemGroup>
-    <PackageReference Include="Grpc.Net.Client" Version="2.67.0" />
-    <PackageReference Include="Refit.Newtonsoft.Json" Version="8.0.0" />
+    <PackageReference Include="Grpc.Net.Client" />
+    <PackageReference Include="Refit.Newtonsoft.Json" />
   </ItemGroup>
 </Project>

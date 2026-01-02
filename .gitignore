@@ -19,6 +19,7 @@ bld/
 [Bb]in/
 [Oo]bj/
 nuget/*.nupkg
+nuget/*.snupkg
 
 # Visual Studio cache/options directory
 .vs/

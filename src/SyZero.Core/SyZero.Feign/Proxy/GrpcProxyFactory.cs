@@ -78,19 +78,13 @@ namespace SyZero.Feign.Proxy
             if (!feignService.EnableSsl)
             {
                 AppContext.SetSwitch("System.Net.Http.SocketsHttpHandler.Http2UnencryptedSupport", true);
-#if NET6_0_OR_GREATER
-                // .NET 6+ 使用 SocketsHttpHandler 获得更好的性能
                 var handler = new System.Net.Http.SocketsHttpHandler
-                {
-                    EnableMultipleHttp2Connections = true,
-                    PooledConnectionIdleTimeout = TimeSpan.FromMinutes(5),
-                    KeepAlivePingDelay = TimeSpan.FromSeconds(60),
-                    KeepAlivePingTimeout = TimeSpan.FromSeconds(30),
-                };
-#else
-                // .NET Standard 2.1 回退到 HttpClientHandler
-                var handler = new System.Net.Http.HttpClientHandler();
-#endif
+                    {
+                        EnableMultipleHttp2Connections = true,
+                        PooledConnectionIdleTimeout = TimeSpan.FromMinutes(5),
+                        KeepAlivePingDelay = TimeSpan.FromSeconds(60),
+                        KeepAlivePingTimeout = TimeSpan.FromSeconds(30),
+                    };
                 options.HttpHandler = handler;
             }
 
