@@ -2,45 +2,15 @@
 
   <PropertyGroup>
     <TargetFramework>net9.0</TargetFramework>
-    <PackageId>SyZero.DynamicWebApi</PackageId>
-    <Authors>winter2048</Authors>
-    <Company>SYZERO</Company>
     <Description>SyZero-DynamicWebApi</Description>
-    <PackageIcon>logo.png</PackageIcon>
-    <PackageIconUrl />
-    <NeutralLanguage></NeutralLanguage>
-    <PackageProjectUrl>https://syzero.com</PackageProjectUrl>
-    <PackageLicenseFile>LICENSE</PackageLicenseFile>
-    <RepositoryUrl>https://github.com/winter2048/syzero-core</RepositoryUrl>
-    <RepositoryType>git</RepositoryType>
-    <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
-    <PackageLicenseExpression></PackageLicenseExpression>
-    <SignAssembly>false</SignAssembly>
-    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <IsPackable>true</IsPackable>
   </PropertyGroup>
-
 
   <ItemGroup>
     <FrameworkReference Include="Microsoft.AspNetCore.App" />
   </ItemGroup>
 
-
   <ItemGroup>
     <ProjectReference Include="..\SyZero\SyZero.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Include="..\..\..\doc\icon\logo.png">
-      <Pack>True</Pack>
-      <PackagePath></PackagePath>
-    </None>
-    <None Include="..\..\..\LICENSE">
-      <Pack>True</Pack>
-      <PackagePath></PackagePath>
-    </None>
-    <None Include="README.md">
-      <Pack>True</Pack>
-      <PackagePath></PackagePath>
-    </None>
   </ItemGroup>
 </Project>
